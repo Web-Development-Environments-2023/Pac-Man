@@ -6,23 +6,87 @@ var pac_color;
 var start_time;
 var time_elapsed;
 var interval;
+var users = {};
 
 
-$(document).ready(function() {
-	$('#register_screen').hide();
-	// context = canvas.getContext("2d");
-	// Start();
+
+$(document).ready(function()
+ {
+	showAndHideDivs("start_screen")
+	users["k"] = "k"
 });
 
-function Register(){
-	// document.getElementById("start_screen_img")
-	$('#register_screen').show();
-	$('#start_screen').hide();
-	// document.getElementById('username').innerHTML = username
+function Register()
+{
+	showAndHideDivs("register_screen")
 }
 
-function Login(){
-	
+function Login()
+{
+	showAndHideDivs("login_screen")
+}
+
+function showAndHideDivs(currentScreen)
+{
+	switch(currentScreen)
+	{
+		case "start_screen":
+			$('#start_screen').show();
+			$('#register_screen').hide();
+			$('#login_screen').hide();
+			$('#game_screen').hide();
+			break;
+		case "register_screen":
+			$('#register_screen').show();
+			$('#start_screen').hide();
+			$('#login_screen').hide();
+			$('#game_screen').hide();
+			break;
+		case "login_screen":
+			$('#login_screen').show();
+			$('#start_screen').hide();
+			$('#register_screen').hide();
+			$('#game_screen').hide();
+			break;
+		case "game_screen":
+			$('#login_screen').hide();
+			$('#start_screen').hide();
+			$('#register_screen').hide();
+			
+			$('#game_screen').show();
+			context = canvas.getContext("2d");
+			Start();
+			break;
+	}
+}
+
+function check_login_form()
+{
+	let username = $('#usernameL').val()
+	let password = $('#passwordL').val()
+
+	// Check if the username is exist
+	if(username in users)
+	{
+		// Check if the password is correct
+		if(users[username] == password)
+		{	
+			window.alert('login successfully') // forward to the game screen
+			showAndHideDivs("game_screen")
+		}
+		else
+		{	
+			$('#passwordL').val('')
+			window.alert('You have entered a wrong password')
+		}
+	}
+	else
+	{
+		$('#usernameL').val('')
+		$('#passwordL').val('')
+		window.alert('The username \'' + username + '\' is not registed')
+	}
+
 }
 
 function check_register_form(){
@@ -60,17 +124,29 @@ function check_register_form(){
 
 	// Checks that the email is valid
 	let valid_email = checkEmail(email)
-	if (valid_email != true){
+	if (valid_email != true)
+	{
 		window.alert('Your email is not a valid email address')
+		return
+	
+	}
+
+	// Check that the username is not exist in the system
+	if(username in users)
+	{
+		window.alert('Your username \'' + username + '\' is already exist in the system' )
 		return
 	}
 
+	users[username] = password
+	window.alert('You have been Registered Successfully' )
+	showAndHideDivs("start_screen")
+}
 
-
-
-	
-	
-
+function check_form(){
+	let username = $('#usernameL').val()
+	let password = ('#passwordL').val()
+	window.alert('Your email is not a valid email address')
 }
 
 // Function that checks if a given password is more than 6 char and has digits and letters
