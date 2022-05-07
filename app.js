@@ -7,10 +7,104 @@ var start_time;
 var time_elapsed;
 var interval;
 
+
 $(document).ready(function() {
-	context = canvas.getContext("2d");
-	Start();
+	$('#register_screen').hide();
+	// context = canvas.getContext("2d");
+	// Start();
 });
+
+function Register(){
+	// document.getElementById("start_screen_img")
+	$('#register_screen').show();
+	$('#start_screen').hide();
+	// document.getElementById('username').innerHTML = username
+}
+
+function Login(){
+	
+}
+
+function check_register_form(){
+	let username = $('#username').val()
+	let password = $('#password').val()
+	let fullname = $('#fullname').val()
+	let email = $('#email').val()
+	let birthdate = $('#birthdate').val()
+	
+	// Checks that all the fields are not empty
+	if ((username == '') || (password == '') || (fullname == '') || (email == '') || (birthdate == '')){
+		window.alert('Missing values - please fill all the values to register')
+		return
+	}
+
+	// Checks that the inputs don't have spaces (except full name and birthdate)
+	if ((username == '' || (/\s/).test(username)) || (password == '' || (/\s/).test(password)) || (email == '' || (/\s/).test(email))){
+		window.alert('Illegal character (whitespace) in username or password or email.')
+		return
+	}
+
+	// Checks that the password contains at least 6 digits of numbers and letters
+	let valid_pwd = checkPwd(password)
+	if (valid_pwd != true){
+		window.alert('Your password ' + valid_pwd)
+		return
+	}
+	
+	// Checks that the fullname contains no numbers in it
+	let valid_fullname = checkFullname(fullname)
+	if (valid_fullname != true){
+		window.alert('Your fullname ' + valid_fullname)
+		return
+	}
+
+	// Checks that the email is valid
+	let valid_email = checkEmail(email)
+	if (valid_email != true){
+		window.alert('Your email is not a valid email address')
+		return
+	}
+
+
+
+
+	
+	
+
+}
+
+// Function that checks if a given password is more than 6 char and has digits and letters
+function checkPwd(str) {
+	if (str.length < 6) {
+		return("is too short - you need at least 6 characters");
+	} else if (str.search(/\d/) == -1) {
+		return("has no numbers in it - you need at least 1 digit");
+	} else if (str.search(/[a-zA-Z]/) == -1) {
+		return("has no letters in it - you need at least 1 letter");
+	}
+	return true;
+}
+
+// Function that checks if a given fullname has no digits in it
+function checkFullname(str) {
+	if (str.search(/\d/) != -1) {
+		return("has numbers in it - a name can't have numbers");
+	}
+	return true;
+}
+
+// Function that checks if a given email is valid
+function checkEmail(email) {
+	// if (str.search(/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/) != -1) {
+	// 	return("is not a valid email address");
+	// }
+	// return true;
+	var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+	return regex.test(email);
+  }
+  
+
+
 
 function Start() {
 	board = new Array();
@@ -31,19 +125,19 @@ function Start() {
 				(i == 6 && j == 1) ||
 				(i == 6 && j == 2)
 			) {
-				board[i][j] = 4;
+				board[i][j] = 4; // draws a wall
 			} else {
 				var randomNum = Math.random();
 				if (randomNum <= (1.0 * food_remain) / cnt) {
 					food_remain--;
-					board[i][j] = 1;
+					board[i][j] = 1; // draws food
 				} else if (randomNum < (1.0 * (pacman_remain + food_remain)) / cnt) {
 					shape.i = i;
 					shape.j = j;
 					pacman_remain--;
-					board[i][j] = 2;
+					board[i][j] = 2; // draws pacman
 				} else {
-					board[i][j] = 0;
+					board[i][j] = 0; //draws passage
 				}
 				cnt--;
 			}
@@ -54,6 +148,8 @@ function Start() {
 		board[emptyCell[0]][emptyCell[1]] = 1;
 		food_remain--;
 	}
+
+
 	keysDown = {};
 	addEventListener(
 		"keydown",
@@ -69,7 +165,7 @@ function Start() {
 		},
 		false
 	);
-	interval = setInterval(UpdatePosition, 250);
+	interval = setInterval(UpdatePosition, 1);
 }
 
 function findRandomEmptyCell(board) {

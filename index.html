@@ -3,10 +3,34 @@
 	<head>
 		<script src="./jquery-3.4.1.slim.min.js"></script>
 		<script type="text/javascript" src="./app.js"></script>
+		<link rel="stylesheet" href="style.css">
 	</head>
 
-	<body>
-		<div id="score">
+	<body id="body">
+		<div id="start_screen"><img src="https://www.pngitem.com/pimgs/m/112-1122868_pacman-logo-png-pac-man-logo-png-transparent.png">
+			<button id="Register_button" type="button", onclick="Register()">Register</button>
+			<button type="Login_button", onclick="Login()">Login</button>
+		</div>
+
+		<div id="register_screen">
+		<form id="register_form" action='javascript:check_register_form()'>
+			<label for="username">Username:</label><br>
+			<input type="text" id="username" name="username"><br>
+			<label for="password">Password:</label><br>
+			<input type="text" id="password" name="password"><br>
+			<label for="fullname">Full Name:</label><br>
+			<input type="text" id="fullname" name="fullname"><br>
+			<label for="email">Email:</label><br>
+			<input type="text" id="email" name="email"><br>
+			<label for="birthdate">Date of Birth:</label><br>
+			<input type="date" id="birthdate" name="birthdate"><br><br>
+
+			<input type="submit" value="Register">
+		  </form> 
+		</div>
+
+		  
+		<!-- <div id="score">
 			<label for="lblScore">SCORE:</label>
 			<input id="lblScore" type="text" />
 		</div>
@@ -16,6 +40,6 @@
 		</div>
 		<div id="game">
 			<canvas id="canvas" height="600" width="600"></canvas>
-		</div>
+		</div> -->
 	</body>
 </html>
