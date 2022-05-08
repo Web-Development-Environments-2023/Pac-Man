@@ -30,28 +30,44 @@ function showAndHideDivs(currentScreen)
 {
 	switch(currentScreen)
 	{
-		case "start_screen":
+		case "start_screen": // start mode
 			$('#start_screen').show();
 			$('#register_screen').hide();
 			$('#login_screen').hide();
 			$('#game_screen').hide();
+			$('#settings_screen').hide();
 			break;
-		case "register_screen":
+
+		case "register_screen": // register mode
 			$('#register_screen').show();
 			$('#start_screen').hide();
 			$('#login_screen').hide();
 			$('#game_screen').hide();
+			$('#settings_screen').hide();
 			break;
-		case "login_screen":
+
+		case "login_screen": // login mode
 			$('#login_screen').show();
 			$('#start_screen').hide();
 			$('#register_screen').hide();
 			$('#game_screen').hide();
+			$('#settings_screen').hide();
 			break;
-		case "game_screen":
+
+		case "setting_screen": // setting mode
+			$('#settings_screen').show();
 			$('#login_screen').hide();
 			$('#start_screen').hide();
 			$('#register_screen').hide();
+			$('#game_screen').hide();
+			break;
+
+		case "game_screen": // game mode
+			$('#login_screen').hide();
+			$('#start_screen').hide();
+			$('#register_screen').hide();
+			$('#settings_screen').hide();
+
 			
 			$('#game_screen').show();
 			context = canvas.getContext("2d");
@@ -71,8 +87,8 @@ function check_login_form()
 		// Check if the password is correct
 		if(users[username] == password)
 		{	
-			window.alert('login successfully') // forward to the game screen
-			showAndHideDivs("game_screen")
+			window.alert('login successfully')
+			showAndHideDivs("setting_screen")
 		}
 		else
 		{	
@@ -140,7 +156,7 @@ function check_register_form(){
 
 	users[username] = password
 	window.alert('You have been Registered Successfully' )
-	showAndHideDivs("start_screen")
+	showAndHideDivs("login_screen")
 }
 
 function check_form(){

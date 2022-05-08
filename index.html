@@ -14,6 +14,7 @@
 		</div>
 
 		<div id="register_screen">
+			<h2>Register Page</h2>
 		<form id="register_form" action='javascript:check_register_form()'>
 			<label for="username">Username:</label><br>
 			<input type="text" id="username" name="username"><br>
@@ -25,13 +26,13 @@
 			<input type="text" id="email" name="email"><br>
 			<label for="birthdate">Date of Birth:</label><br>
 			<input type="date" id="birthdate" name="birthdate"><br><br>
-
 			<input type="submit" value="Register">
 		  </form> 
 		</div>
 
 
 		<div id="login_screen">
+			<h2>Login Page</h2>
 		<form id = "login_form" action='javascript:check_login_form()'>
 			<label for="username"> Username:</label><br>
 			<input type="text" id="usernameL" name="usernameL"><br>
@@ -39,9 +40,27 @@
 			<input type="text" id="passwordL" name="passwordL"><br><br>
 
 			<input type="submit" value="Login">
-
-
 		  </form>
+		</div>
+
+
+		<div id="settings_screen">
+			<h2>Settings</h2>
+				<form action="update_settings">
+					<h3>Insert your desired key control</h3>
+
+					<label for="Moveup"> Move up:  			<br>
+					<label for="Movedown"> Move Down:   	<br>	
+					<label for="Moveright"> Move Right:  	<br>	 
+					<label for="Moveleft"> Move Left:  		<br>
+
+
+
+
+
+				</form>
+
+
 		</div>
 
 		  <div id="game_screen">
