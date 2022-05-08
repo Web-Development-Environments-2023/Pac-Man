@@ -7,6 +7,11 @@ var start_time;
 var time_elapsed;
 var interval;
 var users = {};
+var controls = {'up':38, 'down':40, 'right':39, 'left':37}
+var numOfMonsters;
+var numOfBalls;
+var timeForGame;
+
 
 
 
@@ -195,7 +200,70 @@ function checkEmail(email) {
 	return regex.test(email);
   }
   
+  function myKeyPress(e, key) // Function for updating the game controls (up,down,left,right)
+  {
+	var keynum;
+	if(window.event)                
+		keynum = e.keyCode;
+	var wantedKey
 
+	switch(key)
+	{
+		case('up'):
+			wantedKey = $('#moveup')
+			controls['up'] = keynum
+			break;
+		case('down'):
+			wantedKey = $('#movedown')
+			controls['down'] = keynum
+			break;
+		case('right'):
+			wantedKey = $('#moveright')
+			controls['right'] = keynum
+			break;
+		case('left'):
+			wantedKey = $('#moveleft')
+			controls['left'] = keynum
+			break;
+	}
+
+	if (e.keyCode == '38') {
+		wantedKey.val('up')
+	}
+	else if (e.keyCode == '40') {
+		wantedKey.val('down')
+	}
+	else if (e.keyCode == '39') {
+		wantedKey.val('right')
+	}
+	else if (e.keyCode == '37') {
+		wantedKey.val('left')
+	}
+	else
+		wantedKey.val('')
+  }
+
+  function defaultSettings()
+  {
+	  // setting the default moving controls
+	controls = {'up':38, 'down':40, 'right':39, 'left':37}
+	$('#moveup').val("up")
+	$('#movedown').val("down")
+	$('#moveright').val("right")
+	$('#moveleft').val("left")
+
+	// setting the numbers of balls
+	var randomNumOfBalls = Math.floor((Math.random() * 40) + 50);
+	$('#numofballs').val(randomNumOfBalls)
+
+	// setting the game time
+	var randomNumOfBalls = Math.floor((Math.random() * 40) + 60);
+	$('#gametime').val(randomNumOfBalls)
+
+	// setting the numbers of monsters
+	var randomNumOfBalls = Math.floor((Math.random() * 3) + 1);
+	$('#numofmonsters').val(randomNumOfBalls)
+  }
 
 
 function Start() {
