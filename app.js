@@ -7,7 +7,7 @@ var start_time;
 var time_elapsed;
 var interval;
 var users = {};
-var controls = {'up':38, 'down':40, 'right':39, 'left':37}
+var controls = {}
 var numOfMonsters;
 var numOfBalls;
 var timeForGame;
@@ -164,11 +164,11 @@ function check_register_form(){
 	showAndHideDivs("login_screen")
 }
 
-function check_form(){
-	let username = $('#usernameL').val()
-	let password = ('#passwordL').val()
-	window.alert('Your email is not a valid email address')
-}
+// function check_form(){
+// 	let username = $('#usernameL').val()
+// 	let password = ('#passwordL').val()
+// 	window.alert('Your email is not a valid email address')
+// }
 
 // Function that checks if a given password is more than 6 char and has digits and letters
 function checkPwd(str) {
@@ -243,7 +243,7 @@ function checkEmail(email) {
 		wantedKey.val('')
   }
 
-  function defaultSettings()
+  function defaultKeySettings()
   {
 	  // setting the default moving controls
 	controls = {'up':38, 'down':40, 'right':39, 'left':37}
@@ -251,18 +251,62 @@ function checkEmail(email) {
 	$('#movedown').val("down")
 	$('#moveright').val("right")
 	$('#moveleft').val("left")
+  }
 
+  function randomGameSettings(){
 	// setting the numbers of balls
-	var randomNumOfBalls = Math.floor((Math.random() * 40) + 50);
-	$('#numofballs').val(randomNumOfBalls)
+	// var randomNumOfBalls = Math.floor((Math.random() * 40) + 50);
+	$('#numofballs').val(Math.floor((Math.random() * 40) + 50))
 
 	// setting the game time
-	var randomNumOfBalls = Math.floor((Math.random() * 40) + 60);
-	$('#gametime').val(randomNumOfBalls)
+	// var randomNumOfBalls = Math.floor((Math.random() * 40) + 60);
+	$('#gametime').val(Math.floor((Math.random() * 40) + 60))
 
 	// setting the numbers of monsters
-	var randomNumOfBalls = Math.floor((Math.random() * 3) + 1);
-	$('#numofmonsters').val(randomNumOfBalls)
+	// var randomNumOfBalls = Math.floor((Math.random() * 3) + 1);
+	$('#numofmonsters').val(Math.floor((Math.random() * 3) + 1))
+  }
+
+  function check_settings_form(){
+	// Extracts all the inputs from the form and saves them to variables
+	let up = $('#moveup').val()
+	let down = $('#movedown').val()
+	let right = $('#moveright').val()
+	let left = $('#moveleft').val()
+	numOfMonsters = $('#numofmonsters').val();
+	numOfBalls = $('#numofballs').val();
+	timeForGame = $('#gametime').val();
+	
+	// Checks that all the fields are not empty
+	if ((up == '') || (down == '') || (right == '') || (left == '') || (numOfMonsters == '') || (numOfBalls == '') || (timeForGame == '')){
+		window.alert('Missing values - please fill all the values to proceed')
+		return
+	}
+
+	// Checks that there aren't 2 identical keys
+	console.log("heeeeeyyyy")
+	let set_of_keys = new Set([up, down, right, left])
+	console.log(set_of_keys)
+	if (length(set_of_keys) != 4){
+		window.alert('Identical keys error - You configured 2 or more different movements with the same keys, please configure for each movement a different key')
+		return
+	}
+
+	if (numOfBalls < 50 || numOfBalls > 90){
+		window.alert('Number of balls should be between 50-90.')
+		return
+	}
+
+	if (timeForGame < 60){
+		window.alert('Game time should be more than 60 sec.')
+		return
+	}
+
+	if (numOfMonsters < 1 || numOfMonsters > 4){
+		window.alert('Number of monsters should be between 1-4.')
+		return
+	}
+	
   }
 
 
