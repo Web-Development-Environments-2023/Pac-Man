@@ -164,11 +164,6 @@ function check_register_form(){
 	showAndHideDivs("login_screen")
 }
 
-// function check_form(){
-// 	let username = $('#usernameL').val()
-// 	let password = ('#passwordL').val()
-// 	window.alert('Your email is not a valid email address')
-// }
 
 // Function that checks if a given password is more than 6 char and has digits and letters
 function checkPwd(str) {
@@ -284,29 +279,30 @@ function checkEmail(email) {
 	}
 
 	// Checks that there aren't 2 identical keys
-	console.log("heeeeeyyyy")
 	let set_of_keys = new Set([up, down, right, left])
-	console.log(set_of_keys)
-	if (length(set_of_keys) != 4){
+
+	if (set_of_keys.size != 4)
+	{
 		window.alert('Identical keys error - You configured 2 or more different movements with the same keys, please configure for each movement a different key')
 		return
 	}
 
 	if (numOfBalls < 50 || numOfBalls > 90){
-		window.alert('Number of balls should be between 50-90.')
+		window.alert('Number of balls should be between 50-90')
 		return
 	}
 
 	if (timeForGame < 60){
-		window.alert('Game time should be more than 60 sec.')
+		window.alert('Game time should be more than 60 sec')
 		return
 	}
 
 	if (numOfMonsters < 1 || numOfMonsters > 4){
-		window.alert('Number of monsters should be between 1-4.')
+		window.alert('Number of monsters should be between 1-4')
 		return
 	}
-	
+
+	showAndHideDivs("game_screen")
   }
 
 
