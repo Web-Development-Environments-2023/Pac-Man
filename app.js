@@ -11,6 +11,7 @@ var controls = {}
 var numOfMonsters;
 var numOfBalls;
 var timeForGame;
+var last_pac_direction;
 
 
 
@@ -18,6 +19,7 @@ var timeForGame;
 $(document).ready(function()
  {
 	showAndHideDivs("start_screen")
+	// showAndHideDivs("game_screen")
 	users["k"] = "k"
 });
 
@@ -71,7 +73,7 @@ function showAndHideDivs(currentScreen)
 			$('#login_screen').hide();
 			$('#start_screen').hide();
 			$('#register_screen').hide();
-			$('#settings_screen').hide();
+			$('#settings_screen').show();
 
 			
 			$('#game_screen').show();
@@ -284,10 +286,8 @@ function checkEmail(email) {
 	}
 
 	// Checks that there aren't 2 identical keys
-	console.log("heeeeeyyyy")
-	let set_of_keys = new Set([up, down, right, left])
-	console.log(set_of_keys)
-	if (length(set_of_keys) != 4){
+	let set_of_keys = new Set([up, down, right, left]);
+	if (set_of_keys.size != 4){
 		window.alert('Identical keys error - You configured 2 or more different movements with the same keys, please configure for each movement a different key')
 		return
 	}
@@ -306,6 +306,8 @@ function checkEmail(email) {
 		window.alert('Number of monsters should be between 1-4.')
 		return
 	}
+
+	showAndHideDivs("game_screen")
 	
   }
 
@@ -369,7 +371,7 @@ function Start() {
 		},
 		false
 	);
-	interval = setInterval(UpdatePosition, 1);
+	interval = setInterval(UpdatePosition, 150);
 }
 
 function findRandomEmptyCell(board) {
@@ -407,15 +409,15 @@ function Draw() {
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
 			if (board[i][j] == 2) {
-				context.beginPath();
-				context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
-				context.lineTo(center.x, center.y);
-				context.fillStyle = pac_color; //color
-				context.fill();
-				context.beginPath();
-				context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
-				context.fillStyle = "black"; //color
-				context.fill();
+				let pressed_key = GetKeyPressed()
+				if (pressed_key == null){
+					DrawPacman(last_pac_direction, center)
+				}
+				else{
+					DrawPacman(pressed_key, center)
+					last_pac_direction = pressed_key
+				}
+				
 			} else if (board[i][j] == 1) {
 				context.beginPath();
 				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
@@ -429,6 +431,75 @@ function Draw() {
 			}
 		}
 	}
+}
+
+function DrawPacman(direction, center){
+
+	// UP
+	if (direction == 1){
+		context.beginPath();
+		context.arc(center.x, center.y, 30, 1.65 * Math.PI, 1.35 * Math.PI); // half circle
+		context.lineTo(center.x, center.y);
+		context.fillStyle = pac_color; //color
+		context.fill();
+		context.beginPath();
+		context.arc(center.x + 15, center.y + 5, 5, 0, 2 * Math.PI); // circle
+		context.fillStyle = "black"; //color
+		context.fill();
+	}
+
+	//DOWN
+	else if (direction == 2){
+		context.beginPath();
+		context.arc(center.x, center.y, 30, 0.65 * Math.PI, 0.35 * Math.PI); // half circle
+		context.lineTo(center.x, center.y);
+		context.fillStyle = pac_color; //color
+		context.fill();
+		context.beginPath();
+		context.arc(center.x + 15, center.y + 3, 5, 0, 2 * Math.PI); // circle
+		context.fillStyle = "black"; //color
+		context.fill();
+	}
+
+	//RIGHT
+	else if (direction == 3){
+		context.beginPath();
+		context.arc(center.x, center.y, 30, 1.15 * Math.PI, 0.85 * Math.PI); // half circle
+		context.lineTo(center.x, center.y);
+		context.fillStyle = pac_color; //color
+		context.fill();
+		context.beginPath();
+		context.arc(center.x - 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
+		context.fillStyle = "black"; //color
+		context.fill();
+	}
+
+	//LEFT
+	else if (direction == 4){
+		context.beginPath();
+		context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
+		context.lineTo(center.x, center.y);
+		context.fillStyle = pac_color; //color
+		context.fill();
+		context.beginPath();
+		context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
+		context.fillStyle = "black"; //color
+		context.fill();
+	}
+
+	// Default direction - just for the start
+	else{
+		context.beginPath();
+		context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
+		context.lineTo(center.x, center.y);
+		context.fillStyle = pac_color; //color
+		context.fill();
+		context.beginPath();
+		context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
+		context.fillStyle = "black"; //color
+		context.fill();
+	}
+	
 }
 
 function UpdatePosition() {
