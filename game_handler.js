@@ -248,9 +248,10 @@ function UpdatePosition()
 	}
 	if(time_elapsed >= timeForGame)
 	{
-		showAndHideDivs("")
+		gameOver("t")
 	}
-	else {
+	else 
+	{
 		Draw();
 	}
 }
@@ -299,42 +300,71 @@ function updateMonsterPose(monster, movements, cellValue)
 			// UP
 			case 1:
 				if(is_valid_move(monster.i - 1, monster.j))
-					board[monster.i][monster[j]] = cellValue
+				{
+					board[monster.i][monster[j]] = cellValue // set current cell value
+					setMonsterOnCell(monster.i - 1, monster.j) // set new cell value
+					return;
+				}
 				break;
 			// DOWN
 			case 2:
 				if(is_valid_move(monster.i + 1, monster.j))
-					board[monster.i][monster[j]] = cellValue
+				{
+					board[monster.i][monster[j]] = cellValue // set current cell value
+					setMonsterOnCell(monster.i + 1, monster.j) // set new cell value
+					return;
+				}
 				break;
 			// RIGHT
 			case 3:
 				if(is_valid_move(monster.i, monster.j + 1))
-					board[monster.i][monster[j]] = cellValue
+				{
+					board[monster.i][monster[j]] = cellValue // set current cell value
+					setMonsterOnCell(monster.i, monster.j + 1) // set new cell value
+					return;
+				}
 				break;
 			// LEFT
 			case 4:
 				if(is_valid_move(monster.i, monster.j - 1))
-					board[monster.i][monster[j]] = cellValue
+				{
+					board[monster.i][monster[j]] = cellValue // set current cell value
+					setMonsterOnCell(monster.i, monster.j - 1) // set new cell value
+					return;
+				}
 				break;
-
 		}
 	}
-	if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
-		shape.j--;
-	}
+}
+	
+
+
+setMonsterOnCell(i, j)
+{
+	if(board[i][j] == 0) 
+		board[i][j] = 5 // monster on empty cell
+	else if(board[i][j] == 1) 
+		board[i][j] = 6 // monster on cell with coin
+	else 
+		 gameOver("d") // monster on cell with pacmen!
 }
 
-// UP - 1
-// DOWN - 2
-// RIGHT - 3
-// LEFT - 4
+
+function is_valid_move(i, j)
+{
+	return ((i >= 0 || i < board.length) && (j >= 0 || j < board[0].length) && (board[i][j] == 0 || board[i][j] == 1 ||board[i][j] == 2))
+}
+
+
+
 function predict_best_moves(pacman, monster){
     let result = [];
     diff_i = pacman.i - monster.i;
     diff_j = pacman.j - monster.j;
 
     // UP/DOWN first
-    if (Math.abs(diff_i) > Math.abs(diff_j)){ 
+    if (Math.abs(diff_i) > Math.abs(diff_j))
+	{ 
         //DOWN
         if (diff_i > 0){
             result[0] = 2;
@@ -407,4 +437,12 @@ function predict_best_moves(pacman, monster){
         }
     }
     return result
+}
+
+function gameOver(end_game_reason)
+{
+	if(end_game_reason == 'd') // died (monster eat the pacman)
+		return;
+	else if(end_game_reason == 't') // time over
+		return;
 }
