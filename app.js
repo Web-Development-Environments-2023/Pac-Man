@@ -43,6 +43,7 @@ function showAndHideDivs(currentScreen)
 			$('#login_screen').hide();
 			$('#game_screen').hide();
 			$('#settings_screen').hide();
+			$('#about_screen').hide();
 			break;
 
 		case "register_screen": // register mode
@@ -51,6 +52,7 @@ function showAndHideDivs(currentScreen)
 			$('#login_screen').hide();
 			$('#game_screen').hide();
 			$('#settings_screen').hide();
+			$('#about_screen').hide();
 			break;
 
 		case "login_screen": // login mode
@@ -59,6 +61,7 @@ function showAndHideDivs(currentScreen)
 			$('#register_screen').hide();
 			$('#game_screen').hide();
 			$('#settings_screen').hide();
+			$('#about_screen').hide();
 			break;
 
 		case "setting_screen": // setting mode
@@ -67,15 +70,25 @@ function showAndHideDivs(currentScreen)
 			$('#start_screen').hide();
 			$('#register_screen').hide();
 			$('#game_screen').hide();
+			$('#about_screen').hide();
+			break;
+		
+		case "about_screen": // about mode
+			$('#login_screen').hide();
+			$('#start_screen').hide();
+			$('#register_screen').hide();
+			$('#settings_screen').hide();
+			$('#game_screen').hide();
+			$('#about_screen').show();
 			break;
 
 		case "game_screen": // game mode
 			$('#login_screen').hide();
 			$('#start_screen').hide();
 			$('#register_screen').hide();
-			$('#settings_screen').show();
+			$('#about_screen').hide();
 
-			
+			$('#settings_screen').show();
 			$('#game_screen').show();
 			context = canvas.getContext("2d");
 			Start();

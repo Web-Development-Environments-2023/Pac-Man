@@ -12,6 +12,17 @@
 
 	<body id="body">
 		
+
+		<div id="menu">
+			<div class="top">
+				<h3 onclick="showAndHideDivs('start_screen')">Home</h3>
+				<h3 onclick="showAndHideDivs('register_screen')">Register</h3>
+				<h3 onclick="showAndHideDivs('login_screen')">Login</h3>
+				<h3 onclick="showAndHideDivs('about_screen')">About</h3>
+			</div>
+		</div>
+
+
 		<div id="start_screen"><img src="https://www.pngitem.com/pimgs/m/112-1122868_pacman-logo-png-pac-man-logo-png-transparent.png">
 			<br><br><br>
 				<button id="Register_button" type="button", onclick="Register()">Register</button>
@@ -24,7 +35,7 @@
 			<label for="username">Username:</label><br>
 			<input type="text" id="username" name="username"><br>
 			<label for="password">Password:</label><br>
-			<input type="text" id="password" name="password"><br>
+			<input type="password" id="password" name="password"><br>
 			<label for="fullname">Full Name:</label><br>
 			<input type="text" id="fullname" name="fullname"><br>
 			<label for="email">Email:</label><br>
@@ -43,11 +54,21 @@
 			<label for="username"> Username:</label><br>
 			<input type="text" id="usernameL" name="usernameL"><br>
 			<label for="password"> Password:</label><br>
-			<input type="text" id="passwordL" name="passwordL"><br><br>
+			<input type="password" id="passwordL" name="passwordL"><br><br>
 
 			<input type="submit" value="Login">
 						<br><br><br><br><br>
 		  </form>
+		</div>
+
+		<div id="about_screen">
+			<h2>About the app</h2>
+			Pac-Man is an action maze chase video game;<br>
+			the player controls the eponymous character through an enclosed maze.
+			The objective of the game is to eat all of the dots placed in the maze while avoiding four colored ghosts — 
+			Blinky (red), Pinky (pink), Inky (cyan), and Clyde (orange) — that pursue him.
+			<br>
+			In this application we impemented the Pac-Man game
 		</div>
 
 
@@ -86,11 +107,11 @@
 							</tr>
 							<tr>
 								<td>Game time (in seconds):</td>
-								<td><input id="numofmonsters" type="text"placeholder="1 - 4"/></td>
+								<td><input id="gametime" type="text"placeholder="60+"/></td>
 							</tr>
 							<tr>
 								<td>Number of monsters:</td>
-								<td><input id="gametime" type="text"placeholder="60+"/></td>
+								<td><input id="numofmonsters" type="text"placeholder="1 - 4"/></td>
 							</tr>
 						</table>
 						<button onclick="randomGameSettings()"> Random game settings</button>
@@ -114,6 +135,9 @@
 			</div>
 			<div id="game">
 				<canvas id="canvas" height="600" width="600"></canvas>
+				<br>
+				<button onclick="Start()"> Restart</button>
+
 			</div>
 		  </div>
 
