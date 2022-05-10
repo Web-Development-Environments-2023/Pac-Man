@@ -84,5 +84,3 @@ function showAndHideDivs(currentScreen)
 }
 
 
-
-
