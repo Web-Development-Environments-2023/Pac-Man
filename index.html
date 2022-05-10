@@ -3,6 +3,10 @@
 	<head>
 		<script src="./jquery-3.4.1.slim.min.js"></script>
 		<script type="text/javascript" src="./app.js"></script>
+		<!-- <script type="text/javascript" src="./monster.js"></script> -->
+		<script type="text/javascript" src="./form_handler.js"></script>
+		<script type="text/javascript" src="./game_handler.js"></script>
+
 		<link rel="stylesheet" href="style.css">
 	</head>
 
@@ -51,20 +55,42 @@
 			<h2>Settings</h2>
 				<form action='javascript:defaultSettings()'>
 					<h3>Insert your desired key control</h3>
+					
 					<div>
-							<label for="Moveup"> Move Up:  &nbsp;&nbsp;&nbsp;&nbsp;		<input id="moveup" type="text" onkeydown="return myKeyPress(event, 'up')" /><br>
-							<label for="Movedown"> Move Down:   <input id="movedown" type="text"  onkeydown="return myKeyPress(event, 'down')" /><br>	
-							<label for="Moveright"> Move Right: &nbsp;<input id="moveright" type="text"  onkeydown="return myKeyPress(event, 'right')" /><br>	 
-							<label for="Moveleft"> Move Left:  	&nbsp;&nbsp;	<input id="moveleft" type="text"  onkeydown="return myKeyPress(event, 'left')" /><br>
-							
-					</div>
-					<div>
+						<table>
+							<tr>
+								<td> Move Up:</td>
+								<td><input id="moveup" type="text" onkeydown="return myKeyPress(event, 'up')"/></td>
+							</tr>
+							<tr>
+								<td>Move Down:</td>
+								<td><input id="movedown" type="text"  onkeydown="return myKeyPress(event, 'down')"/></td>
+							</tr>
+							<tr>
+								<td>Move Right:</td>
+								<td><input id="moveright" type="text"  onkeydown="return myKeyPress(event, 'right')" /></td>
+							</tr>
+							<tr>
+								<td>Move Left:</td>
+								<td><input id="moveleft" type="text"  onkeydown="return myKeyPress(event, 'left')" /></td>
+							</tr>
+						</table>
 						<button onclick="defaultKeySettings()"> Default key settings</button>
-					</div>
-					<label> Number of balls:  	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	<input id="numofballs" type="text"placeholder="50 - 90"/><br>
-					<label> Game time (in seconds):  	&nbsp;&nbsp;	<input id="gametime" type="text"placeholder="60+"/><br>
-					<label> Number of monsters:  	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;	<input id="numofmonsters" type="text"placeholder="1 - 4"/><br>
 
+						<table>
+							<tr>
+								<td>Number of balls:</td>
+								<td><input id="numofballs" type="text"placeholder="50 - 90"/></td>
+							</tr>
+							<tr>
+								<td>Game time (in seconds):</td>
+								<td><input id="numofmonsters" type="text"placeholder="1 - 4"/></td>
+							</tr>
+							<tr>
+								<td>Number of monsters:</td>
+								<td><input id="gametime" type="text"placeholder="60+"/></td>
+							</tr>
+						</table>
 						<button onclick="randomGameSettings()"> Random game settings</button>
 						<br><br><br>
 						
