@@ -1,7 +1,14 @@
+base_image = new Image();
+base_image.src = "https://icon2.cleanpng.com/20180203/ftq/kisspng-pac-man-world-3-ghosts-clip-art-pac-man-ghost-png-transparent-image-5a7561ae052b06.0298581815176421580212.jpg"
+
+
+
+
 function Start() {
 	board = new Array();
 	score = 0;
 	pac_color = "yellow";
+    num_of_lives = 5;
 	var cnt = 100;
 	var food_remain = numOfBalls;
 	var pacman_remain = 1;
@@ -11,6 +18,14 @@ function Start() {
 		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
 		for (var j = 0; j < 10; j++) 
 		{
+            if (//Reserved places for the monsters
+                (i == 0 && j == 0) ||
+                (i == 0 && j == 9) ||
+                (i == 9 && j == 0) ||
+                (i == 9 && j == 9)){
+                    continue
+                }
+
 			if (
 				(i == 3 && j == 3) ||
 				(i == 3 && j == 4) ||
@@ -46,17 +61,19 @@ function Start() {
 
 	// put the monsters in the board
 	let monster_positions = [[0,0], [9,9],[0,9],[9,0]]
-	for(let i = 0; i < numOfMonsters.length; i++)
-
-	{	// check if this position is empty
-		if(board[monster_positions[i][0]][monster_positions[i][1]] == 0)
+	for(let num_monst = 0; num_monst < numOfMonsters; num_monst++){
+        // check if this position is empty
+		if(board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] == 0)
 		{	
-			board[monster_positions[i][0]][monster_positions[i][1]] = 5 // monster on empty cell
+			board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] = 5 // monster on empty cell
 		}
 		else
 		{
-			board[monster_positions[i][0]][monster_positions[i][1]] = 6 // monster on coin cell
+			board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] = 6 // monster on coin cell
 		}
+
+        monster_list[num_monst].i = monster_positions[num_monst][0];
+        monster_list[num_monst].j = monster_positions[num_monst][1];
 	}
 
 	keysDown = {};
@@ -74,7 +91,11 @@ function Start() {
 		},
 		false
 	);
-	interval = setInterval(UpdatePosition, 150);
+    // UpdatePosition();
+	interval = setInterval(UpdatePosition, 130);
+    // update the monsters positions on the board
+	
+    // interval_monsters = setInterval(updateMonsterPositions, 700)
 }
 
 function findRandomEmptyCell(board) {
@@ -88,17 +109,17 @@ function findRandomEmptyCell(board) {
 }
 
 function GetKeyPressed() {
-	if (keysDown[38]) {
+    if (keysDown[controls['up']]) {
 		return 1;
 	}
-	if (keysDown[40]) {
+	if (keysDown[controls['down']]) {
 		return 2;
 	}
-	if (keysDown[37]) {
-		return 3;
-	}
-	if (keysDown[39]) {
+	if (keysDown[controls['right']]) {
 		return 4;
+	}
+	if (keysDown[controls['left']]) {
+		return 3;
 	}
 }
 
@@ -106,6 +127,7 @@ function Draw() {
 	canvas.width = canvas.width; //clean board
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
+    
 	for (var i = 0; i < 10; i++) {
 		for (var j = 0; j < 10; j++) {
 			var center = new Object();
@@ -133,6 +155,10 @@ function Draw() {
 				context.fillStyle = "grey"; //color
 				context.fill();
 			}
+            else if (board[i][j] == 5 || board[i][j] == 6){
+                base_image.width = "60"
+                context.drawImage(base_image, center.x-30, center.y-30, "60", "60")
+            }
 		}
 	}
 }
@@ -233,8 +259,8 @@ function UpdatePosition()
 	if (board[shape.i][shape.j] == 1) {
 		score++;
 	}
-	// update the monsters positions on the board
-	updateMonsterPositions()
+	
+    updateMonsterPositions()
 
 	board[shape.i][shape.j] = 2;
 	var currentTime = new Date();
@@ -258,9 +284,13 @@ function UpdatePosition()
 
 function updateMonsterPositions()
 {
+    let movement_1;
+    let movement_2;
+    let movement_3;
+    let movement_4;
 	switch(numOfMonsters)
-	{
-		case(4):
+	{    
+		case("4"):
 			movement_1 = predict_best_moves(shape, monster_1)
 			movement_2 = predict_best_moves(shape, monster_2)
 			movement_3 = predict_best_moves(shape, monster_3)
@@ -270,22 +300,22 @@ function updateMonsterPositions()
 			updateMonsterPose(monster_3, movement_3, board[monster_3.i][monster_3.j] - 5)
 			updateMonsterPose(monster_4, movement_4, board[monster_4.i][monster_4.j] - 5)
 			break;
-		case(3):
-			movement_1 = predict_best_moves(shape, monster_1)
+		case("3"):
+            movement_1 = predict_best_moves(shape, monster_1)
 			movement_2 = predict_best_moves(shape, monster_2)
 			movement_3 = predict_best_moves(shape, monster_3)
 			updateMonsterPose(monster_1, movement_1, board[monster_1.i][monster_1.j] - 5)
 			updateMonsterPose(monster_2, movement_2, board[monster_2.i][monster_2.j] - 5)
 			updateMonsterPose(monster_3, movement_3, board[monster_3.i][monster_3.j] - 5)
 			break;
-		case(2):
+		case("2"):
 			movement_1 = predict_best_moves(shape, monster_1)
 			movement_2 = predict_best_moves(shape, monster_2)
 			updateMonsterPose(monster_1, movement_1, board[monster_1.i][monster_1.j] - 5)
 			updateMonsterPose(monster_2, movement_2, board[monster_2.i][monster_2.j] - 5)
 			break;
-		case(1):
-			movement_1 = predict_best_moves(shape, monster_1)
+		case("1"):
+            movement_1 = predict_best_moves(shape, monster_1)
 			updateMonsterPose(monster_1, movement_1, board[monster_1.i][monster_1.j] - 5)
 			break;
 	}
@@ -301,8 +331,8 @@ function updateMonsterPose(monster, movements, cellValue)
 			case 1:
 				if(is_valid_move(monster.i - 1, monster.j))
 				{
-					board[monster.i][monster[j]] = cellValue // set current cell value
-					setMonsterOnCell(monster.i - 1, monster.j) // set new cell value
+					board[monster.i][monster.j] = cellValue // set current cell value
+					setMonsterOnCell(monster.i - 1, monster.j, monster) // set new cell value
 					return;
 				}
 				break;
@@ -310,8 +340,8 @@ function updateMonsterPose(monster, movements, cellValue)
 			case 2:
 				if(is_valid_move(monster.i + 1, monster.j))
 				{
-					board[monster.i][monster[j]] = cellValue // set current cell value
-					setMonsterOnCell(monster.i + 1, monster.j) // set new cell value
+					board[monster.i][monster.j] = cellValue // set current cell value
+					setMonsterOnCell(monster.i + 1, monster.j, monster) // set new cell value
 					return;
 				}
 				break;
@@ -319,8 +349,8 @@ function updateMonsterPose(monster, movements, cellValue)
 			case 3:
 				if(is_valid_move(monster.i, monster.j + 1))
 				{
-					board[monster.i][monster[j]] = cellValue // set current cell value
-					setMonsterOnCell(monster.i, monster.j + 1) // set new cell value
+					board[monster.i][monster.j] = cellValue // set current cell value
+					setMonsterOnCell(monster.i, monster.j + 1, monster) // set new cell value
 					return;
 				}
 				break;
@@ -328,27 +358,38 @@ function updateMonsterPose(monster, movements, cellValue)
 			case 4:
 				if(is_valid_move(monster.i, monster.j - 1))
 				{
-					board[monster.i][monster[j]] = cellValue // set current cell value
-					setMonsterOnCell(monster.i, monster.j - 1) // set new cell value
+					board[monster.i][monster.j] = cellValue // set current cell value
+					setMonsterOnCell(monster.i, monster.j - 1, monster) // set new cell value
 					return;
 				}
 				break;
 		}
+        
 	}
 }
 	
 
 
-setMonsterOnCell(i, j)
+function setMonsterOnCell(i, j, monster)
 {
-	if(board[i][j] == 0) 
+	if(board[i][j] == 0)
+    {
 		board[i][j] = 5 // monster on empty cell
+        monster.i = i;
+        monster.j = j;
+    }
 	else if(board[i][j] == 1) 
-		board[i][j] = 6 // monster on cell with coin
+	{
+        board[i][j] = 6 // monster on cell with coin
+        monster.i = i;
+        monster.j = j;
+    }	
 	else 
-		 gameOver("d") // monster on cell with pacmen!
-}
+        collision()
+		//  gameOver("d") // monster on cell with pacman!
 
+    
+}
 
 function is_valid_move(i, j)
 {
@@ -445,4 +486,54 @@ function gameOver(end_game_reason)
 		return;
 	else if(end_game_reason == 't') // time over
 		return;
+}
+
+function collision()
+{
+    if (num_of_lives == 1)
+    {
+        gameOver('d')
+    }
+    else
+    {
+        num_of_lives--;
+        score = score - 10;
+    
+        //Resets the monsters to the corners of the map
+        let monster_positions = [[0,0], [9,9],[0,9],[9,0]]
+        for(let num_monst = 0; num_monst < numOfMonsters; num_monst++)
+        {
+            //Update the cell where the monster were to be a passage or food
+            if(board[monster_list[num_monst].i][monster_list[num_monst].j] == 5)
+            {
+                board[monster_list[num_monst].i][monster_list[num_monst].j] = 0;
+            }
+            else
+            {
+                board[monster_list[num_monst].i][monster_list[num_monst].j] = 1;
+            }
+
+            board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] = 5;
+            monster_list[num_monst].i = monster_positions[num_monst][0];
+            monster_list[num_monst].j = monster_positions[num_monst][1];
+            
+        }
+
+        // Resets the pacman in a random location (midfield)
+        let rand_pacman_i;
+        let rand_pacman_j;
+        do{
+            rand_pacman_i = Math.floor((Math.random() * 4) + 3)
+            rand_pacman_j = Math.floor((Math.random() * 4) + 3)
+
+        }
+        while(!is_valid_move(rand_pacman_i, rand_pacman_j))
+        
+        board[shape.i][shape.j] = 0;
+        shape.i = rand_pacman_i;
+        shape.j = rand_pacman_j;
+        board[rand_pacman_i][rand_pacman_j] = 2;
+
+
+    }
 }
