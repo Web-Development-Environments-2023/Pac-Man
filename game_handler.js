@@ -2,11 +2,13 @@ base_image = new Image();
 base_image.src = "https://icon2.cleanpng.com/20180203/ftq/kisspng-pac-man-world-3-ghosts-clip-art-pac-man-ghost-png-transparent-image-5a7561ae052b06.0298581815176421580212.jpg"
 
 
-
-
 function Start() {
+	clearInterval(interval)
 	board = new Array();
 	score = 0;
+	pauseCounter = 0;
+	pauseAndResumeBtn = document.getElementById('pauseResume');
+	pauseAndResumeBtn.textContent = 'Pause';
 	pac_color = "yellow";
     num_of_lives = 5;
 	var cnt = 100;
@@ -92,10 +94,9 @@ function Start() {
 		false
 	);
     // UpdatePosition();
+	monsterTimeout = Date.now();
 	interval = setInterval(UpdatePosition, 130);
-    // update the monsters positions on the board
-	
-    // interval_monsters = setInterval(updateMonsterPositions, 700)
+
 }
 
 function findRandomEmptyCell(board) {
@@ -127,6 +128,7 @@ function Draw() {
 	canvas.width = canvas.width; //clean board
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
+	lblLive.value = num_of_lives;
     
 	for (var i = 0; i < 10; i++) {
 		for (var j = 0; j < 10; j++) {
@@ -259,10 +261,16 @@ function UpdatePosition()
 	if (board[shape.i][shape.j] == 1) {
 		score++;
 	}
-	
-    updateMonsterPositions()
-
 	board[shape.i][shape.j] = 2;
+
+
+	// Move the monsters every 0.7 seconds
+	if(Date.now() - monsterTimeout >= 700)
+	{
+    	updateMonsterPositions()
+		monsterTimeout = Date.now()
+	}
+
 	var currentTime = new Date();
 	time_elapsed = (currentTime - start_time) / 1000;
 	if (score >= 20 && time_elapsed <= 10) {
@@ -384,9 +392,11 @@ function setMonsterOnCell(i, j, monster)
         monster.i = i;
         monster.j = j;
     }	
-	else 
+	else // monster on cell with pacman!
+
+	{
         collision()
-		//  gameOver("d") // monster on cell with pacman!
+	}
 
     
 }
@@ -483,8 +493,13 @@ function predict_best_moves(pacman, monster){
 function gameOver(end_game_reason)
 {
 	if(end_game_reason == 'd') // died (monster eat the pacman)
-		return;
+	{
+		showAndHideDivs('gameover_screen')
+	}
 	else if(end_game_reason == 't') // time over
+	{
+		showAndHideDivs('gameover_screen')
+	}
 		return;
 }
 
@@ -492,15 +507,18 @@ function collision()
 {
     if (num_of_lives == 1)
     {
-        gameOver('d')
+		clearInterval(interval)
+		gameOver('d')
+		return;
     }
     else
     {
         num_of_lives--;
-        score = score - 10;
+        score = Math.max(0, score - 10);
     
         //Resets the monsters to the corners of the map
         let monster_positions = [[0,0], [9,9],[0,9],[9,0]]
+
         for(let num_monst = 0; num_monst < numOfMonsters; num_monst++)
         {
             //Update the cell where the monster were to be a passage or food
@@ -512,7 +530,6 @@ function collision()
             {
                 board[monster_list[num_monst].i][monster_list[num_monst].j] = 1;
             }
-
             board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] = 5;
             monster_list[num_monst].i = monster_positions[num_monst][0];
             monster_list[num_monst].j = monster_positions[num_monst][1];
@@ -536,4 +553,23 @@ function collision()
 
 
     }
+}
+
+
+function pauseResume()
+{
+	pauseCounter = pauseCounter + 1;
+	if(pauseCounter % 2 == 0)
+	{
+		//Resume
+		interval = setInterval(UpdatePosition, 130);
+		pauseAndResumeBtn.textContent = 'Pause';
+	}
+	else
+	{
+		//Pause
+		clearInterval(interval)
+		interval = setInterval(UpdatePosition, 10000000000000000);
+		pauseAndResumeBtn.textContent = 'Resume';
+	}
 }

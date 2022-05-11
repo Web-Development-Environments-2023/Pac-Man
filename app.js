@@ -18,6 +18,10 @@ var numOfBalls;
 var timeForGame;
 var last_pac_direction;
 var num_of_lives;
+var pauseCounter;
+var pauseAndResumeBtn;
+var monsterTimeout;
+
 
 
 
@@ -50,6 +54,7 @@ function showAndHideDivs(currentScreen)
 			$('#game_screen').hide();
 			$('#settings_screen').hide();
 			$('#about_screen').hide();
+			$('#gameover_screen').hide();
 			break;
 
 		case "register_screen": // register mode
@@ -59,6 +64,7 @@ function showAndHideDivs(currentScreen)
 			$('#game_screen').hide();
 			$('#settings_screen').hide();
 			$('#about_screen').hide();
+			$('#gameover_screen').hide();
 			break;
 
 		case "login_screen": // login mode
@@ -68,6 +74,7 @@ function showAndHideDivs(currentScreen)
 			$('#game_screen').hide();
 			$('#settings_screen').hide();
 			$('#about_screen').hide();
+			$('#gameover_screen').hide();
 			break;
 
 		case "setting_screen": // setting mode
@@ -77,6 +84,7 @@ function showAndHideDivs(currentScreen)
 			$('#register_screen').hide();
 			$('#game_screen').hide();
 			$('#about_screen').hide();
+			$('#gameover_screen').hide();
 			break;
 		
 		case "about_screen": // about mode
@@ -85,7 +93,18 @@ function showAndHideDivs(currentScreen)
 			$('#register_screen').hide();
 			$('#settings_screen').hide();
 			$('#game_screen').hide();
+			$('#gameover_screen').hide();
 			$('#about_screen').show();
+			break;
+
+		case "gameover_screen": // gameover mode`
+			$('#start_screen').hide();
+			$('#register_screen').hide();
+			$('#login_screen').hide();
+			$('#game_screen').hide();
+			$('#settings_screen').hide();
+			$('#about_screen').hide();
+			$('#gameover_screen').show();
 			break;
 
 		case "game_screen": // game mode
@@ -93,6 +112,8 @@ function showAndHideDivs(currentScreen)
 			$('#start_screen').hide();
 			$('#register_screen').hide();
 			$('#about_screen').hide();
+			$('#gameover_screen').hide();
+
 
 			$('#settings_screen').show();
 			$('#game_screen').show();
