@@ -1,5 +1,10 @@
 var context;
 var shape = new Object();
+var monster_1 = new Object();
+var monster_2 = new Object();
+var monster_3 = new Object();
+var monster_4  = new Object();
+var monster_list = [monster_1, monster_2, monster_3, monster_4];
 var board;
 var score;
 var pac_color;
