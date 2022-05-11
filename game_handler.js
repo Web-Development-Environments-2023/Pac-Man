@@ -8,6 +8,7 @@ function Start() {
 	board = new Array();
 	score = 0;
 	pac_color = "yellow";
+    num_of_lives = 5;
 	var cnt = 100;
 	var food_remain = numOfBalls;
 	var pacman_remain = 1;
@@ -94,7 +95,7 @@ function Start() {
 	interval = setInterval(UpdatePosition, 130);
     // update the monsters positions on the board
 	
-    interval_monsters = setInterval(updateMonsterPositions, 700)
+    // interval_monsters = setInterval(updateMonsterPositions, 700)
 }
 
 function findRandomEmptyCell(board) {
@@ -259,6 +260,7 @@ function UpdatePosition()
 		score++;
 	}
 	
+    updateMonsterPositions()
 
 	board[shape.i][shape.j] = 2;
 	var currentTime = new Date();
@@ -314,7 +316,6 @@ function updateMonsterPositions()
 			break;
 		case("1"):
             movement_1 = predict_best_moves(shape, monster_1)
-            console.log(monster_1.i)
 			updateMonsterPose(monster_1, movement_1, board[monster_1.i][monster_1.j] - 5)
 			break;
 	}
@@ -330,7 +331,6 @@ function updateMonsterPose(monster, movements, cellValue)
 			case 1:
 				if(is_valid_move(monster.i - 1, monster.j))
 				{
-                    console.log(cellValue)
 					board[monster.i][monster.j] = cellValue // set current cell value
 					setMonsterOnCell(monster.i - 1, monster.j, monster) // set new cell value
 					return;
@@ -372,23 +372,27 @@ function updateMonsterPose(monster, movements, cellValue)
 
 function setMonsterOnCell(i, j, monster)
 {
-	if(board[i][j] == 0) 
+	if(board[i][j] == 0)
+    {
 		board[i][j] = 5 // monster on empty cell
+        monster.i = i;
+        monster.j = j;
+    }
 	else if(board[i][j] == 1) 
-		board[i][j] = 6 // monster on cell with coin
+	{
+        board[i][j] = 6 // monster on cell with coin
+        monster.i = i;
+        monster.j = j;
+    }	
 	else 
-		 gameOver("d") // monster on cell with pacman!
+        collision()
+		//  gameOver("d") // monster on cell with pacman!
 
-    monster.i = i;
-    monster.j = j;
+    
 }
 
 function is_valid_move(i, j)
 {
-    console.log(board)
-    // console.log(board.length)
-    // console.log(board[0])
-    // console.log(board[0].length)
 	return ((i >= 0 || i < board.length) && (j >= 0 || j < board[0].length) && (board[i][j] == 0 || board[i][j] == 1 ||board[i][j] == 2))
 }
 
@@ -482,4 +486,54 @@ function gameOver(end_game_reason)
 		return;
 	else if(end_game_reason == 't') // time over
 		return;
+}
+
+function collision()
+{
+    if (num_of_lives == 1)
+    {
+        gameOver('d')
+    }
+    else
+    {
+        num_of_lives--;
+        score = score - 10;
+    
+        //Resets the monsters to the corners of the map
+        let monster_positions = [[0,0], [9,9],[0,9],[9,0]]
+        for(let num_monst = 0; num_monst < numOfMonsters; num_monst++)
+        {
+            //Update the cell where the monster were to be a passage or food
+            if(board[monster_list[num_monst].i][monster_list[num_monst].j] == 5)
+            {
+                board[monster_list[num_monst].i][monster_list[num_monst].j] = 0;
+            }
+            else
+            {
+                board[monster_list[num_monst].i][monster_list[num_monst].j] = 1;
+            }
+
+            board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] = 5;
+            monster_list[num_monst].i = monster_positions[num_monst][0];
+            monster_list[num_monst].j = monster_positions[num_monst][1];
+            
+        }
+
+        // Resets the pacman in a random location (midfield)
+        let rand_pacman_i;
+        let rand_pacman_j;
+        do{
+            rand_pacman_i = Math.floor((Math.random() * 4) + 3)
+            rand_pacman_j = Math.floor((Math.random() * 4) + 3)
+
+        }
+        while(!is_valid_move(rand_pacman_i, rand_pacman_j))
+        
+        board[shape.i][shape.j] = 0;
+        shape.i = rand_pacman_i;
+        shape.j = rand_pacman_j;
+        board[rand_pacman_i][rand_pacman_j] = 2;
+
+
+    }
 }

@@ -17,6 +17,7 @@ var numOfMonsters;
 var numOfBalls;
 var timeForGame;
 var last_pac_direction;
+var num_of_lives;
 
 
 

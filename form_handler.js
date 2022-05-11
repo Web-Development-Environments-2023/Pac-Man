@@ -171,15 +171,10 @@ function checkEmail(email) {
 
   function randomGameSettings(){
 	// setting the numbers of balls
-	// var randomNumOfBalls = Math.floor((Math.random() * 40) + 50);
 	$('#numofballs').val(Math.floor((Math.random() * 41) + 50))
-
 	// setting the game time
-	// var randomNumOfBalls = Math.floor((Math.random() * 40) + 60);
 	$('#gametime').val(Math.floor((Math.random() * 41) + 60))
-
 	// setting the numbers of monsters
-	// var randomNumOfBalls = Math.floor((Math.random() * 3) + 1);
 	$('#numofmonsters').val(Math.floor((Math.random() * 4) + 1))
   }
 
