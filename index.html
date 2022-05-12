@@ -11,7 +11,6 @@
 	</head>
 
 	<body id="body">
-		
 
 		<div id="menu">
 			<div class="top">
@@ -53,7 +52,7 @@
 			<div id="gameover_text">
 
 			</div>
-				<button id="tryagain" type="button", onclick="showAndHideDivs('game_screen')">Try Again</button>
+				<button id="tryagain" type="button", onclick="showAndHideDivs('game_screen'); stopGameOverMusic();">Try Again</button>
 		</div>
 
 		<div id="gamewinner_screen"><img src="https://s3.envato.com/files/a53e1f2e-4536-4185-bd47-575c9426e29d/inline_image_preview.jpg">
@@ -63,7 +62,7 @@
 			</div>
 			You have gained 50 Points!
 			<br><br><br>
-				<button id="tryagain" type="button", onclick="showAndHideDivs('game_screen')">Play Again</button>
+				<button id="tryagain" type="button", onclick="showAndHideDivs('game_screen'); stopWinnerMusic();">Play Again</button>
 		</div>
 
 
@@ -81,6 +80,7 @@
 		</div>
 
 		<div id="about_screen">
+
 			<h2>About the app</h2>
 			Pac-Man is an action maze chase video game;<br>
 			the player controls the eponymous character through an enclosed maze.
@@ -94,7 +94,11 @@
 		<table id="settingsAndGame" border="0">
 			<td>
 				<div id="settings_screen">
-					<h2>Settings</h2>
+					<div id="player_name">
+						
+					</div>
+
+					<h1>Settings</h1>
 						<form action='javascript:defaultKeySettings()'>
 							<h3>Insert your desired key control</h3>
 							
@@ -118,7 +122,9 @@
 										<td><input id="moveleft" type="text"  onkeydown="return myKeyPress(event, 'left')" /></td>
 									</tr>
 								</table>
+								<br>
 								<button onclick="defaultKeySettings()"> Default key settings</button>
+								<br><br><br>
 		
 		
 								<table>
@@ -135,12 +141,18 @@
 										<td><input id="numofmonsters" type="text"placeholder="1 - 4"/></td>
 									</tr>
 								</table>
+								<br>
 								<button onclick="randomGameSettings()">Random game settings</button>
 								<br><br><br>
-								
-								<button onclick="check_settings_form()">Start Game</button>
-								<br><br>
+								<div style="text-align:center;">
+									<button onclick="check_settings_form()">Start Game</button>
+								</div>
+								<br><br><br><br><br><br>
 						</form>
+
+						<audio id="audio" autoplay ="true" loop>
+							<source src="backgroundMusic.mp3"/>
+						</audio>
 				</div>
 			</td>
 
@@ -173,7 +185,7 @@
 						<br>
 						<table>
 							<td>
-								<label for="cars">Mode:</label>
+								<label for="modes">Mode:</label>
 								<select onChange="javascript:updateMode();" name="mode" id="mode">
 								  <option value="easy">Easy</option>
 								  <option value="medium">Medium</option>

@@ -10,6 +10,7 @@ function Start() {
 	pauseAndResumeBtn = document.getElementById('pauseResume');
 	pauseAndResumeBtn.textContent = 'Pause';
 	monsterMovementMs = 700; // defualt mode is Easy
+	startMusic() // start music
 	pac_color = "yellow";
     num_of_lives = 5;
 	var cnt = 100;
@@ -280,6 +281,8 @@ function UpdatePosition()
 	}
 	if (score == 50) {
 		window.clearInterval(interval);
+		winnerMusic.play(); // Play winner Music
+		$("#mode").val($("#mode option:first").val()); // Set the game mode - easy mode
 		showAndHideDivs('gamewinner_screen')
 	}
 	if(time_elapsed >= timeForGame)
@@ -498,13 +501,16 @@ function gameOver(end_game_reason)
 	{
 		$('#gameover_text').html("You have lost the game!" + '<br>' + "You have been eaten by the monsters five times.." + '<br>'+ '<br>'+ '<br>')
 		showAndHideDivs('gameover_screen')
+
 	}
 	else if(end_game_reason == 't') // time over
 	{
 		$('#gameover_text').html("You have lost the game!" + '<br>' + "The time is over.." + '<br>'+ '<br>'+ '<br>')
 		showAndHideDivs('gameover_screen')
 	}
-		return;
+	$("#mode").val($("#mode option:first").val()); // Set the game mode - easy mode
+	gameOverMusic.play(); // play GameOver music
+	return;
 }
 
 function collision()
@@ -601,5 +607,27 @@ function setTableBorder(num)
 	gameTable.attr('border', num);
 }
 
+function updateLogeedUser()
+{
+	$('#player_name').html('<h2 style="color: #3399ff;">' + "Player Name: " + connectedPlayer + '</h2>' + '<br>')
+}
+
+function startMusic()
+{
+	gameMusic.loop = true;
+	gameMusic.play();
+}
+
+function stopWinnerMusic()
+{
+	winnerMusic.pause();
+	winnerMusic.currentTime = 0;	
+}
+
+function stopGameOverMusic()
+{
+	gameOverMusic.pause();
+	gameOverMusic.currentTime = 0;	
+}
 
 // add the functiounality that after choose a mode................

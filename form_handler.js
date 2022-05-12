@@ -12,6 +12,7 @@ function check_login_form()
 		if(users[username] == password)
 		{	
 			window.alert('login successfully')
+			connectedPlayer = username
 			showAndHideDivs("setting_screen")
 		}
 		else

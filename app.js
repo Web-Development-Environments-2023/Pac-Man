@@ -4,6 +4,9 @@ var monster_1 = new Object();
 var monster_2 = new Object();
 var monster_3 = new Object();
 var monster_4  = new Object();
+var gameMusic = new Audio('/music/backgroundMusic.mp3');
+var winnerMusic = new Audio('/music/winnerMusic.mp3');
+var gameOverMusic = new Audio('/music/gameoverMusic.mp3');
 var monster_list = [monster_1, monster_2, monster_3, monster_4];
 var board;
 var score;
@@ -22,7 +25,7 @@ var pauseCounter;
 var pauseAndResumeBtn;
 var monsterTimeout;
 var monsterMovementMs;
-
+var connectedPlayer;
 
 
 
@@ -57,6 +60,7 @@ function showAndHideDivs(currentScreen)
 			$('#about_screen').hide();
 			$('#gameover_screen').hide();
 			$('#gamewinner_screen').hide();
+			$('#audio').hide();
 			break;
 
 		case "register_screen": // register mode
@@ -68,6 +72,7 @@ function showAndHideDivs(currentScreen)
 			$('#about_screen').hide();
 			$('#gameover_screen').hide();
 			$('#gamewinner_screen').hide();
+			$('#audio').hide();
 			break;
 
 		case "login_screen": // login mode
@@ -79,6 +84,7 @@ function showAndHideDivs(currentScreen)
 			$('#about_screen').hide();
 			$('#gameover_screen').hide();
 			$('#gamewinner_screen').hide();
+			$('#audio').hide();
 			break;
 
 		case "setting_screen": // setting mode
@@ -90,6 +96,7 @@ function showAndHideDivs(currentScreen)
 			$('#about_screen').hide();
 			$('#gameover_screen').hide();
 			$('#gamewinner_screen').hide();
+			$('#audio').hide();
 			break;
 		
 		case "about_screen": // about mode
@@ -101,6 +108,7 @@ function showAndHideDivs(currentScreen)
 			$('#gameover_screen').hide();
 			$('#about_screen').show();
 			$('#gamewinner_screen').hide();
+			$('#audio').hide();
 			break;
 
 		case "gameover_screen": // gameover mode
@@ -112,6 +120,8 @@ function showAndHideDivs(currentScreen)
 			$('#about_screen').hide();
 			$('#gameover_screen').show();
 			$('#gamewinner_screen').hide();
+			$('#audio').hide();
+
 			break;
 
 		case "gamewinner_screen": // gamewinner mode
@@ -122,6 +132,7 @@ function showAndHideDivs(currentScreen)
 			$('#settings_screen').hide();
 			$('#about_screen').hide();
 			$('#gameover_screen').hide();
+			$('#audio').hide();
 			$('#gamewinner_screen').show();
 			break;
 
@@ -133,15 +144,20 @@ function showAndHideDivs(currentScreen)
 			$('#gameover_screen').hide();
 			$('#gamewinner_screen').hide();
 
-
+			$('#audio').show();
 			$('#settings_screen').show();
 			$('#game_screen').show();
+			updateLogeedUser()
 			context = canvas.getContext("2d");
 			Start();
 			break;
 	}
 	if(currentScreen != "game_screen")
+	{
 		setTableBorder('0')
+		gameMusic.pause();
+		gameMusic.currentTime = 0;	
+	}
 }
 
 
