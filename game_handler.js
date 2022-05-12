@@ -496,10 +496,12 @@ function gameOver(end_game_reason)
 {
 	if(end_game_reason == 'd') // died (monster eat the pacman)
 	{
+		$('#gameover_text').html("You have lost the game!" + '<br>' + "You have been eaten by the monsters five times.." + '<br>'+ '<br>'+ '<br>')
 		showAndHideDivs('gameover_screen')
 	}
 	else if(end_game_reason == 't') // time over
 	{
+		$('#gameover_text').html("You have lost the game!" + '<br>' + "The time is over.." + '<br>'+ '<br>'+ '<br>')
 		showAndHideDivs('gameover_screen')
 	}
 		return;
