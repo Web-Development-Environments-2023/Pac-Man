@@ -30,7 +30,7 @@
 
 
   .top {
-    background-color: rgb(194, 50, 50);
+    background-color: rgb(47, 181, 201);
     overflow: hidden;
     }
     
@@ -70,7 +70,7 @@
       background-size: 100% 100%;
     }
 
-    #settings_screen {
+    #settingsAndGame {
       background-image: url('https://media.istockphoto.com/vectors/abstract-blue-wave-background-vector-id1223914421?k=20&m=1223914421&s=612x612&w=0&h=pdDbLnTMYY-sC4_GfpWePXo3ePEGPENQSeBoPh0E1xc=');
       background-repeat: no-repeat;
       background-attachment: fixed;

@@ -23,7 +23,7 @@
 		</div>
 
 
-		<div id="start_screen"><img src="https://www.pngitem.com/pimgs/m/112-1122868_pacman-logo-png-pac-man-logo-png-transparent.png">
+		<div id="start_screen"><img src="https://thelogicalindian.com/h-upload/2021/03/17/1600x960_192284-thelogicalindianfb1000x600-1.jpg">
 			<br><br><br>
 				<button id="Register_button" type="button", onclick="Register()">Register</button>
 				<button id="Login_button" type="button", onclick="Login()">Login</button>
@@ -78,93 +78,107 @@
 		</div>
 
 
-		<div id="settings_screen">
-			<h2>Settings</h2>
-				<form action='javascript:defaultKeySettings()'>
-					<h3>Insert your desired key control</h3>
-					
-					<div>
+		<table id="settingsAndGame" border="0">
+			<td>
+				<div id="settings_screen">
+					<h2>Settings</h2>
+						<form action='javascript:defaultKeySettings()'>
+							<h3>Insert your desired key control</h3>
+							
+							<div>
+		
+								<table>
+									<tr>
+										<td> Move Up:</td>
+										<td><input id="moveup" type="text" onkeydown="return myKeyPress(event, 'up')"/></td>
+									</tr>
+									<tr>
+										<td>Move Down:</td>
+										<td><input id="movedown" type="text"  onkeydown="return myKeyPress(event, 'down')"/></td>
+									</tr>
+									<tr>
+										<td>Move Right:</td>
+										<td><input id="moveright" type="text"  onkeydown="return myKeyPress(event, 'right')" /></td>
+									</tr>
+									<tr>
+										<td>Move Left:</td>
+										<td><input id="moveleft" type="text"  onkeydown="return myKeyPress(event, 'left')" /></td>
+									</tr>
+								</table>
+								<button onclick="defaultKeySettings()"> Default key settings</button>
+		
+		
+								<table>
+									<tr>
+										<td>Number of balls:</td>
+										<td><input id="numofballs" type="text"placeholder="50 - 90"/></td>
+									</tr>
+									<tr>
+										<td>Game time (in seconds):</td>
+										<td><input id="gametime" type="text"placeholder="60+"/></td>
+									</tr>
+									<tr>
+										<td>Number of monsters:</td>
+										<td><input id="numofmonsters" type="text"placeholder="1 - 4"/></td>
+									</tr>
+								</table>
+								<button onclick="randomGameSettings()"> Random game settings</button>
+								<br><br><br>
+								
+								<button onclick="check_settings_form()"> Start Game!</button>
+								<br><br>
+						</form>
+				</div>
+			</td>
 
-						<table>
-							<tr>
-								<td> Move Up:</td>
-								<td><input id="moveup" type="text" onkeydown="return myKeyPress(event, 'up')"/></td>
-							</tr>
-							<tr>
-								<td>Move Down:</td>
-								<td><input id="movedown" type="text"  onkeydown="return myKeyPress(event, 'down')"/></td>
-							</tr>
-							<tr>
-								<td>Move Right:</td>
-								<td><input id="moveright" type="text"  onkeydown="return myKeyPress(event, 'right')" /></td>
-							</tr>
-							<tr>
-								<td>Move Left:</td>
-								<td><input id="moveleft" type="text"  onkeydown="return myKeyPress(event, 'left')" /></td>
-							</tr>
-						</table>
-						<button onclick="defaultKeySettings()"> Default key settings</button>
-
-
-						<table>
-							<tr>
-								<td>Number of balls:</td>
-								<td><input id="numofballs" type="text"placeholder="50 - 90"/></td>
-							</tr>
-							<tr>
-								<td>Game time (in seconds):</td>
-								<td><input id="gametime" type="text"placeholder="60+"/></td>
-							</tr>
-							<tr>
-								<td>Number of monsters:</td>
-								<td><input id="numofmonsters" type="text"placeholder="1 - 4"/></td>
-							</tr>
-						</table>
-						<button onclick="randomGameSettings()"> Random game settings</button>
-						<br><br><br>
-						
-						<button onclick="check_settings_form()"> Start Game!</button>
-						<br><br>
-				</form>
-		</div>
-
-
-		  <div id="game_screen">
-			<table>
-				<td>
-					<div id="score">
-						<label for="lblScore">SCORE:</label>
-						<input id="lblScore" type="text" />
+			<td>
+				<div id="game_screen">
+					<table>
+						<td>
+							<div id="score">
+								<label for="lblScore">SCORE:</label>
+								<input id="lblScore" type="text" />
+								<br>
+							</div>
+						</td>
+						<td>
+							<div id="time">
+								<label for="lblTime">TIME:</label>
+								<input id="lblTime" type="text" />
+							</div>
+						</td>
+						<td>
+							<div id="time">
+								<label for="lblLive">Lives:</label>
+								<input id="lblLive" type="text" />
+							</div>
+						</td>
+					</table>
+					<div id="game">
+						<!-- <img src="https://icon2.cleanpng.com/20180203/ftq/kisspng-pac-man-world-3-ghosts-clip-art-pac-man-ghost-png-transparent-image-5a7561ae052b06.0298581815176421580212.jpg" alt=""> -->
+						<canvas id="canvas" height="600" width="600"></canvas>
 						<br>
+						<table>
+							<td>
+								<label for="cars">Mode:</label>
+								<select onChange="javascript:updateMode();" name="mode" id="mode">
+								  <option value="easy">Easy</option>
+								  <option value="medium">Medium</option>
+								  <option value="hard">Hard</option>
+								</select>
+							</td>
+							<td>
+								<button id="pauseResume" onclick="pauseResume()"> Pause</button>
+							</td>
+							<td>
+								<button onclick="check_settings_form()"> Restart</button>
+							</td>
+						</table>
 					</div>
-				</td>
-				<td>
-					<div id="time">
-						<label for="lblTime">TIME:</label>
-						<input id="lblTime" type="text" />
-					</div>
-				</td>
-				<td>
-					<div id="time">
-						<label for="lblLive">Lives:</label>
-						<input id="lblLive" type="text" />
-					</div>
-				</td>
-			</table>
-			<div id="game">
-				<!-- <img src="https://icon2.cleanpng.com/20180203/ftq/kisspng-pac-man-world-3-ghosts-clip-art-pac-man-ghost-png-transparent-image-5a7561ae052b06.0298581815176421580212.jpg" alt=""> -->
-				<canvas id="canvas" height="600" width="600"></canvas>
-				<br>
-				<table>
-					<td>
-						<button onclick="check_settings_form()"> Restart</button>
-					</td>
-					<td>
-						<button id="pauseResume" onclick="pauseResume()"> Pause</button>
-					</td>
-				</table>
-			</div>
-		  </div>
+				  </div>
+			</td>
+
+		</table>
 
 	</body>
 </html>

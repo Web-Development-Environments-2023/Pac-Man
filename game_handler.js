@@ -9,11 +9,13 @@ function Start() {
 	pauseCounter = 0;
 	pauseAndResumeBtn = document.getElementById('pauseResume');
 	pauseAndResumeBtn.textContent = 'Pause';
+	monsterMovementMs = 700; // defualt mode is Easy
 	pac_color = "yellow";
     num_of_lives = 5;
 	var cnt = 100;
 	var food_remain = numOfBalls;
 	var pacman_remain = 1;
+	setTableBorder('1') // set the table border
 	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
 		board[i] = new Array();
@@ -264,8 +266,8 @@ function UpdatePosition()
 	board[shape.i][shape.j] = 2;
 
 
-	// Move the monsters every 0.7 seconds
-	if(Date.now() - monsterTimeout >= 700)
+	// Move the monsters every "monsterMovementMs" seconds
+	if(Date.now() - monsterTimeout >= monsterMovementMs)
 	{
     	updateMonsterPositions()
 		monsterTimeout = Date.now()
@@ -573,3 +575,29 @@ function pauseResume()
 		pauseAndResumeBtn.textContent = 'Resume';
 	}
 }
+
+function updateMode()
+{
+	let selectedMode = $('#mode').val();
+	switch(selectedMode)
+	{
+		case "easy":
+			monsterMovementMs = 700;
+			break;
+		case "medium":
+			monsterMovementMs = 500;
+			break;
+		case "hard":
+			monsterMovementMs = 300;
+			break;
+	}
+}
+
+function setTableBorder(num)
+{
+	let gameTable = $("#settingsAndGame");
+	gameTable.attr('border', num);
+}
+
+
+// add the functiounality that after choose a mode................

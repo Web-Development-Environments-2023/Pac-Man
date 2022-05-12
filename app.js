@@ -21,6 +21,7 @@ var num_of_lives;
 var pauseCounter;
 var pauseAndResumeBtn;
 var monsterTimeout;
+var monsterMovementMs;
 
 
 
@@ -121,6 +122,8 @@ function showAndHideDivs(currentScreen)
 			Start();
 			break;
 	}
+	if(currentScreen != "game_screen")
+		setTableBorder('0')
 }
 
 
