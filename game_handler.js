@@ -280,7 +280,7 @@ function UpdatePosition()
 	}
 	if (score == 50) {
 		window.clearInterval(interval);
-		window.alert("Game completed");
+		showAndHideDivs('gamewinner_screen')
 	}
 	if(time_elapsed >= timeForGame)
 	{
@@ -587,10 +587,10 @@ function updateMode()
 			monsterMovementMs = 700;
 			break;
 		case "medium":
-			monsterMovementMs = 500;
+			monsterMovementMs = 450;
 			break;
 		case "hard":
-			monsterMovementMs = 300;
+			monsterMovementMs = 200;
 			break;
 	}
 }

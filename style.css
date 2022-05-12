@@ -28,6 +28,21 @@
     transition:0.2s;
   }
 
+  #gamewinner_screen{  
+    text-align:center;
+    cursor:pointer;
+    /* display: flex; */
+    
+  }
+
+  #gameover_screen img{
+    /* display:; */
+    width:80vw;
+    max-width:800px;
+    height:auto;
+    transition:0.2s;
+  }
+
 
   .top {
     background-color: rgb(47, 181, 201);
@@ -56,28 +71,18 @@
     color: white;
     }
 
-    #register_screen {
+    #body {
       background-image: url('https://media.istockphoto.com/vectors/abstract-blue-wave-background-vector-id1223914421?k=20&m=1223914421&s=612x612&w=0&h=pdDbLnTMYY-sC4_GfpWePXo3ePEGPENQSeBoPh0E1xc=');
       background-repeat: no-repeat;
       background-attachment: fixed;
       background-size: 100% 100%;
     }
 
-    #login_screen {
-      background-image: url('https://media.istockphoto.com/vectors/abstract-blue-wave-background-vector-id1223914421?k=20&m=1223914421&s=612x612&w=0&h=pdDbLnTMYY-sC4_GfpWePXo3ePEGPENQSeBoPh0E1xc=');
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: 100% 100%;
-    }
 
     #settingsAndGame {
-      background-image: url('https://media.istockphoto.com/vectors/abstract-blue-wave-background-vector-id1223914421?k=20&m=1223914421&s=612x612&w=0&h=pdDbLnTMYY-sC4_GfpWePXo3ePEGPENQSeBoPh0E1xc=');
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: 100% 100%;
+      margin-left: auto;
+      margin-right: auto;
     }
-
-
     
   /* }
   #start_screen_img a{
