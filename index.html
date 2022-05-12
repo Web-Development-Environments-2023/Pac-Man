@@ -144,6 +144,15 @@
 								<br>
 								<button onclick="randomGameSettings()">Random game settings</button>
 								<br><br><br>
+								
+								<label for="modes">Mode:</label>
+								<select onChange="javascript:updateMode();" name="mode" id="mode">
+									<option value="easy">Easy</option>
+									<option value="medium">Medium</option>
+									<option value="hard">Hard</option>
+								</select>
+								
+								<br><br><br>
 								<div style="text-align:center;">
 									<button onclick="check_settings_form()">Start Game</button>
 								</div>
@@ -183,15 +192,7 @@
 						<!-- <img src="https://icon2.cleanpng.com/20180203/ftq/kisspng-pac-man-world-3-ghosts-clip-art-pac-man-ghost-png-transparent-image-5a7561ae052b06.0298581815176421580212.jpg" alt=""> -->
 						<canvas id="canvas" height="600" width="600"></canvas>
 						<br>
-						<table>
-							<td>
-								<label for="modes">Mode:</label>
-								<select onChange="javascript:updateMode();" name="mode" id="mode">
-								  <option value="easy">Easy</option>
-								  <option value="medium">Medium</option>
-								  <option value="hard">Hard</option>
-								</select>
-							</td>
+						<table id="ingame_buttons">
 							<td>
 								<button id="pauseResume" onclick="pauseResume()"> Pause</button>
 							</td>

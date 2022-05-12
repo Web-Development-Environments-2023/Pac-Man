@@ -9,13 +9,13 @@ function Start() {
 	pauseCounter = 0;
 	pauseAndResumeBtn = document.getElementById('pauseResume');
 	pauseAndResumeBtn.textContent = 'Pause';
-	monsterMovementMs = 700; // defualt mode is Easy
-	startMusic() // start music
 	pac_color = "yellow";
     num_of_lives = 5;
 	var cnt = 100;
 	var food_remain = numOfBalls;
 	var pacman_remain = 1;
+	updateMode() // defualt mode is Easy
+	startMusic() // start music
 	setTableBorder('1') // set the table border
 	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
@@ -282,7 +282,6 @@ function UpdatePosition()
 	if (score == 50) {
 		window.clearInterval(interval);
 		winnerMusic.play(); // Play winner Music
-		$("#mode").val($("#mode option:first").val()); // Set the game mode - easy mode
 		showAndHideDivs('gamewinner_screen')
 	}
 	if(time_elapsed >= timeForGame)
@@ -508,7 +507,6 @@ function gameOver(end_game_reason)
 		$('#gameover_text').html("You have lost the game!" + '<br>' + "The time is over.." + '<br>'+ '<br>'+ '<br>')
 		showAndHideDivs('gameover_screen')
 	}
-	$("#mode").val($("#mode option:first").val()); // Set the game mode - easy mode
 	gameOverMusic.play(); // play GameOver music
 	return;
 }
@@ -590,13 +588,13 @@ function updateMode()
 	switch(selectedMode)
 	{
 		case "easy":
-			monsterMovementMs = 700;
+			monsterMovementMs = 650;
 			break;
 		case "medium":
-			monsterMovementMs = 450;
+			monsterMovementMs = 400;
 			break;
 		case "hard":
-			monsterMovementMs = 200;
+			monsterMovementMs = 150;
 			break;
 	}
 }
@@ -629,5 +627,3 @@ function stopGameOverMusic()
 	gameOverMusic.pause();
 	gameOverMusic.currentTime = 0;	
 }
-
-// add the functiounality that after choose a mode................
