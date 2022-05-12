@@ -120,9 +120,16 @@ function checkEmail(email) {
 	if(window.event)                
 		keynum = e.keyCode;
         if (keynum == 9){
-            return
+            return;
         }
 	var wantedKey
+	if(inGame)
+	{
+		if(keynumExist(keynum))
+		{
+			return;
+		}
+	}
 
 	switch(key)
 	{
@@ -158,6 +165,14 @@ function checkEmail(email) {
 	}
 	else
 		wantedKey.val('')
+  }
+
+  function keynumExist(keynum)
+  {
+	let values = (Object.values(controls));
+	if(values.includes(keynum))
+		return true
+	return false 
   }
 
   function defaultKeySettings()
@@ -218,5 +233,4 @@ function checkEmail(email) {
 	}
 
 	showAndHideDivs("game_screen")
-	
   }

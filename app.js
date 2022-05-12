@@ -26,6 +26,7 @@ var pauseAndResumeBtn;
 var monsterTimeout;
 var monsterMovementMs;
 var connectedPlayer;
+var inGame;
 
 
 
@@ -154,10 +155,12 @@ function showAndHideDivs(currentScreen)
 	}
 	if(currentScreen != "game_screen")
 	{
+		clearInterval(interval)
 		setTableBorder('0')
 		gameMusic.pause();
 		gameMusic.currentTime = 0;	
+		inGame = false;
 	}
 }
 
-
+// game controls not changing?

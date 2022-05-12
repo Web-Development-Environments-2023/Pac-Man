@@ -14,6 +14,7 @@ function Start() {
 	var cnt = 100;
 	var food_remain = numOfBalls;
 	var pacman_remain = 1;
+	inGame = true; // inGame
 	updateMode() // defualt mode is Easy
 	startMusic() // start music
 	setTableBorder('1') // set the table border
@@ -626,4 +627,9 @@ function stopGameOverMusic()
 {
 	gameOverMusic.pause();
 	gameOverMusic.currentTime = 0;	
+}
+
+function gg()
+{
+	return;
 }
