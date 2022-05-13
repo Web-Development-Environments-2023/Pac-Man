@@ -27,6 +27,7 @@ var monsterTimeout;
 var monsterMovementMs;
 var connectedPlayer;
 var inGame;
+var lifeFlag;
 
 
 

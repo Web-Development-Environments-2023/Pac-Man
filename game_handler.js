@@ -2,7 +2,8 @@ base_image = new Image();
 base_image.src = "https://icon2.cleanpng.com/20180203/ftq/kisspng-pac-man-world-3-ghosts-clip-art-pac-man-ghost-png-transparent-image-5a7561ae052b06.0298581815176421580212.jpg"
 base_image2 = new Image();
 base_image2.src = "https://fastdecals.com/shop/images/detailed/25/pacman-clyde-decal-sticker-09_videogames.jpg"
-
+base_image3 = new Image();
+base_image3.src = "https://www.501commons.org/donate/Heart.jpg/image_preview"
 
 
 
@@ -18,6 +19,7 @@ function Start() {
 	var cnt = 100;
 	var food_remain = numOfBalls;
 	var pacman_remain = 1;
+	lifeFlag = false;
 	inGame = true; // inGame
 	updateMode() // defualt mode is Easy
 	startMusic() // start music
@@ -178,6 +180,13 @@ function Draw() {
 					context.drawImage(base_image2, center.x-30, center.y-30, "60", "60")
 				}
             }
+			else if (board[i][j] == 7)
+			{
+				
+				base_image3.width = "60"
+				context.drawImage(base_image3, center.x-30, center.y-30, "60", "60")
+				
+			}
 		}
 	}
 	monsterCounter = 0;
@@ -279,6 +288,11 @@ function UpdatePosition()
 	if (board[shape.i][shape.j] == 1) {
 		score++;
 	}
+	else if(board[shape.i][shape.j] == 7)
+	{
+		num_of_lives += 1
+		board[shape.i][shape.j] = 0
+	}
 	board[shape.i][shape.j] = 2;
 
 
@@ -323,9 +337,9 @@ function updateMonsterPositions()
 			movement_3 = predict_best_moves(shape, monster_3)
 			movement_4 = predict_best_moves(shape, monster_4)
 			updateMonsterPose(monster_1, movement_1, board[monster_1.i][monster_1.j] - 5, false) // the diffrence between passage with/without monster on it and coin with/without monster on it is 5 
-			updateMonsterPose(monster_2, movement_2, board[monster_2.i][monster_2.j] - 5, true) // for example, if i had 6 (coin with monster on it) than i will have 1 at the end (only coin)
+			updateMonsterPose(monster_2, movement_2, board[monster_2.i][monster_2.j] - 5, false) // for example, if i had 6 (coin with monster on it) than i will have 1 at the end (only coin)
 			updateMonsterPose(monster_3, movement_3, board[monster_3.i][monster_3.j] - 5, false)
-			updateMonsterPose(monster_4, movement_4, board[monster_4.i][monster_4.j] - 5, false)
+			updateMonsterPose(monster_4, movement_4, board[monster_4.i][monster_4.j] - 5, true)
 			break;
 		case("3"):
             movement_1 = predict_best_moves(shape, monster_1)
@@ -515,7 +529,6 @@ function gameOver(end_game_reason)
 	{
 		$('#gameover_text').html("You have lost the game!" + '<br>' + "You have been eaten by the monsters five times.." + '<br>'+ '<br>'+ '<br>')
 		showAndHideDivs('gameover_screen')
-
 	}
 	else if(end_game_reason == 't') // time over
 	{
@@ -528,10 +541,17 @@ function gameOver(end_game_reason)
 
 function collision(isSpaciel)
 {
+
 	num_of_lives--;
 	score = Math.max(0, score - 10);
 
-    if (num_of_lives == 0)
+	if(isSpaciel) // check if it's the spaciel monster
+	{
+		num_of_lives--;
+		score = Math.max(0, score - 10);
+	}
+
+	if (num_of_lives <= 0)
     {
 		clearInterval(interval)
 		gameOver('d')
@@ -539,17 +559,12 @@ function collision(isSpaciel)
     }
     else
     {
-
-		if(isSpaciel) // check if it's the spaciel monster
+		if((num_of_lives == 1) && (!lifeFlag)) // check if we need to add a bonus live
 		{
-			if (num_of_lives == 1)
-			{
-				clearInterval(interval)
-				gameOver('d')
-				return;
-			}
-			num_of_lives--;
-			score = Math.max(0, score - 10);
+			let indexArr = [[2, 2], [8, 8], [2, 8], [8, 2]];
+			let randNum = Math.floor((Math.random() * 4) + 0)
+			lifeFlag = true;
+			board[indexArr[randNum][0]][indexArr[randNum][1]] = 7;
 		}
     
         //Resets the monsters to the corners of the map
@@ -654,9 +669,4 @@ function stopGameOverMusic()
 {
 	gameOverMusic.pause();
 	gameOverMusic.currentTime = 0;	
-}
-
-function gg()
-{
-	return;
 }
