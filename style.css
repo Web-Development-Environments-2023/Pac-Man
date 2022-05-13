@@ -41,6 +41,7 @@
   
   /* Change the color of links on hover */
   .top h3:hover {
+  cursor: pointer;
   background-color: rgb(109, 200, 221);
   color: rgb(14, 14, 15);
   }
@@ -50,6 +51,13 @@
   background-color: #b1b2bd;
   color: white;
   }
+
+  .buttons:hover {
+    cursor: pointer;
+    background-color: rgb(109, 200, 221);
+    color: rgb(14, 14, 15);
+    }
+
 
   #body {
     background-image: url('https://media.istockphoto.com/vectors/abstract-blue-wave-background-vector-id1223914421?k=20&m=1223914421&s=612x612&w=0&h=pdDbLnTMYY-sC4_GfpWePXo3ePEGPENQSeBoPh0E1xc=');

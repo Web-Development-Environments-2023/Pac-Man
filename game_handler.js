@@ -30,7 +30,7 @@ function Start() {
 	pauseAndResumeBtn.textContent = 'Pause';
 	pac_color = "yellow";
     num_of_lives = 5;
-	var cnt = 100;
+	var cnt = 100; 
 	var food_remain = numOfBalls;
 	var pacman_remain = 1;
 	lifeFlag = false;
@@ -376,7 +376,8 @@ function UpdatePosition()
 	if (score >= 20 && time_elapsed <= 10) {
 		pac_color = "green";
 	}
-	if (score >= 100) {
+	if (score >= 10000) ///////////////////////////////////////////////////////
+	{
 		window.clearInterval(interval);
 		winnerMusic.play(); // Play winner Music
 		showAndHideDivs('gamewinner_screen')
@@ -391,27 +392,27 @@ function UpdatePosition()
 	}
 }
 
-// function updateSpecialFoodPosition(){
-// 	let curr_i = special_food.i
-// 	let curr_j = special_food.j
-// 	let random_step = Math.floor((Math.random() * 4) + 0)
-// 	switch(random_step)
-// 	{
-// 		case ('0'):
-// 			if (is_valid_move(curr_i+1, curr_j))
-// 			{
-// 				special_food.i = curr_i + 1
-// 				board
-// 			}
+function updateSpecialFoodPosition(){
+	let curr_i = special_food.i
+	let curr_j = special_food.j
+	let random_step = Math.floor((Math.random() * 4) + 0)
+	switch(random_step)
+	{
+		case ('0'):
+			if (is_valid_move(curr_i+1, curr_j))
+			{
+				special_food.i = curr_i + 1
+				board
+			}
 
-// 		case ('1'):
+		case ('1'):
 
-// 		case ('2'):
+		case ('2'):
 
-// 		case ('3'):
+		case ('3'):
 
-// 	}
-// }
+	}
+}
 
 function updateMonsterPositions()
 {
