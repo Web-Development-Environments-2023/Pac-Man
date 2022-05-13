@@ -232,5 +232,8 @@ function checkEmail(email) {
 		return
 	}
 
+	update_5_point_food();
+	update_15_point_food();
+	update_25_point_food();
 	showAndHideDivs("game_screen")
   }

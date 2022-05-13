@@ -1,11 +1,25 @@
-base_image = new Image();
-base_image.src = "https://icon2.cleanpng.com/20180203/ftq/kisspng-pac-man-world-3-ghosts-clip-art-pac-man-ghost-png-transparent-image-5a7561ae052b06.0298581815176421580212.jpg"
-base_image2 = new Image();
-base_image2.src = "https://fastdecals.com/shop/images/detailed/25/pacman-clyde-decal-sticker-09_videogames.jpg"
-base_image3 = new Image();
-base_image3.src = "https://www.501commons.org/donate/Heart.jpg/image_preview"
+let red_monster = new Image();
+red_monster.src = "https://png2.cleanpng.com/sh/950efaa866f9473cac4b2f4cf9846796/L0KzQYm3VMA3N6V8iZH0aYP2gLBuTgBia15yedC2Z3jyg8X6TgBia15yedC2NXHmSIHphcdmOGc4Tqk3MEK5QYm5VcAyPWM4SKcENki6SYKCUb5xdpg=/kisspng-pac-man-ghosts-pac-man-5ac80be7e06367.0261825015230596879191.png"
+let pink_monster = new Image();
+pink_monster.src = "https://png2.cleanpng.com/sh/9a8e3a15ea191ee6827115384f4e66d1/L0KzQYm3U8E4N6FmiZH0aYP2gLBuTgBia15yedC2YXT5dbB7lgJme15uhp99aX3oPcHog71uaZ9ueZ95YXOwfbL1TfdidZYyiNt3az3qeLF6lL1kdJp1eeR9cz24cbLqgshmOWE5T6Q6ND63QYG9V8A4OmI6SqM7Nki8RoK3UcgzNqFzf3==/kisspng-pac-man-adventures-in-time-pac-mania-pac-man-game-pink-ghost-cliparts-5aacb8e1047214.4106707215212689610182.png"
+let heart = new Image();
+heart.src = "https://www.501commons.org/donate/Heart.jpg/image_preview"
+let special_food_img = new Image();
+special_food_img.src = "https://png2.cleanpng.com/sh/bbfd0b4af505fdaca3828a11b463a601/L0KzQYm3U8IxN5l6iZH0aYP2gLBuTgBia15yedC2Y3jogsPCTgBwe6UygeY2bnB3dX77TgNpcaN5ReV9aXPudcO0kPFkdZJzRdVxZYL1iX73jvcuPZJnSaY8OEDmQ4LsVscvQWg9UaM9N0O0RYO4VcY3PWo3T6sEMj7zfri=/kisspng-pac-man-cherry-post-it-note-t-shirt-sticker-pacman-cherry-png-5ab14380c31e67.9789147315215665927992.png"
 
 
+
+// 0 - Passage
+// 1 - Food 5 points
+// 2 - Food 15 points
+// 3 - Food 25 points
+// 4 - Wall
+// 5 - Monster with passage
+// 6 - Monster with food 5 points
+// 7 - Monster with food 15 points
+// 8 - Monster with food 25 points
+// 9 - Pacman
+// 10 - Lives (heart)
 
 function Start() {
 	clearInterval(interval)
@@ -27,14 +41,10 @@ function Start() {
 	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
 		board[i] = new Array();
-		//put obstacles in (i=3,j=3) and (i=3,j=4) and (i=3,j=5), (i=6,j=1) and (i=6,j=2)
 		for (var j = 0; j < 10; j++) 
 		{
-            if (//Reserved places for the monsters
-                (i == 0 && j == 0) ||
-                (i == 0 && j == 9) ||
-                (i == 9 && j == 0) ||
-                (i == 9 && j == 9)){
+            if ((i == 0 && j == 0) || (i == 0 && j == 9) || (i == 9 && j == 0) || (i == 9 && j == 9))//Reserved places for the monsters
+				{
                     continue
                 }
 
@@ -57,7 +67,7 @@ function Start() {
 					shape.i = i;
 					shape.j = j;
 					pacman_remain--;
-					board[i][j] = 2; // draws pacman
+					board[i][j] = 9; // draws pacman
 				} else {
 					board[i][j] = 0; //draws passage
 				}
@@ -65,23 +75,55 @@ function Start() {
 			}
 		}
 	}
+
+	// special food that gives 50 points
+	let special_food_position = findRandomCell(board, 0)
+	special_food.i = special_food_position[0]
+	special_food.j = special_food_position[1]
+	board[special_food_position[0]][special_food_position[1]] = 11; 
+
 	while (food_remain > 0) {
-		var emptyCell = findRandomEmptyCell(board);
+		var emptyCell = findRandomCell(board, 0);
 		board[emptyCell[0]][emptyCell[1]] = 1;
 		food_remain--;
 	}
+
+	let food_25 = Math.floor(numOfBalls*0.1);
+	let food_15 = Math.floor(numOfBalls*0.3)
+
+	// 10% of all food is transformed into 25 points food
+	for (let i = 0; i < food_25; i++){
+		let food_cell_to_change = findRandomCell(board, 1)
+		board[food_cell_to_change[0]][food_cell_to_change[1]] = 3; //food of 25 points
+	}
+
+	// 30% of all food is transformed into 15 points food
+	for (let i = 0; i < food_15; i++){
+		let food_cell_to_change = findRandomCell(board, 1)
+		board[food_cell_to_change[0]][food_cell_to_change[1]] = 2; //food of 15 points
+	}
+
+
 
 	// put the monsters on the board
 	let monster_positions = [[0,0], [9,9],[0,9],[9,0]]
 	for(let num_monst = 0; num_monst < numOfMonsters; num_monst++){
         // check if this position is empty
-		if(board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] == 0)
+		if(board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] == 0)// monster on passage cell
 		{	
-			board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] = 5 // monster on empty cell
+			board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] = 5;
 		}
-		else
+		else if(board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] == 1)// monster on 5 points food cell
 		{
-			board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] = 6 // monster on coin cell
+			board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] = 6; 
+		}
+		else if(board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] == 2)// monster on 15 points food cell
+		{
+			board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] = 7; 
+		}
+		else if(board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] == 3)// monster on 25 points food cell
+		{
+			board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] = 8; 
 		}
 
         monster_list[num_monst].i = monster_positions[num_monst][0];
@@ -109,10 +151,11 @@ function Start() {
 
 }
 
-function findRandomEmptyCell(board) {
+// Function that finds a random cell with the given object code (example: 0 fo passage, 1 for food, 2 for pacman etc..)
+function findRandomCell(board, object_code) {
 	var i = Math.floor(Math.random() * 9 + 1);
 	var j = Math.floor(Math.random() * 9 + 1);
-	while (board[i][j] != 0) {
+	while (board[i][j] != object_code) {
 		i = Math.floor(Math.random() * 9 + 1);
 		j = Math.floor(Math.random() * 9 + 1);
 	}
@@ -145,8 +188,7 @@ function Draw() {
 			var center = new Object();
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
-            //draw pacman
-			if (board[i][j] == 2) {
+			if (board[i][j] == 9) { //draw pacman
 				let pressed_key = GetKeyPressed()
 				if (pressed_key == null){
 					DrawPacman(last_pac_direction, center)
@@ -156,36 +198,51 @@ function Draw() {
 					last_pac_direction = pressed_key
 				}
 				
-			} else if (board[i][j] == 1) {
+			} else if (board[i][j] == 1) { // draw 5 points food
 				context.beginPath();
-				context.arc(center.x, center.y, 15, 0, 2 * Math.PI); // circle
-				context.fillStyle = "black"; //color
+				context.arc(center.x, center.y, 10, 0, 2 * Math.PI); // circle
+				context.fillStyle = food_5_point_color; 
 				context.fill();
-			} else if (board[i][j] == 4) {
+			} else if (board[i][j] == 2) { // draw 15 points food
+				context.beginPath();
+				context.arc(center.x, center.y, 10, 0, 2 * Math.PI); 
+				context.fillStyle = food_15_point_color; 
+				context.fill();
+			} else if (board[i][j] == 3) { // draw 25 points food
+				context.beginPath();
+				context.arc(center.x, center.y, 10, 0, 2 * Math.PI); 
+				context.fillStyle = food_25_point_color; 
+				context.fill();
+			} else if (board[i][j] == 4) { //draw wall
 				context.beginPath();
 				context.rect(center.x - 30, center.y - 30, 60, 60);
-				context.fillStyle = "grey"; //color
+				context.fillStyle = "grey"; 
 				context.fill();
 			}
-            else if (board[i][j] == 5 || board[i][j] == 6){
+						
+			
+            else if (board[i][j] == 5 || board[i][j] == 6 || board[i][j] == 7 || board[i][j] == 8){ // draw monsters
 				monsterCounter += 1;
 				if(monsterCounter != 3)
 				{
-					base_image.width = "60"
-					context.drawImage(base_image, center.x-30, center.y-30, "60", "60")
+					red_monster.width = "60"
+					context.drawImage(red_monster, center.x-30, center.y-30, "50", "50")
 				}
 				else
 				{
-					base_image2.width = "60"
-					context.drawImage(base_image2, center.x-30, center.y-30, "60", "60")
+					pink_monster.width = "60"
+					context.drawImage(pink_monster, center.x-30, center.y-30, "50", "50")
 				}
             }
-			else if (board[i][j] == 7)
+			else if (board[i][j] == 10) //draw heart
 			{
 				
-				base_image3.width = "60"
-				context.drawImage(base_image3, center.x-30, center.y-30, "60", "60")
-				
+				heart.width = "60"
+				context.drawImage(heart, center.x-30, center.y-30, "50", "50")
+			}
+			else if (board[i][j] == 11) { //draw special food
+				special_food_img.width = "60"
+				context.drawImage(special_food_img, center.x-30, center.y-30, "50", "50")
 			}
 		}
 	}
@@ -197,65 +254,65 @@ function DrawPacman(direction, center){
 	// UP
 	if (direction == 1){
 		context.beginPath();
-		context.arc(center.x, center.y, 30, 1.65 * Math.PI, 1.35 * Math.PI); // half circle
+		context.arc(center.x, center.y, 25, 1.65 * Math.PI, 1.35 * Math.PI); // half circle
 		context.lineTo(center.x, center.y);
-		context.fillStyle = pac_color; //color
+		context.fillStyle = pac_color; 
 		context.fill();
 		context.beginPath();
-		context.arc(center.x + 15, center.y + 5, 5, 0, 2 * Math.PI); // circle
-		context.fillStyle = "black"; //color
+		context.arc(center.x + 15, center.y + 5, 4, 0, 2 * Math.PI); // circle
+		context.fillStyle = "black"; 
 		context.fill();
 	}
 
 	//DOWN
 	else if (direction == 2){
 		context.beginPath();
-		context.arc(center.x, center.y, 30, 0.65 * Math.PI, 0.35 * Math.PI); // half circle
+		context.arc(center.x, center.y, 25, 0.65 * Math.PI, 0.35 * Math.PI); // half circle
 		context.lineTo(center.x, center.y);
-		context.fillStyle = pac_color; //color
+		context.fillStyle = pac_color; 
 		context.fill();
 		context.beginPath();
-		context.arc(center.x + 15, center.y + 3, 5, 0, 2 * Math.PI); // circle
-		context.fillStyle = "black"; //color
+		context.arc(center.x + 15, center.y + 3, 4, 0, 2 * Math.PI); // circle
+		context.fillStyle = "black";
 		context.fill();
 	}
 
 	//RIGHT
 	else if (direction == 3){
 		context.beginPath();
-		context.arc(center.x, center.y, 30, 1.15 * Math.PI, 0.85 * Math.PI); // half circle
+		context.arc(center.x, center.y, 25, 1.15 * Math.PI, 0.85 * Math.PI); // half circle
 		context.lineTo(center.x, center.y);
-		context.fillStyle = pac_color; //color
+		context.fillStyle = pac_color;
 		context.fill();
 		context.beginPath();
-		context.arc(center.x - 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
-		context.fillStyle = "black"; //color
+		context.arc(center.x - 5, center.y - 15, 4, 0, 2 * Math.PI); // circle
+		context.fillStyle = "black";
 		context.fill();
 	}
 
 	//LEFT
 	else if (direction == 4){
 		context.beginPath();
-		context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
+		context.arc(center.x, center.y, 25, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
 		context.lineTo(center.x, center.y);
-		context.fillStyle = pac_color; //color
+		context.fillStyle = pac_color;
 		context.fill();
 		context.beginPath();
-		context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
-		context.fillStyle = "black"; //color
+		context.arc(center.x + 5, center.y - 15, 4, 0, 2 * Math.PI); // circle
+		context.fillStyle = "black";
 		context.fill();
 	}
 
 	// Default direction - just for the start
 	else{
 		context.beginPath();
-		context.arc(center.x, center.y, 30, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
+		context.arc(center.x, center.y, 25, 0.15 * Math.PI, 1.85 * Math.PI); // half circle
 		context.lineTo(center.x, center.y);
-		context.fillStyle = pac_color; //color
+		context.fillStyle = pac_color;
 		context.fill();
 		context.beginPath();
-		context.arc(center.x + 5, center.y - 15, 5, 0, 2 * Math.PI); // circle
-		context.fillStyle = "black"; //color
+		context.arc(center.x + 5, center.y - 15, 4, 0, 2 * Math.PI); // circle
+		context.fillStyle = "black"; 
 		context.fill();
 	}
 	
@@ -285,15 +342,26 @@ function UpdatePosition()
 			shape.i++;
 		}
 	}
+
+	// 5 point food
 	if (board[shape.i][shape.j] == 1) {
-		score++;
+		score = score + 5;
 	}
-	else if(board[shape.i][shape.j] == 7)
+	// 15 point food
+	if (board[shape.i][shape.j] == 2) {
+		score = score + 15;
+	}
+	// 25 point food
+	if (board[shape.i][shape.j] == 3) {
+		score = score + 25;
+	}
+
+	else if(board[shape.i][shape.j] == 10)
 	{
 		num_of_lives += 1
 		board[shape.i][shape.j] = 0
 	}
-	board[shape.i][shape.j] = 2;
+	board[shape.i][shape.j] = 9;
 
 
 	// Move the monsters every "monsterMovementMs" seconds
@@ -308,7 +376,7 @@ function UpdatePosition()
 	if (score >= 20 && time_elapsed <= 10) {
 		pac_color = "green";
 	}
-	if (score == 50) {
+	if (score >= 100) {
 		window.clearInterval(interval);
 		winnerMusic.play(); // Play winner Music
 		showAndHideDivs('gamewinner_screen')
@@ -323,6 +391,28 @@ function UpdatePosition()
 	}
 }
 
+// function updateSpecialFoodPosition(){
+// 	let curr_i = special_food.i
+// 	let curr_j = special_food.j
+// 	let random_step = Math.floor((Math.random() * 4) + 0)
+// 	switch(random_step)
+// 	{
+// 		case ('0'):
+// 			if (is_valid_move(curr_i+1, curr_j))
+// 			{
+// 				special_food.i = curr_i + 1
+// 				board
+// 			}
+
+// 		case ('1'):
+
+// 		case ('2'):
+
+// 		case ('3'):
+
+// 	}
+// }
+
 function updateMonsterPositions()
 {
     let movement_1;
@@ -336,8 +426,8 @@ function updateMonsterPositions()
 			movement_2 = predict_best_moves(shape, monster_2)
 			movement_3 = predict_best_moves(shape, monster_3)
 			movement_4 = predict_best_moves(shape, monster_4)
-			updateMonsterPose(monster_1, movement_1, board[monster_1.i][monster_1.j] - 5, false) // the diffrence between passage with/without monster on it and coin with/without monster on it is 5 
-			updateMonsterPose(monster_2, movement_2, board[monster_2.i][monster_2.j] - 5, false) // for example, if i had 6 (coin with monster on it) than i will have 1 at the end (only coin)
+			updateMonsterPose(monster_1, movement_1, board[monster_1.i][monster_1.j] - 5, false) // the difference between passage/food with and without a monster on it is 5 
+			updateMonsterPose(monster_2, movement_2, board[monster_2.i][monster_2.j] - 5, false) // for example, if i had 6 (5P food with monster on it) than i will have 1 at the end (only 5P food)
 			updateMonsterPose(monster_3, movement_3, board[monster_3.i][monster_3.j] - 5, false)
 			updateMonsterPose(monster_4, movement_4, board[monster_4.i][monster_4.j] - 5, true)
 			break;
@@ -421,10 +511,23 @@ function setMonsterOnCell(i, j, monster, isSpaciel)
     }
 	else if(board[i][j] == 1) 
 	{
-        board[i][j] = 6 // monster on cell with coin
+        board[i][j] = 6 // monster on cell with 5 point food
         monster.i = i;
         monster.j = j;
-    }	
+    }
+	else if(board[i][j] == 2) 
+	{
+        board[i][j] = 7 // monster on cell with 15 point food
+        monster.i = i;
+        monster.j = j;
+    }
+	else if(board[i][j] == 3) 
+	{
+        board[i][j] = 8 // monster on cell with 25 point food
+        monster.i = i;
+        monster.j = j;
+    }
+	//TODO how do we want to treat a monster on a heart cell???????????
 	else // monster on cell with pacman!
 
 	{
@@ -436,7 +539,7 @@ function setMonsterOnCell(i, j, monster, isSpaciel)
 
 function is_valid_move(i, j)
 {
-	return ((i >= 0 || i < board.length) && (j >= 0 || j < board[0].length) && (board[i][j] == 0 || board[i][j] == 1 ||board[i][j] == 2))
+	return ((i >= 0 || i < board.length) && (j >= 0 || j < board[0].length) && (board[i][j] != 4))
 }
 
 
@@ -564,7 +667,7 @@ function collision(isSpaciel)
 			let indexArr = [[2, 2], [8, 8], [2, 8], [8, 2]];
 			let randNum = Math.floor((Math.random() * 4) + 0)
 			lifeFlag = true;
-			board[indexArr[randNum][0]][indexArr[randNum][1]] = 7;
+			board[indexArr[randNum][0]][indexArr[randNum][1]] = 10;
 		}
     
         //Resets the monsters to the corners of the map
@@ -573,14 +676,23 @@ function collision(isSpaciel)
         for(let num_monst = 0; num_monst < numOfMonsters; num_monst++)
         {
             //Update the cell where the monster were to be a passage or food
-            if(board[monster_list[num_monst].i][monster_list[num_monst].j] == 5)
+            if(board[monster_list[num_monst].i][monster_list[num_monst].j] == 5) //passage
             {
                 board[monster_list[num_monst].i][monster_list[num_monst].j] = 0;
             }
-            else
+            else if (board[monster_list[num_monst].i][monster_list[num_monst].j] == 6) // 5 point food
             {
                 board[monster_list[num_monst].i][monster_list[num_monst].j] = 1;
             }
+			else if (board[monster_list[num_monst].i][monster_list[num_monst].j] == 7)// 15 point food
+            {
+                board[monster_list[num_monst].i][monster_list[num_monst].j] = 2;
+            }
+			else if (board[monster_list[num_monst].i][monster_list[num_monst].j] == 8)// 25 point food
+            {
+                board[monster_list[num_monst].i][monster_list[num_monst].j] = 3;
+            }
+			
             board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] = 5;
             monster_list[num_monst].i = monster_positions[num_monst][0];
             monster_list[num_monst].j = monster_positions[num_monst][1];
@@ -600,7 +712,7 @@ function collision(isSpaciel)
         board[shape.i][shape.j] = 0;
         shape.i = rand_pacman_i;
         shape.j = rand_pacman_j;
-        board[rand_pacman_i][rand_pacman_j] = 2;
+        board[rand_pacman_i][rand_pacman_j] = 9;
 
 
     }
@@ -640,6 +752,21 @@ function updateMode()
 			monsterMovementMs = 150;
 			break;
 	}
+}
+
+function update_5_point_food()
+{
+	food_5_point_color = $('#5_point_color').val()
+}
+
+function update_15_point_food()
+{
+	food_15_point_color = $('#15_point_color').val()
+}
+
+function update_25_point_food()
+{
+	food_25_point_color = $('#25_point_color').val()
 }
 
 function setTableBorder(num)

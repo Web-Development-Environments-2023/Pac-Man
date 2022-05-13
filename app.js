@@ -4,6 +4,7 @@ var monster_1 = new Object();
 var monster_2 = new Object();
 var monster_3 = new Object();
 var monster_4  = new Object();
+var special_food = new Object();
 var gameMusic = new Audio('/music/backgroundMusic.mp3');
 var winnerMusic = new Audio('/music/winnerMusic.mp3');
 var gameOverMusic = new Audio('/music/gameoverMusic.mp3');
@@ -28,6 +29,10 @@ var monsterMovementMs;
 var connectedPlayer;
 var inGame;
 var lifeFlag;
+var food_5_point_color;
+var food_15_point_color;
+var food_25_point_color;
+
 
 
 

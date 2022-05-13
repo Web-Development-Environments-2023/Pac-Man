@@ -1,89 +1,92 @@
-#start_screen{  
-    text-align:center;
-    cursor:pointer;
-    /* display: flex; */
-    
+#start_screen img{
+  /* display:; */
+  width:80vw;
+  max-width:800px;
+  height:auto;
+  transition:0.2s;
+}
+
+#gameover_screen img{
+  /* display:; */
+  width:80vw;
+  max-width:800px;
+  height:auto;
+  transition:0.2s;
+}
+
+
+#gameover_screen img{
+  /* display:; */
+  width:80vw;
+  max-width:800px;
+  height:auto;
+  transition:0.2s;
+}
+
+
+.top {
+  background-color: rgb(47, 181, 201);
+  overflow: hidden;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .top h3 {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 2px 20px;
+  text-decoration: none;
+  font-size: 22px;
+  }
+  
+  /* Change the color of links on hover */
+  .top h3:hover {
+  background-color: rgb(109, 200, 221);
+  color: rgb(14, 14, 15);
+  }
+  
+  /* Add a color to the active/current link */
+  .top h3.active {
+  background-color: #b1b2bd;
+  color: white;
   }
 
-  #start_screen img{
-    /* display:; */
-    width:80vw;
-    max-width:800px;
-    height:auto;
-    transition:0.2s;
+  #body {
+    background-image: url('https://media.istockphoto.com/vectors/abstract-blue-wave-background-vector-id1223914421?k=20&m=1223914421&s=612x612&w=0&h=pdDbLnTMYY-sC4_GfpWePXo3ePEGPENQSeBoPh0E1xc=');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
   }
 
-  #gameover_screen{  
-    text-align:center;
-    cursor:pointer;
-    /* display: flex; */
-    
+  #settingsAndGame {
+    margin-left: auto;
+    margin-right: auto;
   }
 
-  #gameover_screen img{
-    /* display:; */
-    width:80vw;
-    max-width:800px;
-    height:auto;
-    transition:0.2s;
-  }
-
-  #gamewinner_screen{  
-    text-align:center;
-    cursor:pointer;
-    /* display: flex; */
-    
-  }
-
-  #gameover_screen img{
-    /* display:; */
-    width:80vw;
-    max-width:800px;
-    height:auto;
-    transition:0.2s;
+  #ingame_buttons {
+    margin-left: auto;
+    margin-right: auto;
   }
 
 
-  .top {
-    background-color: rgb(47, 181, 201);
-    overflow: hidden;
-    }
-    
-    /* Style the links inside the navigation bar */
-    .top h3 {
-    float: left;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 22px;
-    }
-    
-    /* Change the color of links on hover */
-    .top h3:hover {
-    background-color: #ddd;
-    color: black;
-    }
-    
-    /* Add a color to the active/current link */
-    .top h3.active {
-    background-color: #b1b2bd;
-    color: white;
-    }
+.screens {
+text-align:center;
+cursor:pointer;
+}
 
-    #body {
-      background-image: url('https://media.istockphoto.com/vectors/abstract-blue-wave-background-vector-id1223914421?k=20&m=1223914421&s=612x612&w=0&h=pdDbLnTMYY-sC4_GfpWePXo3ePEGPENQSeBoPh0E1xc=');
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: 100% 100%;
-    }
+#canvas {
+  border: 1px solid rgb(10, 10, 10);
+}   
 
-    #settingsAndGame {
-      margin-left: auto;
-      margin-right: auto;
-    }
+#game{
+  text-align: center;
+}
 
-    #ingame_buttons {
-      margin-left: auto;
-      margin-right: auto;
-    }
+#footer {
+  position: fixed;
+  bottom: 3%;
+  width: 100%;
+  /* Height of the footer*/ 
+  height: 40px;
+  /* background: grey; */
+}
