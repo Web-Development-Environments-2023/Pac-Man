@@ -20,8 +20,10 @@ special_food_img.src = "https://png2.cleanpng.com/sh/bbfd0b4af505fdaca3828a11b46
 // 8 - Monster with food 25 points
 // 9 - Pacman
 // 10 - Lives (heart)
+// 11 - Spaciel Food 
 
 function Start() {
+
 	clearInterval(interval)
 	board = new Array();
 	score = 0;
@@ -38,6 +40,9 @@ function Start() {
 	inGame = true; // inGame
 	updateMode() // defualt mode is Easy
 	startMusic() // start music
+
+	gameMusic.pause();//////////////////////////////////////
+
 	setTableBorder('1') // set the table border
 	start_time = new Date();
 	for (var i = 0; i < 10; i++) {
@@ -535,10 +540,9 @@ function setMonsterOnCell(i, j, monster, isSpaciel)
 }
 
 
-function is_valid_move(i, j)
+function is_valid_move(i, j) //[0,1,2,3,9]
 {
-	let possible = [0, 1, 2, 3, 9]
-	return ((i >= 0 || i < board.length) && (j >= 0 || j < board[0].length) && (board[i][j] != 4) && (board[i][j] != 5) && (board[i][j] != 6))
+	return ((i >= 0 || i < board.length) && (j >= 0 || j < board[0].length) && ((board[i][j] == 0) || (board[i][j] == 1) || (board[i][j] == 2) || (board[i][j] == 3) || (board[i][j] == 9)))
 }
 
 
@@ -629,13 +633,21 @@ function gameOver(end_game_reason)
 {
 	if(end_game_reason == 'd') // died (monster eat the pacman)
 	{
-		$('#gameover_text').html("You have lost the game!" + '<br>' + "You have been eaten by the monsters five times.." + '<br>'+ '<br>'+ '<br>')
+		$('#gameover_text').html("You have lost the game!" + '<br>' + "No lives have left.." + '<h1>' + "Loser!" + '</h1>' + '<br>')
 		showAndHideDivs('gameover_screen')
 	}
 	else if(end_game_reason == 't') // time over
 	{
-		$('#gameover_text').html("You have lost the game!" + '<br>' + "The time is over.." + '<br>'+ '<br>'+ '<br>')
-		showAndHideDivs('gameover_screen')
+		if(score < 100)
+		{
+			$('#gameover_text').html("You have lost the game!" + '<br>' + "The time is over.." + '<h2>' + "You are better than " + score + " points!" + '</h2>' + '<br>')
+			showAndHideDivs('gameover_screen')
+		}
+		else
+		{
+			$('#gameover_text').html("You have gained more than 100 points!" + '<br>' + "The time is over.." + '<h2>' + "Winner!!!" + '</h2>' + '<br>')
+			showAndHideDivs('gameover_screen')
+		}
 	}
 	gameOverMusic.play(); // play GameOver music
 	return;
@@ -797,7 +809,7 @@ function stopGameOverMusic()
 	gameOverMusic.currentTime = 0;	
 }
 
-function randomizeWalls(i, j, randWall) // [[2, 2], [8, 8], [2, 8], [8, 2]]
+function randomizeWalls(i, j, randWall)
 {
 	let wallsList = [[[3,3], [3,4],[3,5],[6,1],[6,2], [2,5], [7,7], [2,7]], [[5,5], [5,6],[7,5],[3,7],[4,4], [2,5], [3,3], [7,8], [7,2], [6,3]], [[7,7], [4,4],[7,6],[2,7],[6,6], [2,3],[1,6], [7,3], [8,3],[7,4]], [[5,6], [6,5],[3,3],[7,7],[6,2],[2,3],[4,4], [2,7], [2,8]]]
 	let currWalls = wallsList[randWall]
@@ -810,3 +822,8 @@ function randomizeWalls(i, j, randWall) // [[2, 2], [8, 8], [2, 8], [8, 2]]
 	}
 	return false;
 }
+
+//problems:
+//1. when having alot of monsters, the spaciel one getting crazy..
+//2. footer problem - cant press any buttun at the lower page
+//3. monster "eat" monster
