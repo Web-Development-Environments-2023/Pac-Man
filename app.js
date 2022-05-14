@@ -155,6 +155,7 @@ function showAndHideDivs(currentScreen)
 			$('#audio').show();
 			$('#settings_screen').show();
 			$('#game_screen').show();
+			updateFooterView(false);
 			updateLogeedUser()
 			context = canvas.getContext("2d");
 			Start();
@@ -165,6 +166,7 @@ function showAndHideDivs(currentScreen)
 		clearInterval(interval)
 		setTableBorder('0')
 		gameMusic.pause();
+		updateFooterView(true);
 		gameMusic.currentTime = 0;	
 		inGame = false;
 	}

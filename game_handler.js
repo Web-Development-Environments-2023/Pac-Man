@@ -14,10 +14,10 @@ special_food_img.src = "https://png2.cleanpng.com/sh/bbfd0b4af505fdaca3828a11b46
 // 2 - Food 15 points
 // 3 - Food 25 points
 // 4 - Wall
-// 5 - Monster with passage
-// 6 - Monster with food 5 points
-// 7 - Monster with food 15 points
-// 8 - Monster with food 25 points
+// 5 - Monster with passage // 12 - spaciel
+// 6 - Monster with food 5 points // 13 - spaciel
+// 7 - Monster with food 15 points // 14 - spaciel
+// 8 - Monster with food 25 points // 15 - spaciel
 // 9 - Pacman
 // 10 - Lives (heart)
 // 11 - Spaciel Food 
@@ -149,21 +149,23 @@ function Start() {
     // UpdatePosition();
 	monsterTimeout = Date.now();
 	interval = setInterval(UpdatePosition, 130);
-
 }
 
 // Function that finds a random cell with the given object code (example: 0 fo passage, 1 for food, 2 for pacman etc..)
-function findRandomCell(board, object_code) {
+function findRandomCell(board, object_code)
+ {
 	var i = Math.floor(Math.random() * 9 + 1);
 	var j = Math.floor(Math.random() * 9 + 1);
-	while (board[i][j] != object_code) {
+	while (board[i][j] != object_code) 
+	{
 		i = Math.floor(Math.random() * 9 + 1);
 		j = Math.floor(Math.random() * 9 + 1);
 	}
 	return [i, j];
 }
 
-function GetKeyPressed() {
+function GetKeyPressed() 
+{
     if (keysDown[controls['up']]) {
 		return 1;
 	}
@@ -221,7 +223,6 @@ function Draw() {
 				context.fill();
 			}
 						
-			
             else if (board[i][j] == 5 || board[i][j] == 6 || board[i][j] == 7 || board[i][j] == 8){ // draw monsters
 				monsterCounter += 1;
 				if(monsterCounter != 3)
@@ -235,6 +236,7 @@ function Draw() {
 					context.drawImage(pink_monster, center.x-30, center.y-30, "50", "50")
 				}
             }
+
 			else if (board[i][j] == 10) //draw heart
 			{
 				
@@ -374,7 +376,7 @@ function UpdatePosition()
 
 	var currentTime = new Date();
 	time_elapsed = (currentTime - start_time) / 1000;
-	if (score >= 20 && time_elapsed <= 10) {
+	if (score >= 100 && time_elapsed <= 20) {
 		pac_color = "green";
 	}
 	if (score >= 10000) ///////////////////////////////////////////////////////
@@ -823,7 +825,20 @@ function randomizeWalls(i, j, randWall)
 	return false;
 }
 
+
+function updateFooterView(bool)
+{
+	let footer = document.getElementById("footer");
+	if(bool)
+	{
+		footer.style["position"] = "fixed";
+	}
+	else
+	{
+		footer.style["position"] = "relative";
+	}
+}
+
+
 //problems:
 //1. when having alot of monsters, the spaciel one getting crazy..
-//2. footer problem - cant press any buttun at the lower page
-//3. monster "eat" monster
