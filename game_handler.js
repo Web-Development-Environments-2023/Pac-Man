@@ -882,3 +882,4 @@ function regularOrSpaciel(row, col)
 
 // 1. when moving from screens, the footer not working well..
 // 2. pacman moving on monsters..
+// 3. start the pacman next to a monster?..
