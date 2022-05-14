@@ -34,6 +34,7 @@ function Start() {
 	var food_remain = numOfBalls;
 	var pacman_remain = 1;
 	lifeFlag = false;
+	randWall = Math.floor((Math.random() * 4) + 0)
 	inGame = true; // inGame
 	updateMode() // defualt mode is Easy
 	startMusic() // start music
@@ -48,12 +49,7 @@ function Start() {
                     continue
                 }
 
-			if (
-				(i == 3 && j == 3) ||
-				(i == 3 && j == 4) ||
-				(i == 3 && j == 5) ||
-				(i == 6 && j == 1) ||
-				(i == 6 && j == 2)) 
+			if (randomizeWalls(i, j, randWall)) 
 			{
 				board[i][j] = 4; // draws a wall
 			} 
@@ -538,9 +534,11 @@ function setMonsterOnCell(i, j, monster, isSpaciel)
     
 }
 
+
 function is_valid_move(i, j)
 {
-	return ((i >= 0 || i < board.length) && (j >= 0 || j < board[0].length) && (board[i][j] != 4))
+	let possible = [0, 1, 2, 3, 9]
+	return ((i >= 0 || i < board.length) && (j >= 0 || j < board[0].length) && (board[i][j] != 4) && (board[i][j] != 5) && (board[i][j] != 6))
 }
 
 
@@ -797,4 +795,18 @@ function stopGameOverMusic()
 {
 	gameOverMusic.pause();
 	gameOverMusic.currentTime = 0;	
+}
+
+function randomizeWalls(i, j, randWall) // [[2, 2], [8, 8], [2, 8], [8, 2]]
+{
+	let wallsList = [[[3,3], [3,4],[3,5],[6,1],[6,2], [2,5], [7,7], [2,7]], [[5,5], [5,6],[7,5],[3,7],[4,4], [2,5], [3,3], [7,8], [7,2], [6,3]], [[7,7], [4,4],[7,6],[2,7],[6,6], [2,3],[1,6], [7,3], [8,3],[7,4]], [[5,6], [6,5],[3,3],[7,7],[6,2],[2,3],[4,4], [2,7], [2,8]]]
+	let currWalls = wallsList[randWall]
+	for(let k = 0; k < currWalls.length; k++)
+	{
+		if((i == currWalls[k][0]) && (j == currWalls[k][1]))
+		{
+			return true;
+		}
+	}
+	return false;
 }

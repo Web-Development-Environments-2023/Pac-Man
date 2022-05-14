@@ -29,6 +29,7 @@ var monsterMovementMs;
 var connectedPlayer;
 var inGame;
 var lifeFlag;
+var randWall;
 var food_5_point_color;
 var food_15_point_color;
 var food_25_point_color;
