@@ -175,4 +175,3 @@ function showAndHideDivs(currentScreen)
 	}
 }
 
-// game controls not changing?

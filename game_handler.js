@@ -14,10 +14,10 @@ special_food_img.src = "https://png2.cleanpng.com/sh/bbfd0b4af505fdaca3828a11b46
 // 2 - Food 15 points
 // 3 - Food 25 points
 // 4 - Wall
-// 5 - Monster with passage // 12 - spaciel
-// 6 - Monster with food 5 points // 13 - spaciel
-// 7 - Monster with food 15 points // 14 - spaciel
-// 8 - Monster with food 25 points // 15 - spaciel
+// 5 - Monster with passage
+// 6 - Monster with food 5 points
+// 7 - Monster with food 15 points
+// 8 - Monster with food 25 points
 // 9 - Pacman
 // 10 - Lives (heart)
 // 11 - Spaciel Food 
@@ -49,6 +49,7 @@ function Start() {
 		board[i] = new Array();
 		for (var j = 0; j < 10; j++) 
 		{
+			// continue...........
 
 			if (randomizeWalls(i, j, randWall)) 
 			{
@@ -358,19 +359,31 @@ function UpdatePosition()
 		score = score + 5;
 	}
 	// 15 point food
-	if (board[shape.i][shape.j] == 2) {
+	else if (board[shape.i][shape.j] == 2) {
 		score = score + 15;
 	}
 	// 25 point food
-	if (board[shape.i][shape.j] == 3) {
+	else if (board[shape.i][shape.j] == 3) {
 		score = score + 25;
 	}
-
+	// extra life
 	else if(board[shape.i][shape.j] == 10)
 	{
 		num_of_lives += 1
 		board[shape.i][shape.j] = 0
 	}
+	// else if(board[shape.i][shape.j] == 5 || board[shape.i][shape.j] == 6 ||board[shape.i][shape.j] == 7 ||board[shape.i][shape.j] == 8) // step on monster
+	// {
+	// 	if(randomizeWalls(shape.i, shape.j) == "r")
+	// 	{
+	// 		collision(false)
+	// 	}
+	// 	else
+	// 	{
+	// 		collision(true)
+	// 	}
+	// }
+
 	board[shape.i][shape.j] = 9;
 
 
@@ -865,3 +878,7 @@ function regularOrSpaciel(row, col)
 		return  monster_4.type;
 	}
 }
+
+
+// 1. when moving from screens, the footer not working well..
+// 2. pacman moving on monsters..
