@@ -1,9 +1,9 @@
 var context;
 var shape = new Object();
-var monster_1 = new Object();
-var monster_2 = new Object();
-var monster_3 = new Object();
-var monster_4  = new Object();
+var monster_1 = {type:"r"}
+var monster_2 = {type:"r"}
+var monster_3 = {type:"s"}
+var monster_4  = {type:"r"}
 var special_food = new Object();
 var gameMusic = new Audio('/music/backgroundMusic.mp3');
 var winnerMusic = new Audio('/music/winnerMusic.mp3');
@@ -166,9 +166,12 @@ function showAndHideDivs(currentScreen)
 		clearInterval(interval)
 		setTableBorder('0')
 		gameMusic.pause();
-		updateFooterView(true);
 		gameMusic.currentTime = 0;	
 		inGame = false;
+	}
+	if(currentScreen != "game_screen" && currentScreen != "gamewinner_screen" && currentScreen != "gameover_screen")
+	{
+		updateFooterView(true);
 	}
 }
 

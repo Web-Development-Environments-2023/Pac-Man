@@ -49,10 +49,6 @@ function Start() {
 		board[i] = new Array();
 		for (var j = 0; j < 10; j++) 
 		{
-            if ((i == 0 && j == 0) || (i == 0 && j == 9) || (i == 9 && j == 0) || (i == 9 && j == 9))//Reserved places for the monsters
-				{
-                    continue
-                }
 
 			if (randomizeWalls(i, j, randWall)) 
 			{
@@ -223,9 +219,20 @@ function Draw() {
 				context.fill();
 			}
 						
-            else if (board[i][j] == 5 || board[i][j] == 6 || board[i][j] == 7 || board[i][j] == 8){ // draw monsters
-				monsterCounter += 1;
-				if(monsterCounter != 3)
+            else if (board[i][j] == 5 || board[i][j] == 6 || board[i][j] == 7 || board[i][j] == 8)
+			{ // draw monsters
+				// monsterCounter += 1;
+				// if(monsterCounter != 3)
+				// {
+				// 	red_monster.width = "60"
+				// 	context.drawImage(red_monster, center.x-30, center.y-30, "50", "50")
+				// }
+				// else
+				// {
+				// 	pink_monster.width = "60"
+				// 	context.drawImage(pink_monster, center.x-30, center.y-30, "50", "50")
+				// }
+				if(regularOrSpaciel(i,j) == "r")
 				{
 					red_monster.width = "60"
 					context.drawImage(red_monster, center.x-30, center.y-30, "50", "50")
@@ -432,16 +439,16 @@ function updateMonsterPositions()
 			movement_4 = predict_best_moves(shape, monster_4)
 			updateMonsterPose(monster_1, movement_1, board[monster_1.i][monster_1.j] - 5, false) // the difference between passage/food with and without a monster on it is 5 
 			updateMonsterPose(monster_2, movement_2, board[monster_2.i][monster_2.j] - 5, false) // for example, if i had 6 (5P food with monster on it) than i will have 1 at the end (only 5P food)
-			updateMonsterPose(monster_3, movement_3, board[monster_3.i][monster_3.j] - 5, false)
-			updateMonsterPose(monster_4, movement_4, board[monster_4.i][monster_4.j] - 5, true)
+			updateMonsterPose(monster_3, movement_3, board[monster_3.i][monster_3.j] - 5, true)
+			updateMonsterPose(monster_4, movement_4, board[monster_4.i][monster_4.j] - 5, false)
 			break;
 		case("3"):
             movement_1 = predict_best_moves(shape, monster_1)
 			movement_2 = predict_best_moves(shape, monster_2)
 			movement_3 = predict_best_moves(shape, monster_3)
 			updateMonsterPose(monster_1, movement_1, board[monster_1.i][monster_1.j] - 5, false)
-			updateMonsterPose(monster_2, movement_2, board[monster_2.i][monster_2.j] - 5, true)
-			updateMonsterPose(monster_3, movement_3, board[monster_3.i][monster_3.j] - 5, false)
+			updateMonsterPose(monster_2, movement_2, board[monster_2.i][monster_2.j] - 5, false)
+			updateMonsterPose(monster_3, movement_3, board[monster_3.i][monster_3.j] - 5, true)
 			break;
 		case("2"):
 			movement_1 = predict_best_moves(shape, monster_1)
@@ -839,6 +846,22 @@ function updateFooterView(bool)
 	}
 }
 
-
-//problems:
-//1. when having alot of monsters, the spaciel one getting crazy..
+function regularOrSpaciel(row, col)
+{
+	if(monster_1.i == row && monster_1.j == col)
+	{
+		return  monster_1.type;
+	}
+	else if (monster_2.i == row && monster_2.j == col)
+	{
+		return  monster_2.type;
+	}
+	else if (monster_3.i == row && monster_3.j == col)
+	{
+		return  monster_3.type;
+	}
+	else if (monster_4.i == row && monster_4.j == col)
+	{
+		return  monster_4.type;
+	}
+}
