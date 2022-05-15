@@ -6,6 +6,9 @@ let heart = new Image();
 heart.src = "https://www.501commons.org/donate/Heart.jpg/image_preview"
 let special_food_img = new Image();
 special_food_img.src = "https://png2.cleanpng.com/sh/bbfd0b4af505fdaca3828a11b463a601/L0KzQYm3U8IxN5l6iZH0aYP2gLBuTgBia15yedC2Y3jogsPCTgBwe6UygeY2bnB3dX77TgNpcaN5ReV9aXPudcO0kPFkdZJzRdVxZYL1iX73jvcuPZJnSaY8OEDmQ4LsVscvQWg9UaM9N0O0RYO4VcY3PWo3T6sEMj7zfri=/kisspng-pac-man-cherry-post-it-note-t-shirt-sticker-pacman-cherry-png-5ab14380c31e67.9789147315215665927992.png"
+let wall_img = new Image();
+wall_img.src = "https://previews.123rf.com/images/dmitr1ch/dmitr1ch1702/dmitr1ch170200032/74410490-black-wall-brick-texture-dark-background.jpg"
+
 
 
 // 0 - Passage
@@ -48,8 +51,6 @@ function Start() {
 		board[i] = new Array();
 		for (var j = 0; j < 10; j++) 
 		{
-			// continue...........
-
 			if (randomizeWalls(i, j, randWall)) 
 			{
 				board[i][j] = 4; // draws a wall
@@ -213,25 +214,12 @@ function Draw() {
 				context.fillStyle = food_25_point_color; 
 				context.fill();
 			} else if (board[i][j] == 4) { //draw wall
-				context.beginPath();
-				context.rect(center.x - 30, center.y - 30, 60, 60);
-				context.fillStyle = "grey"; 
-				context.fill();
+				wall_img.width = "60"
+				context.drawImage(wall_img, center.x-30, center.y-30, "60", "60")
 			}
 						
             else if (board[i][j] == 5 || board[i][j] == 6 || board[i][j] == 7 || board[i][j] == 8)
-			{ // draw monsters
-				// monsterCounter += 1;
-				// if(monsterCounter != 3)
-				// {
-				// 	red_monster.width = "60"
-				// 	context.drawImage(red_monster, center.x-30, center.y-30, "50", "50")
-				// }
-				// else
-				// {
-				// 	pink_monster.width = "60"
-				// 	context.drawImage(pink_monster, center.x-30, center.y-30, "50", "50")
-				// }
+			{ 
 				if(regularOrSpaciel(i,j) == "r")
 				{
 					red_monster.width = "60"
@@ -832,7 +820,7 @@ function stopGameOverMusic()
 
 function randomizeWalls(i, j, randWall)
 {
-	let wallsList = [[[3,3], [3,4],[3,5],[6,1],[6,2], [2,5], [7,7], [2,7]], [[5,5], [5,6],[7,5],[3,7],[4,4], [2,5], [3,3], [7,8], [7,2], [6,3]], [[7,7], [4,4],[7,6],[2,7],[6,6], [2,3],[1,6], [7,3], [8,3],[7,4]], [[5,6], [6,5],[3,3],[7,7],[6,2],[2,3],[4,4], [2,7], [2,8]]]
+	let wallsList = [[[1,3],[1,8], [1,1], [1,2], [3,3], [3,4], [3,5], [6,1], [6,2], [2,5], [7,7], [6,7], [5,7], [6,4], [4,7], [7,6], [7,5], [7,4], [2,7], [8,7]], [[1,8],[8,1],[1,2],[1,1],[5,5], [5,6],[7,5],[3,7],[4,4], [2,5], [3,3], [7,8], [7,2], [6,3]], [[7,7],[7,8],[6,8],[5,8],[4,8],[4,1],[5,1],[6,1],[7,1], [4,4],[7,6],[2,7],[6,6], [2,3], [2,4], [2,1], [2,5], [7,3], [8,3],[7,4]], [[5,6], [6,5],[3,3],[7,7],[6,2],[2,3],[4,4], [2,7], [2,8]]]
 	let currWalls = wallsList[randWall]
 	for(let k = 0; k < currWalls.length; k++)
 	{
@@ -878,9 +866,25 @@ function regularOrSpaciel(row, col)
 	}
 }
 
+// script for disable scrolling the page using the up/down (inGame) 
+var keys = {};
+window.addEventListener("keydown",
+    function(e){
+        keys[e.keyCode] = true;
+        switch(e.keyCode){
+            case 37: case 39: case 38:  case 40: // Arrow keys
+            case 32: e.preventDefault(); break; // Space
+            default: break; // do not block other keys
+        }
+    },
+false);
+window.addEventListener('keyup',
+    function(e){
+        keys[e.keyCode] = false;
+    },
+false);
 
-// 1. when moving from screens, the footer not working well..
+
 // 2. pacman moving on monsters..
 // 3. start the pacman next to a monster?..
 // 4. register page - validation
-// 5. Details modal, add 'x' and answer the questions

@@ -65,10 +65,8 @@ function showAndHideDivs(currentScreen)
 			$('#login_screen').hide();
 			$('#game_screen').hide();
 			$('#settings_screen').hide();
-			$('#about_screen').hide();
 			$('#gameover_screen').hide();
 			$('#gamewinner_screen').hide();
-			$('#audio').hide();
 			break;
 
 		case "register_screen": // register mode
@@ -77,10 +75,8 @@ function showAndHideDivs(currentScreen)
 			$('#login_screen').hide();
 			$('#game_screen').hide();
 			$('#settings_screen').hide();
-			$('#about_screen').hide();
 			$('#gameover_screen').hide();
 			$('#gamewinner_screen').hide();
-			$('#audio').hide();
 			break;
 
 		case "login_screen": // login mode
@@ -89,10 +85,8 @@ function showAndHideDivs(currentScreen)
 			$('#register_screen').hide();
 			$('#game_screen').hide();
 			$('#settings_screen').hide();
-			$('#about_screen').hide();
 			$('#gameover_screen').hide();
 			$('#gamewinner_screen').hide();
-			$('#audio').hide();
 			break;
 
 		case "setting_screen": // setting mode
@@ -101,22 +95,9 @@ function showAndHideDivs(currentScreen)
 			$('#start_screen').hide();
 			$('#register_screen').hide();
 			$('#game_screen').hide();
-			$('#about_screen').hide();
 			$('#gameover_screen').hide();
 			$('#gamewinner_screen').hide();
-			$('#audio').hide();
-			break;
-		
-		case "about_screen": // about mode
-			$('#login_screen').hide();
-			$('#start_screen').hide();
-			$('#register_screen').hide();
-			$('#settings_screen').hide();
-			$('#game_screen').hide();
-			$('#gameover_screen').hide();
-			$('#about_screen').show();
-			$('#gamewinner_screen').hide();
-			$('#audio').hide();
+			updateFooterView(false);
 			break;
 
 		case "gameover_screen": // gameover mode
@@ -125,11 +106,8 @@ function showAndHideDivs(currentScreen)
 			$('#login_screen').hide();
 			$('#game_screen').hide();
 			$('#settings_screen').hide();
-			$('#about_screen').hide();
 			$('#gameover_screen').show();
 			$('#gamewinner_screen').hide();
-			$('#audio').hide();
-
 			break;
 
 		case "gamewinner_screen": // gamewinner mode
@@ -138,9 +116,7 @@ function showAndHideDivs(currentScreen)
 			$('#login_screen').hide();
 			$('#game_screen').hide();
 			$('#settings_screen').hide();
-			$('#about_screen').hide();
 			$('#gameover_screen').hide();
-			$('#audio').hide();
 			$('#gamewinner_screen').show();
 			break;
 
@@ -148,11 +124,9 @@ function showAndHideDivs(currentScreen)
 			$('#login_screen').hide();
 			$('#start_screen').hide();
 			$('#register_screen').hide();
-			$('#about_screen').hide();
 			$('#gameover_screen').hide();
 			$('#gamewinner_screen').hide();
 
-			$('#audio').show();
 			$('#settings_screen').show();
 			$('#game_screen').show();
 			updateFooterView(false);
@@ -169,7 +143,7 @@ function showAndHideDivs(currentScreen)
 		gameMusic.currentTime = 0;	
 		inGame = false;
 	}
-	if(currentScreen != "game_screen" && currentScreen != "gamewinner_screen" && currentScreen != "gameover_screen")
+	if((currentScreen != "game_screen") && (currentScreen != "gamewinner_screen") && (currentScreen != "gameover_screen") && (currentScreen != "setting_screen"))
 	{
 		updateFooterView(true);
 	}
