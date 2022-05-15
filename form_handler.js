@@ -243,11 +243,3 @@ function showDialog()
 {
 	$("#dialog").modal({fadeDuration: 1000});
 }
-
-function exitDialog(e)
-{
-	if(e.keynum == 88)
-	{
-		rel="modal:close"
-	}
-}
