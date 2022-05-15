@@ -98,3 +98,31 @@ cursor:pointer;
   height: 40px;
   /* background: grey; */
 }
+
+.top {
+  background-color: rgb(47, 181, 201);
+  overflow: hidden;
+  }
+  
+  /* Style the links inside the navigation bar */
+  .top a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 2px 20px;
+  text-decoration: none;
+  font-size: 22px;
+  }
+  
+  /* Change the color of links on hover */
+  .top a:hover {
+  cursor: pointer;
+  background-color: rgb(109, 200, 221);
+  color: rgb(14, 14, 15);
+  }
+  
+  /* Add a color to the active/current link */
+  .top a.active {
+  background-color: #b1b2bd;
+  color: white;
+  }

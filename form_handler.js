@@ -237,3 +237,17 @@ function checkEmail(email) {
 	update_25_point_food();
 	showAndHideDivs("game_screen")
   }
+
+
+function showDialog()
+{
+	$("#dialog").modal({fadeDuration: 1000});
+}
+
+function exitDialog(e)
+{
+	if(e.keynum == 88)
+	{
+		rel="modal:close"
+	}
+}

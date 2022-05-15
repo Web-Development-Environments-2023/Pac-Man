@@ -8,7 +8,6 @@ let special_food_img = new Image();
 special_food_img.src = "https://png2.cleanpng.com/sh/bbfd0b4af505fdaca3828a11b463a601/L0KzQYm3U8IxN5l6iZH0aYP2gLBuTgBia15yedC2Y3jogsPCTgBwe6UygeY2bnB3dX77TgNpcaN5ReV9aXPudcO0kPFkdZJzRdVxZYL1iX73jvcuPZJnSaY8OEDmQ4LsVscvQWg9UaM9N0O0RYO4VcY3PWo3T6sEMj7zfri=/kisspng-pac-man-cherry-post-it-note-t-shirt-sticker-pacman-cherry-png-5ab14380c31e67.9789147315215665927992.png"
 
 
-
 // 0 - Passage
 // 1 - Food 5 points
 // 2 - Food 15 points
@@ -883,3 +882,4 @@ function regularOrSpaciel(row, col)
 // 1. when moving from screens, the footer not working well..
 // 2. pacman moving on monsters..
 // 3. start the pacman next to a monster?..
+// 4. register page

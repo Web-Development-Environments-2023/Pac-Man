@@ -6,6 +6,13 @@
 		<!-- <script type="text/javascript" src="./monster.js"></script> -->
 		<script type="text/javascript" src="./form_handler.js"></script>
 		<script type="text/javascript" src="./game_handler.js"></script>
+		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.js"></script>
+		<script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/additional-methods.js"></script>
+		<script src="./jquery-3.4.1.slim.min.js"></script>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 
 		<link rel="stylesheet" href="style.css">
 	</head>
@@ -18,12 +25,19 @@
 				<h3 onclick="showAndHideDivs('start_screen')">Home</h3>
 				<h3 onclick="showAndHideDivs('register_screen')">Register</h3>
 				<h3 onclick="showAndHideDivs('login_screen')">Login</h3>
-				<h3 onclick="showAndHideDivs('about_screen')">About</h3>
+				<h3><a href="#dialog" rel="modal:open">About</a></h3>
 				<h2 style="float: right;">Designed and created by Or Izhaky & Amit Elbaz &#8482;</h2>
 			</div>
 		</div>
 
 
+		<!-- Modal HTML embedded directly into document -->
+		<div id="dialog" class="modal">
+			<p>Thanks for clicking. That felt good.</p>
+			<a href="#" rel="modal:close">Close</a>
+		</div>
+		
+				
 		<div id="start_screen" class="screens"><img src="https://thelogicalindian.com/h-upload/2021/03/17/1600x960_192284-thelogicalindianfb1000x600-1.jpg">
 			<br><br><br>
 				<button id="Register_button" type="button", onclick="Register()">Register</button>
