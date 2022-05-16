@@ -30,59 +30,59 @@ function check_login_form()
 
 }
 
-function check_register_form(){
-	let username = $('#username').val()
-	let password = $('#password').val()
-	let fullname = $('#fullname').val()
-	let email = $('#email').val()
-	let birthdate = $('#birthdate').val()
+// function check_register_form(){
+// 	let username = $('#username').val()
+// 	let password = $('#password').val()
+// 	let fullname = $('#fullname').val()
+// 	let email = $('#email').val()
+// 	let birthdate = $('#birthdate').val()
 	
-	// Checks that all the fields are not empty
-	if ((username == '') || (password == '') || (fullname == '') || (email == '') || (birthdate == '')){
-		window.alert('Missing values - please fill all the values to register')
-		return
-	}
+// 	// Checks that all the fields are not empty
+// 	if ((username == '') || (password == '') || (fullname == '') || (email == '') || (birthdate == '')){
+// 		window.alert('Missing values - please fill all the values to register')
+// 		return
+// 	}
 
-	// Checks that the inputs don't have spaces (except full name and birthdate)
-	if ((username == '' || (/\s/).test(username)) || (password == '' || (/\s/).test(password)) || (email == '' || (/\s/).test(email))){
-		window.alert('Illegal character (whitespace) in username or password or email.')
-		return
-	}
+// 	// Checks that the inputs don't have spaces (except full name and birthdate)
+// 	if ((username == '' || (/\s/).test(username)) || (password == '' || (/\s/).test(password)) || (email == '' || (/\s/).test(email))){
+// 		window.alert('Illegal character (whitespace) in username or password or email.')
+// 		return
+// 	}
 
-	// Checks that the password contains at least 6 digits of numbers and letters
-	let valid_pwd = checkPwd(password)
-	if (valid_pwd != true){
-		window.alert('Your password ' + valid_pwd)
-		return
-	}
+// 	// Checks that the password contains at least 6 digits of numbers and letters
+// 	let valid_pwd = checkPwd(password)
+// 	if (valid_pwd != true){
+// 		window.alert('Your password ' + valid_pwd)
+// 		return
+// 	}
 	
-	// Checks that the fullname contains no numbers in it
-	let valid_fullname = checkFullname(fullname)
-	if (valid_fullname != true){
-		window.alert('Your fullname ' + valid_fullname)
-		return
-	}
+// 	// Checks that the fullname contains no numbers in it
+// 	let valid_fullname = checkFullname(fullname)
+// 	if (valid_fullname != true){
+// 		window.alert('Your fullname ' + valid_fullname)
+// 		return
+// 	}
 
-	// Checks that the email is valid
-	let valid_email = checkEmail(email)
-	if (valid_email != true)
-	{
-		window.alert('Your email is not a valid email address')
-		return
+// 	// Checks that the email is valid
+// 	let valid_email = checkEmail(email)
+// 	if (valid_email != true)
+// 	{
+// 		window.alert('Your email is not a valid email address')
+// 		return
 	
-	}
+// 	}
 
-	// Check that the username is not exist in the system
-	if(username in users)
-	{
-		window.alert('Your username \'' + username + '\' is already exist in the system' )
-		return
-	}
+// 	// Check that the username is not exist in the system
+// 	if(username in users)
+// 	{
+// 		window.alert('Your username \'' + username + '\' is already exist in the system' )
+// 		return
+// 	}
 
-	users[username] = password
-	window.alert('You have been Registered Successfully' )
-	showAndHideDivs("login_screen")
-}
+// 	users[username] = password
+// 	window.alert('You have been Registered Successfully' )
+// 	showAndHideDivs("login_screen")
+// }
 
 // Function that checks if a given password is more than 6 char and has digits and letters
 function checkPwd(str) {

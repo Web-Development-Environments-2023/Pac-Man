@@ -3,8 +3,8 @@ var shape = new Object();
 var monster_1 = {type:"r"}
 var monster_2 = {type:"r"}
 var monster_3 = {type:"s"}
-var monster_4  = {type:"r"}
-var special_food = new Object();
+var monster_4  = {type:"r", eaten:false}
+var special_food = {lastFood:0}
 var gameMusic = new Audio('/music/backgroundMusic.mp3');
 var winnerMusic = new Audio('/music/winnerMusic.mp3');
 var gameOverMusic = new Audio('/music/gameoverMusic.mp3');
@@ -149,3 +149,30 @@ function showAndHideDivs(currentScreen)
 	}
 }
 
+
+
+// $(document).ready(function () 
+// {
+    
+// 	// Validate Username
+// 	$("form[name='gg']").validate({
+// 		rules: {
+// 			username:{
+// 				required: true,
+// 				lettersonly: true // todo: check that it doesnt allow spaces
+// 				// doesnt exist
+// 			},
+// 			password:{
+// 				required: true,
+// 				minlength: 6,
+// 				// atleast one letter + digit
+// 			},
+// 			fullname:{
+// 				required: true,
+// 				lettersonly: true
+// 			},
+// 			email:{
+// 				required: true,
+// 				lettersonly: true
+// 			},
+// }})});

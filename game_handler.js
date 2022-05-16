@@ -39,6 +39,7 @@ function Start() {
 	var pacman_remain = 1;
 	lifeFlag = false;
 	randWall = Math.floor((Math.random() * 4) + 0)
+	special_food.eaten = false; // spaciel food 
 	inGame = true; // inGame
 	updateMode() // defualt mode is Easy
 	startMusic() // start music
@@ -58,10 +59,13 @@ function Start() {
 
 			else {
 				var randomNum = Math.random();
-				if (randomNum <= (1.0 * food_remain) / cnt) {
+				if (randomNum <= (1.0 * food_remain) / cnt)
+				 {
 					food_remain--;
 					board[i][j] = 1; // draws food
-				} else if (randomNum < (1.0 * (pacman_remain + food_remain)) / cnt) {
+				}
+				 else if ((randomNum < (1.0 * (pacman_remain + food_remain)) / cnt) && not_on_monster_places(i, j))
+				 {
 					shape.i = i;
 					shape.j = j;
 					pacman_remain--;
@@ -353,30 +357,41 @@ function UpdatePosition()
 	else if (board[shape.i][shape.j] == 3) {
 		score = score + 25;
 	}
+	// special food
+	else if(board[shape.i][shape.j] == 11)
+	{
+		score = score + 50;
+		special_food.eaten = true;
+	}
 	// extra life
 	else if(board[shape.i][shape.j] == 10)
 	{
 		num_of_lives += 1
-		board[shape.i][shape.j] = 0
 	}
-	// else if(board[shape.i][shape.j] == 5 || board[shape.i][shape.j] == 6 ||board[shape.i][shape.j] == 7 ||board[shape.i][shape.j] == 8) // step on monster
-	// {
-	// 	if(randomizeWalls(shape.i, shape.j) == "r")
-	// 	{
-	// 		collision(false)
-	// 	}
-	// 	else
-	// 	{
-	// 		collision(true)
-	// 	}
-	// }
+	else if(board[shape.i][shape.j] == 5 || board[shape.i][shape.j] == 6 ||board[shape.i][shape.j] == 7 ||board[shape.i][shape.j] == 8) // step on monster
+	{
+		if(regularOrSpaciel(shape.i, shape.j) == "r")
+		{
+			collision(false)
+		}
+		else
+		{
+			collision(true)
+		}
+	}
 
 	board[shape.i][shape.j] = 9;
+
+
 
 
 	// Move the monsters every "monsterMovementMs" seconds
 	if(Date.now() - monsterTimeout >= monsterMovementMs)
 	{
+		if(!special_food.eaten)
+		{
+			updateSpecialFoodPosition();
+		}
     	updateMonsterPositions()
 		monsterTimeout = Date.now()
 	}
@@ -402,26 +417,60 @@ function UpdatePosition()
 	}
 }
 
-function updateSpecialFoodPosition(){
+function updateSpecialFoodPosition()
+{
 	let curr_i = special_food.i
 	let curr_j = special_food.j
-	let random_step = Math.floor((Math.random() * 4) + 0)
-	switch(random_step)
+
+	// set the current cell value
+	console.log(special_food.lastFood)
+	board[curr_i][curr_j] = special_food.lastFood;
+	console.log(board[curr_i][curr_j])
+
+	let random_step = 0;
+	while(random_step != -1)
 	{
-		case ('0'):
-			if (is_valid_move(curr_i+1, curr_j))
-			{
-				special_food.i = curr_i + 1
-				board
-			}
-
-		case ('1'):
-
-		case ('2'):
-
-		case ('3'):
-
-	}
+		random_step = Math.floor((Math.random() * 4) + 0);
+		switch(random_step)
+		{
+			case (0): // down
+				if (is_valid_move(curr_i+1, curr_j))
+				{
+					special_food.i = curr_i + 1
+					special_food.lastFood = board[curr_i+1][curr_j]
+					board[curr_i + 1][curr_j] = 11
+					random_step = -1;
+				}
+				break;
+			case (1): // up
+				if (is_valid_move(curr_i-1, curr_j))
+				{
+					special_food.i = curr_i - 1
+					special_food.lastFood = board[curr_i-1][curr_j]
+					board[curr_i - 1][curr_j] = 11
+					random_step = -1;
+				}
+				break;
+			case (2): // right
+				if (is_valid_move(curr_i, curr_j + 1))
+				{
+					special_food.j = curr_j + 1
+					special_food.lastFood = board[curr_i][curr_j + 1]
+					board[curr_i][curr_j + 1] = 11
+					random_step = -1;
+				}
+				break;
+			case (3): // left
+				if (is_valid_move(curr_i, curr_j - 1))
+				{
+					special_food.j = curr_j - 1
+					special_food.lastFood = board[curr_i][curr_j - 1]
+					board[curr_i1][curr_j - 1] = 11
+					random_step = -1;
+				}
+				break;
+		}
+	}	
 }
 
 function updateMonsterPositions()
@@ -551,7 +600,7 @@ function setMonsterOnCell(i, j, monster, isSpaciel)
 
 function is_valid_move(i, j) //[0,1,2,3,9]
 {
-	return ((i >= 0 || i < board.length) && (j >= 0 || j < board[0].length) && ((board[i][j] == 0) || (board[i][j] == 1) || (board[i][j] == 2) || (board[i][j] == 3) || (board[i][j] == 9)))
+	return ((i >= 0 && i < board.length) && (j >= 0 && j < board[0].length) && ((board[i][j] == 0) || (board[i][j] == 1) || (board[i][j] == 2) || (board[i][j] == 3) || (board[i][j] == 9)))
 }
 
 
@@ -885,6 +934,22 @@ window.addEventListener('keyup',
 false);
 
 
-// 2. pacman moving on monsters..
-// 3. start the pacman next to a monster?..
+// Helper function that checks if the current position is not one of the monster's initial position (0,0), (0,9), (9,0), (9,9)
+function not_on_monster_places(i, j)
+{
+	if ((i == 0 & j == 0) || (i == 9 & j == 0) || (i == 0 & j == 9) || (i == 9 & j == 9))
+	{
+		return false
+	}
+	else
+	{
+		return true
+	}
+}
+
+
 // 4. register page - validation
+// make the cherry move
+// write content in the about
+// finish css styling of buttons and shit
+// arrange the code write comments and shit
