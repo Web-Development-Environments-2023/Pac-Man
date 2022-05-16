@@ -948,8 +948,7 @@ function not_on_monster_places(i, j)
 }
 
 
-// 4. register page - validation
-// make the cherry move
+// register page - validation
 // write content in the about
 // finish css styling of buttons and shit
 // arrange the code write comments and shit
