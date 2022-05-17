@@ -633,7 +633,7 @@ function updateFooterView(bool)
 
 
 // Script for disable scrolling on the page using the up/down (inGame) 
-var keys = {};
+var keys = {}; 
 window.addEventListener("keydown",
     function(e){
         keys[e.keyCode] = true;

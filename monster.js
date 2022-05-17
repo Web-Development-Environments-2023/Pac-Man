@@ -9,7 +9,7 @@ function updateMonsterPositions()
     let movement_1;
     let movement_2;
     let movement_3;
-    let movement_4;
+    let movement_4; 
 
 	// For each monster, generate a list of the best moves that a monster can do to get close to the pacman
 	// Then, updates the monster position with that list (tries the best move and if impossible tries 2nd best etc..)

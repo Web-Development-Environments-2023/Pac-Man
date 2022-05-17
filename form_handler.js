@@ -96,7 +96,7 @@ function checkPwd(str) {
 	} else if (str.search(/[a-zA-Z]/) == -1) {
 		return("has no letters in it - you need at least 1 letter");
 	}
-	return true;
+	return true; 
 }
 
 // Function that checks if a given fullname has no digits in it
