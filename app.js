@@ -101,7 +101,7 @@ function showAndHideDivs(currentScreen)
 			$('#gameover_screen').hide();
 			$('#gamewinner_screen').hide();
 			updateFooterView(false);
-			break;
+			break; 
 
 		case "gameover_screen": // gameover mode
 			$('#start_screen').hide();
