@@ -1,7 +1,4 @@
-let red_monster = new Image();
-red_monster.src = "https://png2.cleanpng.com/sh/950efaa866f9473cac4b2f4cf9846796/L0KzQYm3VMA3N6V8iZH0aYP2gLBuTgBia15yedC2Z3jyg8X6TgBia15yedC2NXHmSIHphcdmOGc4Tqk3MEK5QYm5VcAyPWM4SKcENki6SYKCUb5xdpg=/kisspng-pac-man-ghosts-pac-man-5ac80be7e06367.0261825015230596879191.png"
-let pink_monster = new Image();
-pink_monster.src = "https://png2.cleanpng.com/sh/9a8e3a15ea191ee6827115384f4e66d1/L0KzQYm3U8E4N6FmiZH0aYP2gLBuTgBia15yedC2YXT5dbB7lgJme15uhp99aX3oPcHog71uaZ9ueZ95YXOwfbL1TfdidZYyiNt3az3qeLF6lL1kdJp1eeR9cz24cbLqgshmOWE5T6Q6ND63QYG9V8A4OmI6SqM7Nki8RoK3UcgzNqFzf3==/kisspng-pac-man-adventures-in-time-pac-mania-pac-man-game-pink-ghost-cliparts-5aacb8e1047214.4106707215212689610182.png"
+
 let heart = new Image();
 heart.src = "https://www.501commons.org/donate/Heart.jpg/image_preview"
 let special_food_img = new Image();
@@ -10,6 +7,10 @@ let wall_img = new Image();
 wall_img.src = "https://previews.123rf.com/images/dmitr1ch/dmitr1ch1702/dmitr1ch170200032/74410490-black-wall-brick-texture-dark-background.jpg"
 
 
+ 
+// Function that creates the board and randomly puts the food, walls, pacman and monsters
+// It then creates an interval that calls at each interval the 'updatePosition' function.
+// Below are the code numbers for the board:
 
 // 0 - Passage
 // 1 - Food 5 points
@@ -22,8 +23,7 @@ wall_img.src = "https://previews.123rf.com/images/dmitr1ch/dmitr1ch1702/dmitr1ch
 // 8 - Monster with food 25 points
 // 9 - Pacman
 // 10 - Lives (heart)
-// 11 - Spaciel Food 
-
+// 11 - Special Food
 function Start() {
 
 	clearInterval(interval)
@@ -35,19 +35,21 @@ function Start() {
 	pac_color = "yellow";
     num_of_lives = 5;
 	var cnt = 100; 
-	var food_remain = numOfBalls;
+	food_remain = numOfBalls;
 	var pacman_remain = 1;
 	lifeFlag = false;
 	randWall = Math.floor((Math.random() * 4) + 0)
-	special_food.eaten = false; // spaciel food 
-	inGame = true; // inGame
-	updateMode() // defualt mode is Easy
+	special_food.eaten = false; // special food that gives 50 points
+	inGame = true; // if user is in game mode
+	updateMode() // default mode is Easy
 	startMusic() // start music
 
-	gameMusic.pause();//////////////////////////////////////
+	gameMusic.pause();
 
 	setTableBorder('1') // set the table border
 	start_time = new Date();
+
+	// Builds the board (10X10 matrix)
 	for (var i = 0; i < 10; i++) {
 		board[i] = new Array();
 		for (var j = 0; j < 10; j++) 
@@ -78,12 +80,13 @@ function Start() {
 		}
 	}
 
-	// special food that gives 50 points
+	// special food that gives 50 points - puts it in random cell
 	let special_food_position = findRandomCell(board, 0)
 	special_food.i = special_food_position[0]
 	special_food.j = special_food_position[1]
 	board[special_food_position[0]][special_food_position[1]] = 11; 
 
+	// puts the remaining food that is left on the board
 	while (food_remain > 0) {
 		var emptyCell = findRandomCell(board, 0);
 		board[emptyCell[0]][emptyCell[1]] = 1;
@@ -105,9 +108,7 @@ function Start() {
 		board[food_cell_to_change[0]][food_cell_to_change[1]] = 2; //food of 15 points
 	}
 
-
-
-	// put the monsters on the board
+	// put the monsters on the board at the corners
 	let monster_positions = [[0,0], [9,9],[0,9],[9,0]]
 	for(let num_monst = 0; num_monst < numOfMonsters; num_monst++){
         // check if this position is empty
@@ -132,6 +133,7 @@ function Start() {
         monster_list[num_monst].j = monster_positions[num_monst][1];
 	}
 
+	// Creates event listeners for keydown and keyup events
 	keysDown = {};
 	addEventListener(
 		"keydown",
@@ -147,12 +149,14 @@ function Start() {
 		},
 		false
 	);
-    // UpdatePosition();
+    
+	food_remain = numOfBalls;
+	// Creates an inteval that calls the updatePosition function at each interval
 	monsterTimeout = Date.now();
 	interval = setInterval(UpdatePosition, 130);
 }
 
-// Function that finds a random cell with the given object code (example: 0 fo passage, 1 for food, 2 for pacman etc..)
+// Function that finds a random cell with the given object code (example: 0 fo passage, 1 for food etc..)
 function findRandomCell(board, object_code)
  {
 	var i = Math.floor(Math.random() * 9 + 1);
@@ -165,6 +169,7 @@ function findRandomCell(board, object_code)
 	return [i, j];
 }
 
+// Function that returns a personnalized key code of the pressed key
 function GetKeyPressed() 
 {
     if (keysDown[controls['up']]) {
@@ -181,19 +186,24 @@ function GetKeyPressed()
 	}
 }
 
+// Function that iterates on each cell of the board matrix and draws the correct item on each cell
 function Draw() {
 	canvas.width = canvas.width; //clean board
 	lblScore.value = score;
 	lblTime.value = time_elapsed;
 	lblLive.value = num_of_lives;
-	let monsterCounter = 0;
+
+	// Iterates on the board
 	for (var i = 0; i < 10; i++) {
 		for (var j = 0; j < 10; j++) {
 			var center = new Object();
 			center.x = i * 60 + 30;
 			center.y = j * 60 + 30;
-			if (board[i][j] == 9) { //draw pacman
+
+			if (board[i][j] == 9) { //draw pacman 
 				let pressed_key = GetKeyPressed()
+				
+				// Draws pacman in the correct direction
 				if (pressed_key == null){
 					DrawPacman(last_pac_direction, center)
 				}
@@ -221,14 +231,17 @@ function Draw() {
 				wall_img.width = "60"
 				context.drawImage(wall_img, center.x-30, center.y-30, "60", "60")
 			}
-						
+			
+			// Draws a monster
             else if (board[i][j] == 5 || board[i][j] == 6 || board[i][j] == 7 || board[i][j] == 8)
 			{ 
+				// Regular monster
 				if(regularOrSpaciel(i,j) == "r")
 				{
 					red_monster.width = "60"
 					context.drawImage(red_monster, center.x-30, center.y-30, "50", "50")
 				}
+				// Special monster (that does 2 time more damage)
 				else
 				{
 					pink_monster.width = "60"
@@ -236,7 +249,7 @@ function Draw() {
 				}
             }
 
-			else if (board[i][j] == 10) //draw heart
+			else if (board[i][j] == 10) //draw heart (bonus live)
 			{
 				
 				heart.width = "60"
@@ -251,6 +264,7 @@ function Draw() {
 	monsterCounter = 0;
 }
 
+// Function that draws the pacman in the given direction
 function DrawPacman(direction, center){
 
 	// UP
@@ -317,28 +331,33 @@ function DrawPacman(direction, center){
 		context.fillStyle = "black"; 
 		context.fill();
 	}
-	
 }
 
+// Function that update the position of the pacman, monsters and the special food
 function UpdatePosition()
  {
+	//First we get the key that has been pressed by the user
 	board[shape.i][shape.j] = 0;
 	var x = GetKeyPressed();
+	//Up
 	if (x == 1) {
 		if (shape.j > 0 && board[shape.i][shape.j - 1] != 4) {
 			shape.j--;
 		}
 	}
+	//Down
 	if (x == 2) {
 		if (shape.j < 9 && board[shape.i][shape.j + 1] != 4) {
 			shape.j++;
 		}
 	}
+	//Left
 	if (x == 3) {
 		if (shape.i > 0 && board[shape.i - 1][shape.j] != 4) {
 			shape.i--;
 		}
 	}
+	//Right
 	if (x == 4) {
 		if (shape.i < 9 && board[shape.i + 1][shape.j] != 4) {
 			shape.i++;
@@ -347,14 +366,17 @@ function UpdatePosition()
 
 	// 5 point food
 	if (board[shape.i][shape.j] == 1) {
+		food_remain --;
 		score = score + 5;
 	}
 	// 15 point food
 	else if (board[shape.i][shape.j] == 2) {
+		food_remain--;
 		score = score + 15;
 	}
 	// 25 point food
 	else if (board[shape.i][shape.j] == 3) {
+		food_remain--;
 		score = score + 25;
 	}
 	// special food
@@ -368,6 +390,8 @@ function UpdatePosition()
 	{
 		num_of_lives += 1
 	}
+
+	// Monsters
 	else if(board[shape.i][shape.j] == 5 || board[shape.i][shape.j] == 6 ||board[shape.i][shape.j] == 7 ||board[shape.i][shape.j] == 8) // step on monster
 	{
 		if(regularOrSpaciel(shape.i, shape.j) == "r")
@@ -382,9 +406,6 @@ function UpdatePosition()
 
 	board[shape.i][shape.j] = 9;
 
-
-
-
 	// Move the monsters every "monsterMovementMs" seconds
 	if(Date.now() - monsterTimeout >= monsterMovementMs)
 	{
@@ -396,17 +417,22 @@ function UpdatePosition()
 		monsterTimeout = Date.now()
 	}
 
+	// Updates the game score and time and checks if the game needs to be finished
 	var currentTime = new Date();
 	time_elapsed = (currentTime - start_time) / 1000;
 	if (score >= 100 && time_elapsed <= 20) {
 		pac_color = "green";
 	}
-	if (score >= 10000) ///////////////////////////////////////////////////////
+
+	console.log(food_remain)
+	// If food is finished
+	if (food_remain == 0) ///////////////////////////////////////////////////////TODO change here
 	{
 		window.clearInterval(interval);
 		winnerMusic.play(); // Play winner Music
 		showAndHideDivs('gamewinner_screen')
 	}
+	//Checks if time is over
 	if(time_elapsed >= timeForGame)
 	{
 		gameOver("t")
@@ -417,15 +443,14 @@ function UpdatePosition()
 	}
 }
 
+// Function that updates the position of the special fod
 function updateSpecialFoodPosition()
 {
 	let curr_i = special_food.i
 	let curr_j = special_food.j
 
-	// set the current cell value
-	console.log(special_food.lastFood)
+	// set the current cell value to be what it was before
 	board[curr_i][curr_j] = special_food.lastFood;
-	console.log(board[curr_i][curr_j])
 
 	let random_step = 0;
 	while(random_step != -1)
@@ -465,7 +490,7 @@ function updateSpecialFoodPosition()
 				{
 					special_food.j = curr_j - 1
 					special_food.lastFood = board[curr_i][curr_j - 1]
-					board[curr_i1][curr_j - 1] = 11
+					board[curr_i][curr_j - 1] = 11
 					random_step = -1;
 				}
 				break;
@@ -473,321 +498,21 @@ function updateSpecialFoodPosition()
 	}	
 }
 
-function updateMonsterPositions()
-{
-    let movement_1;
-    let movement_2;
-    let movement_3;
-    let movement_4;
-	switch(numOfMonsters)
-	{    
-		case("4"):
-			movement_1 = predict_best_moves(shape, monster_1)
-			movement_2 = predict_best_moves(shape, monster_2)
-			movement_3 = predict_best_moves(shape, monster_3)
-			movement_4 = predict_best_moves(shape, monster_4)
-			updateMonsterPose(monster_1, movement_1, board[monster_1.i][monster_1.j] - 5, false) // the difference between passage/food with and without a monster on it is 5 
-			updateMonsterPose(monster_2, movement_2, board[monster_2.i][monster_2.j] - 5, false) // for example, if i had 6 (5P food with monster on it) than i will have 1 at the end (only 5P food)
-			updateMonsterPose(monster_3, movement_3, board[monster_3.i][monster_3.j] - 5, true)
-			updateMonsterPose(monster_4, movement_4, board[monster_4.i][monster_4.j] - 5, false)
-			break;
-		case("3"):
-            movement_1 = predict_best_moves(shape, monster_1)
-			movement_2 = predict_best_moves(shape, monster_2)
-			movement_3 = predict_best_moves(shape, monster_3)
-			updateMonsterPose(monster_1, movement_1, board[monster_1.i][monster_1.j] - 5, false)
-			updateMonsterPose(monster_2, movement_2, board[monster_2.i][monster_2.j] - 5, false)
-			updateMonsterPose(monster_3, movement_3, board[monster_3.i][monster_3.j] - 5, true)
-			break;
-		case("2"):
-			movement_1 = predict_best_moves(shape, monster_1)
-			movement_2 = predict_best_moves(shape, monster_2)
-			updateMonsterPose(monster_1, movement_1, board[monster_1.i][monster_1.j] - 5, false)
-			updateMonsterPose(monster_2, movement_2, board[monster_2.i][monster_2.j] - 5, false)
-			break;
-		case("1"):
-            movement_1 = predict_best_moves(shape, monster_1)
-			updateMonsterPose(monster_1, movement_1, board[monster_1.i][monster_1.j] - 5, false)
-			break;
-	}
-}
-
-function updateMonsterPose(monster, movements, cellValue, isSpaciel)
-{
-	for(let i = 0; i < movements.length; i++)
-	{
-		switch(movements[i])
-		{
-			// UP
-			case 1:
-				if(is_valid_move(monster.i - 1, monster.j))
-				{
-					board[monster.i][monster.j] = cellValue // set current cell value
-					setMonsterOnCell(monster.i - 1, monster.j, monster, isSpaciel) // set new cell value
-					return;
-				}
-				break;
-			// DOWN
-			case 2:
-				if(is_valid_move(monster.i + 1, monster.j))
-				{
-					board[monster.i][monster.j] = cellValue // set current cell value
-					setMonsterOnCell(monster.i + 1, monster.j, monster, isSpaciel) // set new cell value
-					return;
-				}
-				break;
-			// RIGHT
-			case 3:
-				if(is_valid_move(monster.i, monster.j + 1))
-				{
-					board[monster.i][monster.j] = cellValue // set current cell value
-					setMonsterOnCell(monster.i, monster.j + 1, monster, isSpaciel) // set new cell value
-					return;
-				}
-				break;
-			// LEFT
-			case 4:
-				if(is_valid_move(monster.i, monster.j - 1))
-				{
-					board[monster.i][monster.j] = cellValue // set current cell value
-					setMonsterOnCell(monster.i, monster.j - 1, monster, isSpaciel) // set new cell value
-					return;
-				}
-				break;
-		}
-        
-	}
-}
-	
 
 
-function setMonsterOnCell(i, j, monster, isSpaciel)
-{
-	if(board[i][j] == 0)
-    {
-		board[i][j] = 5 // monster on empty cell
-        monster.i = i;
-        monster.j = j;
-    }
-	else if(board[i][j] == 1) 
-	{
-        board[i][j] = 6 // monster on cell with 5 point food
-        monster.i = i;
-        monster.j = j;
-    }
-	else if(board[i][j] == 2) 
-	{
-        board[i][j] = 7 // monster on cell with 15 point food
-        monster.i = i;
-        monster.j = j;
-    }
-	else if(board[i][j] == 3) 
-	{
-        board[i][j] = 8 // monster on cell with 25 point food
-        monster.i = i;
-        monster.j = j;
-    }
-	//TODO how do we want to treat a monster on a heart cell???????????
-	else // monster on cell with pacman!
-
-	{
-        collision(isSpaciel)
-	}
-
-    
-}
 
 
-function is_valid_move(i, j) //[0,1,2,3,9]
+// Function that returns a boolean value if a given i and j of a cell is valid (not out of border or wall)
+function is_valid_move(i, j)
 {
 	return ((i >= 0 && i < board.length) && (j >= 0 && j < board[0].length) && ((board[i][j] == 0) || (board[i][j] == 1) || (board[i][j] == 2) || (board[i][j] == 3) || (board[i][j] == 9)))
 }
 
 
 
-function predict_best_moves(pacman, monster){
-    let result = [];
-    diff_i = pacman.i - monster.i;
-    diff_j = pacman.j - monster.j;
-
-    // UP/DOWN first
-    if (Math.abs(diff_i) > Math.abs(diff_j))
-	{ 
-        //DOWN
-        if (diff_i > 0){
-            result[0] = 2;
-            // RIGHT is better than DOWN
-            if (diff_j > 0){
-                result[1] = 3;
-                result[2] = 4;
-            }
-            // LEFT and then RIGHT (if diff_j == 0 it doesn't matter if going left or right)
-            else{
-                result[1] = 4;
-                result[2] = 3;
-            }
-            // UP is the worst option
-            result[3] = 1;
-        }
-
-        //UP
-        else{
-            result[0] = 1
-            // RIGHT is better than LEFT
-            if (diff_j > 0){
-                result[1] = 3;
-                result[2] = 4;
-            }
-            // LEFT and then RIGHT (if diff_j == 0 it doesn't matter if going left or right)
-            else{
-                result[1] = 4;
-                result[2] = 3;
-            }
-            // DOWN is the worst option
-            result[3] = 2;
-        }
-    }
-
-    // LEFT/RIGHT first
-    else{
-        //RIGHT
-        if (diff_j > 0){
-            result[0] = 3;
-            //DOWN is better than UP
-            if (diff_i > 0){
-                result[1] = 2;
-                result[2] = 1;
-            }
-            //UP and then DOWN (if diff_i == 0 it doesn't matter if going up or down)
-            else{
-                result[1] = 1;
-                result[2] = 2;
-            }
-            //LEFT is the worst option
-            result[3] = 4;
-        }
-
-        //LEFT
-        else{
-            result[0] = 4;
-            //DOWN is better than UP
-            if (diff_i > 0){
-                result[1] = 2;
-                result[2] = 1;
-            }
-            //UP and then DOWN (if diff_i == 0 it doesn't matter if going up or down)
-            else{
-                result[1] = 1;
-                result[2] = 2;
-            }
-            //RIGHT is the worst option
-            result[3] = 3;
-        }
-    }
-    return result
-}
-
-function gameOver(end_game_reason)
-{
-	if(end_game_reason == 'd') // died (monster eat the pacman)
-	{
-		$('#gameover_text').html("You have lost the game!" + '<br>' + "No lives have left.." + '<h1>' + "Loser!" + '</h1>' + '<br>')
-		showAndHideDivs('gameover_screen')
-	}
-	else if(end_game_reason == 't') // time over
-	{
-		if(score < 100)
-		{
-			$('#gameover_text').html("You have lost the game!" + '<br>' + "The time is over.." + '<h2>' + "You are better than " + score + " points!" + '</h2>' + '<br>')
-			showAndHideDivs('gameover_screen')
-		}
-		else
-		{
-			$('#gameover_text').html("You have gained more than 100 points!" + '<br>' + "The time is over.." + '<h2>' + "Winner!!!" + '</h2>' + '<br>')
-			showAndHideDivs('gameover_screen')
-		}
-	}
-	gameOverMusic.play(); // play GameOver music
-	return;
-}
-
-function collision(isSpaciel)
-{
-
-	num_of_lives--;
-	score = Math.max(0, score - 10);
-
-	if(isSpaciel) // check if it's the spaciel monster
-	{
-		num_of_lives--;
-		score = Math.max(0, score - 10);
-	}
-
-	if (num_of_lives <= 0)
-    {
-		clearInterval(interval)
-		gameOver('d')
-		return;
-    }
-    else
-    {
-		if((num_of_lives == 1) && (!lifeFlag)) // check if we need to add a bonus live
-		{
-			let indexArr = [[2, 2], [8, 8], [2, 8], [8, 2]];
-			let randNum = Math.floor((Math.random() * 4) + 0)
-			lifeFlag = true;
-			board[indexArr[randNum][0]][indexArr[randNum][1]] = 10;
-		}
-    
-        //Resets the monsters to the corners of the map
-        let monster_positions = [[0,0], [9,9],[0,9],[9,0]]
-
-        for(let num_monst = 0; num_monst < numOfMonsters; num_monst++)
-        {
-            //Update the cell where the monster were to be a passage or food
-            if(board[monster_list[num_monst].i][monster_list[num_monst].j] == 5) //passage
-            {
-                board[monster_list[num_monst].i][monster_list[num_monst].j] = 0;
-            }
-            else if (board[monster_list[num_monst].i][monster_list[num_monst].j] == 6) // 5 point food
-            {
-                board[monster_list[num_monst].i][monster_list[num_monst].j] = 1;
-            }
-			else if (board[monster_list[num_monst].i][monster_list[num_monst].j] == 7)// 15 point food
-            {
-                board[monster_list[num_monst].i][monster_list[num_monst].j] = 2;
-            }
-			else if (board[monster_list[num_monst].i][monster_list[num_monst].j] == 8)// 25 point food
-            {
-                board[monster_list[num_monst].i][monster_list[num_monst].j] = 3;
-            }
-			
-            board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] = 5;
-            monster_list[num_monst].i = monster_positions[num_monst][0];
-            monster_list[num_monst].j = monster_positions[num_monst][1];
-            
-        }
-
-        // Resets the pacman in a random location (midfield)
-        let rand_pacman_i;
-        let rand_pacman_j;
-        do{
-            rand_pacman_i = Math.floor((Math.random() * 4) + 3)
-            rand_pacman_j = Math.floor((Math.random() * 4) + 3)
-
-        }
-        while(!is_valid_move(rand_pacman_i, rand_pacman_j))
-        
-        board[shape.i][shape.j] = 0;
-        shape.i = rand_pacman_i;
-        shape.j = rand_pacman_j;
-        board[rand_pacman_i][rand_pacman_j] = 9;
 
 
-    }
-}
-
-
+// Function that handles the pause/resume button
 function pauseResume()
 {
 	pauseCounter = pauseCounter + 1;
@@ -806,6 +531,7 @@ function pauseResume()
 	}
 }
 
+// Function that changes the game mode between easy/medium/hard. It changes the interval for updating monster positions therefore it changes their speed
 function updateMode()
 {
 	let selectedMode = $('#mode').val();
@@ -823,50 +549,59 @@ function updateMode()
 	}
 }
 
+// Function that updates the 5 point food color from the user's input
 function update_5_point_food()
 {
 	food_5_point_color = $('#5_point_color').val()
 }
 
+// Function that updates the 15 point food color from the user's input
 function update_15_point_food()
 {
 	food_15_point_color = $('#15_point_color').val()
 }
 
+// Function that updates the 25 point food color from the user's input
 function update_25_point_food()
 {
 	food_25_point_color = $('#25_point_color').val()
 }
 
+// Function that updates the table border
 function setTableBorder(num)
 {
 	let gameTable = $("#settingsAndGame");
 	gameTable.attr('border', num);
 }
 
+// Function that updates the name of the logged user
 function updateLogeedUser()
 {
 	$('#player_name').html('<h2 style="color: #3399ff;">' + "Player Name: " + connectedPlayer + '</h2>' + '<br>')
 }
 
+// Function that starts the music
 function startMusic()
 {
 	gameMusic.loop = true;
 	gameMusic.play();
 }
 
+// Function that stops the winner music
 function stopWinnerMusic()
 {
 	winnerMusic.pause();
 	winnerMusic.currentTime = 0;	
 }
 
+// Function that stops the 'game over' music
 function stopGameOverMusic()
 {
 	gameOverMusic.pause();
 	gameOverMusic.currentTime = 0;	
 }
 
+// Function that returns a boolean value of a check if the given position i,j on the board is a wall
 function randomizeWalls(i, j, randWall)
 {
 	let wallsList = [[[1,3],[1,8], [1,1], [1,2], [3,3], [3,4], [3,5], [6,1], [6,2], [2,5], [7,7], [6,7], [5,7], [6,4], [4,7], [7,6], [7,5], [7,4], [2,7], [8,7]], [[1,8],[8,1],[1,2],[1,1],[5,5], [5,6],[7,5],[3,7],[4,4], [2,5], [3,3], [7,8], [7,2], [6,3]], [[7,7],[7,8],[6,8],[5,8],[4,8],[4,1],[5,1],[6,1],[7,1], [4,4],[7,6],[2,7],[6,6], [2,3], [2,4], [2,1], [2,5], [7,3], [8,3],[7,4]], [[5,6], [6,5],[3,3],[7,7],[6,2],[2,3],[4,4], [2,7], [2,8]]]
@@ -881,7 +616,7 @@ function randomizeWalls(i, j, randWall)
 	return false;
 }
 
-
+// Function that updates the footer style to match different screens
 function updateFooterView(bool)
 {
 	let footer = document.getElementById("footer");
@@ -895,27 +630,9 @@ function updateFooterView(bool)
 	}
 }
 
-function regularOrSpaciel(row, col)
-{
-	if(monster_1.i == row && monster_1.j == col)
-	{
-		return  monster_1.type;
-	}
-	else if (monster_2.i == row && monster_2.j == col)
-	{
-		return  monster_2.type;
-	}
-	else if (monster_3.i == row && monster_3.j == col)
-	{
-		return  monster_3.type;
-	}
-	else if (monster_4.i == row && monster_4.j == col)
-	{
-		return  monster_4.type;
-	}
-}
 
-// script for disable scrolling the page using the up/down (inGame) 
+
+// Script for disable scrolling on the page using the up/down (inGame) 
 var keys = {};
 window.addEventListener("keydown",
     function(e){
@@ -934,21 +651,8 @@ window.addEventListener('keyup',
 false);
 
 
-// Helper function that checks if the current position is not one of the monster's initial position (0,0), (0,9), (9,0), (9,9)
-function not_on_monster_places(i, j)
-{
-	if ((i == 0 & j == 0) || (i == 9 & j == 0) || (i == 0 & j == 9) || (i == 9 & j == 9))
-	{
-		return false
-	}
-	else
-	{
-		return true
-	}
-}
 
 
 // register page - validation
 // write content in the about
 // finish css styling of buttons and shit
-// arrange the code write comments and shit

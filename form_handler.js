@@ -1,5 +1,5 @@
 
-
+// Function that checks the login form
 function check_login_form()
 {
 	let username = $('#usernameL').val()
@@ -29,6 +29,9 @@ function check_login_form()
 	}
 
 }
+
+
+
 
 // function check_register_form(){
 // 	let username = $('#username').val()
@@ -114,9 +117,11 @@ function checkEmail(email) {
 	return regex.test(email);
   }
   
-  function myKeyPress(e, key) // Function for updating the game controls (up,down,left,right)
+  // Function for updating the game controls (up,down,left,right)
+  function myKeyPress(e, key) 
   {
 	var keynum;
+	// Waits for the event
 	if(window.event)                
 		keynum = e.keyCode;
         if (keynum == 9){
@@ -167,6 +172,7 @@ function checkEmail(email) {
 		wantedKey.val('')
   }
 
+  // Function that checks if a pressed keynum has been configured in the game and needs an action to be performed
   function keynumExist(keynum)
   {
 	let values = (Object.values(controls));
@@ -175,9 +181,10 @@ function checkEmail(email) {
 	return false 
   }
 
+  // Function that sets default values for the movement of the pacman (up, down, left, right arrows)
   function defaultKeySettings()
   {
-	  // setting the default moving controls
+	  
 	controls = {'up':38, 'down':40, 'right':39, 'left':37}
 	$('#moveup').val("up")
 	$('#movedown').val("down")
@@ -185,6 +192,7 @@ function checkEmail(email) {
 	$('#moveleft').val("left")
   }
 
+  // Function that sets random settings for the game
   function randomGameSettings(){
 	// setting the numbers of balls
 	$('#numofballs').val(Math.floor((Math.random() * 41) + 50))
@@ -194,6 +202,7 @@ function checkEmail(email) {
 	$('#numofmonsters').val(Math.floor((Math.random() * 4) + 1))
   }
 
+  // Function that checks that the settings for the game are correct
   function check_settings_form(){
 	// Extracts all the inputs from the form and saves them to variables
 	let up = $('#moveup').val()
@@ -217,16 +226,19 @@ function checkEmail(email) {
 		return
 	}
 
+	// Checks the constraint of the number of balls
 	if (numOfBalls < 50 || numOfBalls > 90){
 		window.alert('Number of balls should be between 50-90.')
 		return
 	}
 
+	// Checks the constraint of the game time
 	if (timeForGame < 60){
 		window.alert('Game time should be more than 60 sec.')
 		return
 	}
 
+	// Checks the constraint on the number of monsters
 	if (numOfMonsters < 1 || numOfMonsters > 4){
 		window.alert('Number of monsters should be between 1-4.')
 		return
