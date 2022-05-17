@@ -19,6 +19,7 @@ var users = {};
 var controls = {}
 var numOfMonsters;
 var numOfBalls;
+var food_remain;
 var timeForGame;
 var last_pac_direction;
 var num_of_lives;
@@ -37,24 +38,26 @@ var food_25_point_color;
 
 
 
-
+// Shows the start screen after the DOM is loaded
 $(document).ready(function()
  {
 	showAndHideDivs("start_screen")
-	// showAndHideDivs("game_screen")
 	users["k"] = "k"
 });
 
+// Function that is called when the register button is pressed
 function Register()
 {
 	showAndHideDivs("register_screen")
 }
 
+// Function that is called when the login button is pressed
 function Login()
 {
 	showAndHideDivs("login_screen")
 }
 
+// Function that hides and shows different divs
 function showAndHideDivs(currentScreen)
 {
 	switch(currentScreen)
@@ -143,7 +146,7 @@ function showAndHideDivs(currentScreen)
 		gameMusic.currentTime = 0;	
 		inGame = false;
 	}
-	if((currentScreen != "game_screen") && (currentScreen != "gamewinner_screen") && (currentScreen != "gameover_screen") && (currentScreen != "setting_screen"))
+	if((currentScreen != "game_screen") && (currentScreen != "gamewinner_screen") && (currentScreen != "gameover_screen") && (currentScreen != "setting_screen") && (currentScreen != "start_screen"))
 	{
 		updateFooterView(true);
 	}

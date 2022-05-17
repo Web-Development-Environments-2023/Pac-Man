@@ -91,7 +91,7 @@ cursor:pointer;
 }
 
 #footer {
-  position: fixed;
+  position: relative;
   bottom: 3%;
   width: 100%;
   /* Height of the footer*/ 
