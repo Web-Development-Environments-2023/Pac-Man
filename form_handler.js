@@ -52,14 +52,15 @@ $().ready(function(){
 			birthdate:{date: true}
 		},
 		messages: {
-		    username: "<br/>Error validation message",
+		    username: "<br/>Please provide a username",
 		    password: {
 			required: "<br/>Please provide a password",
 			minlength: "<br/>Your password must be at least 6 characters long",
 			passCheck: "<br/>Your password must contain numbers and letters"},  
 		    fullname: "<br/>Please enter a valid full name",
 			email: "<br/>Please enter a valid email address"
-		},
+			
+		},       
 	})
 });
 

@@ -44,7 +44,7 @@ function Start() {
 	updateMode() // default mode is Easy
 	startMusic() // start music
 
-	// gameMusic.pause();
+	//gameMusic.pause(); 
 
 	setTableBorder('1') // set the table border
 	start_time = new Date();
@@ -423,7 +423,6 @@ function UpdatePosition()
 	if (score >= 100 && time_elapsed <= 20) {
 		pac_color = "green";
 	}
-
 	// If food is finished
 	if (food_remain == 0) ///////////////////////////////////////////////////////TODO change here
 	{
