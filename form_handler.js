@@ -30,13 +30,19 @@ function check_login_form()
 
 }
 
+$.validator.addMethod("fullnameCheck", function(value) {
+  return /(^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$)\b/.test(value);
+}, 'full name check');
+
+//   return /(([a-zA-Z])\s([a-zA-Z]))\b/.test(value);
+
+
+$.validator.addMethod("passCheck", function(value){
+	return checkPwd(value)}, 'password check');
+
+
 $().ready(function(){
-	$.validator.addMethod("fullnameCheck", function(value) {
-		return /(([a-zA-Z])\s([a-zA-Z]))\b/.test(value);
-	  });
-
-	$.validator.addMethod("passCheck", checkPwd(value));
-
+	
 	$("#register_form").validate({
 		rules: {
 			username:{required: true},
@@ -56,6 +62,8 @@ $().ready(function(){
 		},
 	})
 });
+
+
 
   
   
@@ -169,11 +177,11 @@ function submit()
 // Function that checks if a given password is more than 6 char and has digits and letters
 function checkPwd(str) {
 	if (str.length < 6) {
-		return("is too short - you need at least 6 characters");
+		return false;
 	} else if (str.search(/\d/) == -1) {
-		return("has no numbers in it - you need at least 1 digit");
+		return false;
 	} else if (str.search(/[a-zA-Z]/) == -1) {
-		return("has no letters in it - you need at least 1 letter");
+		return false;
 	}
 	return true; 
 }
@@ -181,20 +189,20 @@ function checkPwd(str) {
 // Function that checks if a given fullname has no digits in it
 function checkFullname(str) {
 	if (str.search(/\d/) != -1) {
-		return("has numbers in it - a name can't have numbers");
+		return false;
 	}
 	return true;
 }
 
-// Function that checks if a given email is valid
-function checkEmail(email) {
-	// if (str.search(/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/) != -1) {
-	// 	return("is not a valid email address");
-	// }
-	// return true;
-	var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-	return regex.test(email);
-  }
+// // Function that checks if a given email is valid
+// function checkEmail(email) {
+// 	// if (str.search(/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/) != -1) {
+// 	// 	return("is not a valid email address");
+// 	// }
+// 	// return true;
+// 	var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+// 	return regex.test(email);
+//   }
   
   // Function for updating the game controls (up,down,left,right)
   function myKeyPress(e, key) 

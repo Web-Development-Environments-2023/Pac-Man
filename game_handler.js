@@ -44,7 +44,7 @@ function Start() {
 	updateMode() // default mode is Easy
 	startMusic() // start music
 
-	gameMusic.pause();
+	// gameMusic.pause();
 
 	setTableBorder('1') // set the table border
 	start_time = new Date();
@@ -424,7 +424,6 @@ function UpdatePosition()
 		pac_color = "green";
 	}
 
-	console.log(food_remain)
 	// If food is finished
 	if (food_remain == 0) ///////////////////////////////////////////////////////TODO change here
 	{
@@ -638,8 +637,8 @@ window.addEventListener("keydown",
     function(e){
         keys[e.keyCode] = true;
         switch(e.keyCode){
-            case 37: case 39: case 38:  case 40: // Arrow keys
-            case 32: e.preventDefault(); break; // Space
+            case 37: case 39: case 38:  case 40: e.preventDefault(); break; // Arrow keys
+            // case 32: e.preventDefault(); break; // Space
             default: break; // do not block other keys
         }
     },
