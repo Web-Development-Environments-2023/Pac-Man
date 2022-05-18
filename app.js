@@ -5,9 +5,9 @@ var monster_2 = {type:"r"}
 var monster_3 = {type:"s"}
 var monster_4  = {type:"r", eaten:false}
 var special_food = {lastFood:0}
-var gameMusic = new Audio('/music/backgroundMusic.mp3');
-var winnerMusic = new Audio('/music/winnerMusic.mp3');
-var gameOverMusic = new Audio('/music/gameoverMusic.mp3');
+var gameMusic = new Audio('/resources/music/backgroundMusic.mp3');
+var winnerMusic = new Audio('/resources/music/winnerMusic.mp3');
+var gameOverMusic = new Audio('/resources/music/gameoverMusic.mp3');
 var monster_list = [monster_1, monster_2, monster_3, monster_4];
 var board;
 var score;
