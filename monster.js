@@ -1,7 +1,7 @@
 let red_monster = new Image();
-red_monster.src = "https://png2.cleanpng.com/sh/950efaa866f9473cac4b2f4cf9846796/L0KzQYm3VMA3N6V8iZH0aYP2gLBuTgBia15yedC2Z3jyg8X6TgBia15yedC2NXHmSIHphcdmOGc4Tqk3MEK5QYm5VcAyPWM4SKcENki6SYKCUb5xdpg=/kisspng-pac-man-ghosts-pac-man-5ac80be7e06367.0261825015230596879191.png"
+red_monster.src = "/resources/images/red ghost.png"
 let pink_monster = new Image();
-pink_monster.src = "https://png2.cleanpng.com/sh/9a8e3a15ea191ee6827115384f4e66d1/L0KzQYm3U8E4N6FmiZH0aYP2gLBuTgBia15yedC2YXT5dbB7lgJme15uhp99aX3oPcHog71uaZ9ueZ95YXOwfbL1TfdidZYyiNt3az3qeLF6lL1kdJp1eeR9cz24cbLqgshmOWE5T6Q6ND63QYG9V8A4OmI6SqM7Nki8RoK3UcgzNqFzf3==/kisspng-pac-man-adventures-in-time-pac-mania-pac-man-game-pink-ghost-cliparts-5aacb8e1047214.4106707215212689610182.png"
+pink_monster.src =  "/resources/images/pink ghost.png"
 
 // Function that updates the monsters positions
 function updateMonsterPositions()

@@ -30,7 +30,86 @@ function check_login_form()
 
 }
 
+$().ready(function(){
+	$.validator.addMethod("fullnameCheck", function(value) {
+		return /(([a-zA-Z])\s([a-zA-Z]))\b/.test(value);
+	  });
 
+	$.validator.addMethod("passCheck", checkPwd(value));
+
+	$("#register_form").validate({
+		rules: {
+			username:{required: true},
+			password:{required: true, minlength: 6, passCheck: true},
+			fullname:{required: true, fullnameCheck: true},
+			email:{required: true, email: true},
+			birthdate:{date: true}
+		},
+		messages: {
+		    username: "Please provide a username",
+		    password: {
+			required: "Please provide a password",
+			minlength: "Your password must be at least 6 characters long",
+			passCheck: "Your password must contain numbers and letters"},  
+		    fullname: "Please enter a valid full name",
+			email: "Please enter a valid email address"
+		},
+	})
+});
+
+  
+  
+
+// $(document).ready(function(){
+//   $(function() {
+// 	  $("form[name='register_form']").validate({
+// 		rules: {
+// 			username:{required: true},
+// 			password:{required: true, minlength: 6, passCheck: true},
+// 			fullname:{required: true, fullnameCheck: true},
+// 			email:{required: true, email: true},
+// 			birthdate:{date: true}
+// 		},
+// 		messages: {
+// 		    username: "Please provide a username",
+// 		    password: {
+// 			required: "Please provide a password",
+// 			minlength: "Your password must be at least 6 characters long",
+// 			passCheck: "Your password must contain numbers and letters"},  
+// 		    fullname: "Please enter a valid full name",
+// 			email: "Please enter a valid email address"
+// 		},	 
+// 	 });
+// 	});
+		 
+		
+
+
+function submit()
+{
+	let username = $('#username').val()
+	let password = $('#password').val()
+	let fullname = $('#fullname').val()
+	let email = $('#email').val()
+	let birthdate = $('#birthdate').val()
+
+	//	Checks that all the fields are not empty
+	if ((username == '') || (password == '') || (fullname == '') || (email == '') || (birthdate == '')){
+		// window.alert('Missing values - please fill all the values to register')
+		return
+	}
+
+	// Check that the username is not exist in the system
+	if(username in users)
+	{
+		window.alert('Your username \'' + username + '\' already exists in the system' )
+		return
+	}
+
+	users[username] = password
+	window.alert('You have been Registered Successfully' )
+	showAndHideDivs("login_screen")
+}
 
 
 // function check_register_form(){

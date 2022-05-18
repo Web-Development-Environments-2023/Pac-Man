@@ -1,10 +1,10 @@
 
 let heart = new Image();
-heart.src = "https://www.501commons.org/donate/Heart.jpg/image_preview"
+heart.src = "/resources/images/heart.png"
 let special_food_img = new Image();
-special_food_img.src = "https://png2.cleanpng.com/sh/bbfd0b4af505fdaca3828a11b463a601/L0KzQYm3U8IxN5l6iZH0aYP2gLBuTgBia15yedC2Y3jogsPCTgBwe6UygeY2bnB3dX77TgNpcaN5ReV9aXPudcO0kPFkdZJzRdVxZYL1iX73jvcuPZJnSaY8OEDmQ4LsVscvQWg9UaM9N0O0RYO4VcY3PWo3T6sEMj7zfri=/kisspng-pac-man-cherry-post-it-note-t-shirt-sticker-pacman-cherry-png-5ab14380c31e67.9789147315215665927992.png"
+special_food_img.src = "/resources/images/cherry.png"
 let wall_img = new Image();
-wall_img.src = "https://previews.123rf.com/images/dmitr1ch/dmitr1ch1702/dmitr1ch170200032/74410490-black-wall-brick-texture-dark-background.jpg"
+wall_img.src = "/resources/images/wall.png"
 
 
  
@@ -654,5 +654,4 @@ false);
 
 
 // register page - validation
-// write content in the about
 // finish css styling of buttons and shit
