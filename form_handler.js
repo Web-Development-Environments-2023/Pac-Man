@@ -34,13 +34,13 @@ $.validator.addMethod("fullnameCheck", function(value) {
   return /(^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$)\b/.test(value);
 }, 'full name check');
 
-//   return /(([a-zA-Z])\s([a-zA-Z]))\b/.test(value);
 
 
 $.validator.addMethod("passCheck", function(value){
 	return checkPwd(value)}, 'password check');
 
 
+// Validate function
 $().ready(function(){
 	
 	$("#register_form").validate({
@@ -52,45 +52,16 @@ $().ready(function(){
 			birthdate:{date: true}
 		},
 		messages: {
-		    username: "Please provide a username",
+		    username: "<br/>Error validation message",
 		    password: {
-			required: "Please provide a password",
-			minlength: "Your password must be at least 6 characters long",
-			passCheck: "Your password must contain numbers and letters"},  
-		    fullname: "Please enter a valid full name",
-			email: "Please enter a valid email address"
+			required: "<br/>Please provide a password",
+			minlength: "<br/>Your password must be at least 6 characters long",
+			passCheck: "<br/>Your password must contain numbers and letters"},  
+		    fullname: "<br/>Please enter a valid full name",
+			email: "<br/>Please enter a valid email address"
 		},
 	})
 });
-
-
-
-  
-  
-
-// $(document).ready(function(){
-//   $(function() {
-// 	  $("form[name='register_form']").validate({
-// 		rules: {
-// 			username:{required: true},
-// 			password:{required: true, minlength: 6, passCheck: true},
-// 			fullname:{required: true, fullnameCheck: true},
-// 			email:{required: true, email: true},
-// 			birthdate:{date: true}
-// 		},
-// 		messages: {
-// 		    username: "Please provide a username",
-// 		    password: {
-// 			required: "Please provide a password",
-// 			minlength: "Your password must be at least 6 characters long",
-// 			passCheck: "Your password must contain numbers and letters"},  
-// 		    fullname: "Please enter a valid full name",
-// 			email: "Please enter a valid email address"
-// 		},	 
-// 	 });
-// 	});
-		 
-		
 
 
 function submit()
@@ -116,63 +87,15 @@ function submit()
 
 	users[username] = password
 	window.alert('You have been Registered Successfully' )
+	$('#username').val("")
+	$('#password').val("")
+	$('#fullname').val("")
+	$('#email').val("")
+	$('#birthdate').val("")
 	showAndHideDivs("login_screen")
 }
 
 
-// function check_register_form(){
-// 	let username = $('#username').val()
-// 	let password = $('#password').val()
-// 	let fullname = $('#fullname').val()
-// 	let email = $('#email').val()
-// 	let birthdate = $('#birthdate').val()
-	
-// 	// Checks that all the fields are not empty
-// 	if ((username == '') || (password == '') || (fullname == '') || (email == '') || (birthdate == '')){
-// 		window.alert('Missing values - please fill all the values to register')
-// 		return
-// 	}
-
-// 	// Checks that the inputs don't have spaces (except full name and birthdate)
-// 	if ((username == '' || (/\s/).test(username)) || (password == '' || (/\s/).test(password)) || (email == '' || (/\s/).test(email))){
-// 		window.alert('Illegal character (whitespace) in username or password or email.')
-// 		return
-// 	}
-
-// 	// Checks that the password contains at least 6 digits of numbers and letters
-// 	let valid_pwd = checkPwd(password)
-// 	if (valid_pwd != true){
-// 		window.alert('Your password ' + valid_pwd)
-// 		return
-// 	}
-	
-// 	// Checks that the fullname contains no numbers in it
-// 	let valid_fullname = checkFullname(fullname)
-// 	if (valid_fullname != true){
-// 		window.alert('Your fullname ' + valid_fullname)
-// 		return
-// 	}
-
-// 	// Checks that the email is valid
-// 	let valid_email = checkEmail(email)
-// 	if (valid_email != true)
-// 	{
-// 		window.alert('Your email is not a valid email address')
-// 		return
-	
-// 	}
-
-// 	// Check that the username is not exist in the system
-// 	if(username in users)
-// 	{
-// 		window.alert('Your username \'' + username + '\' is already exist in the system' )
-// 		return
-// 	}
-
-// 	users[username] = password
-// 	window.alert('You have been Registered Successfully' )
-// 	showAndHideDivs("login_screen")
-// }
 
 // Function that checks if a given password is more than 6 char and has digits and letters
 function checkPwd(str) {
@@ -194,15 +117,7 @@ function checkFullname(str) {
 	return true;
 }
 
-// // Function that checks if a given email is valid
-// function checkEmail(email) {
-// 	// if (str.search(/^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/) != -1) {
-// 	// 	return("is not a valid email address");
-// 	// }
-// 	// return true;
-// 	var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-// 	return regex.test(email);
-//   }
+
   
   // Function for updating the game controls (up,down,left,right)
   function myKeyPress(e, key) 

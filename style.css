@@ -206,6 +206,13 @@ cursor:pointer;
     width: 180px;
     }
 
-  
-  
+
+    .error 
+    {
+      font-size: 12;
+      color: red;
+      align-items: center;
+
+    }
+ 
   
