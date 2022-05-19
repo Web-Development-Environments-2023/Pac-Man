@@ -44,8 +44,6 @@ function Start() {
 	updateMode() // default mode is Easy
 	startMusic() // start music
 
-	//gameMusic.pause(); 
-
 	setTableBorder('1') // set the table border
 	start_time = new Date();
 
@@ -384,6 +382,10 @@ function UpdatePosition()
 	{
 		score = score + 50;
 		special_food.eaten = true;
+		if(special_food.lastFood != 0)
+		{
+			food_remain--;
+		}
 	}
 	// extra life
 	else if(board[shape.i][shape.j] == 10)
@@ -397,6 +399,7 @@ function UpdatePosition()
 		if(regularOrSpaciel(shape.i, shape.j) == "r")
 		{
 			collision(false)
+
 		}
 		else
 		{
@@ -409,12 +412,12 @@ function UpdatePosition()
 	// Move the monsters every "monsterMovementMs" seconds
 	if(Date.now() - monsterTimeout >= monsterMovementMs)
 	{
+    	updateMonsterPositions()
+		monsterTimeout = Date.now()
 		if(!special_food.eaten)
 		{
 			updateSpecialFoodPosition();
 		}
-    	updateMonsterPositions()
-		monsterTimeout = Date.now()
 	}
 
 	// Updates the game score and time and checks if the game needs to be finished
@@ -424,6 +427,7 @@ function UpdatePosition()
 		pac_color = "green";
 	}
 	// If food is finished
+	console.log(food_remain)
 	if (food_remain == 0) ///////////////////////////////////////////////////////TODO change here
 	{
 		window.clearInterval(interval);
@@ -651,5 +655,3 @@ false);
 
 
 
-// register page - validation
-// finish css styling of buttons and shit

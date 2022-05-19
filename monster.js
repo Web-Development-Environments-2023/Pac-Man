@@ -299,7 +299,7 @@ function collision(isSpaciel)
                 board[monster_list[num_monst].i][monster_list[num_monst].j] = 3;
             }
 			
-            board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] = 5;
+            board[monster_positions[num_monst][0]][monster_positions[num_monst][1]] += 5;
             monster_list[num_monst].i = monster_positions[num_monst][0];
             monster_list[num_monst].j = monster_positions[num_monst][1];
             
