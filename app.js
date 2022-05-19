@@ -154,28 +154,3 @@ function showAndHideDivs(currentScreen)
 
 
 
-// $(document).ready(function () 
-// {
-    
-// 	// Validate Username
-// 	$("form[name='gg']").validate({
-// 		rules: {
-// 			username:{
-// 				required: true,
-// 				lettersonly: true // todo: check that it doesnt allow spaces
-// 				// doesnt exist
-// 			},
-// 			password:{
-// 				required: true,
-// 				minlength: 6,
-// 				// atleast one letter + digit
-// 			},
-// 			fullname:{
-// 				required: true,
-// 				lettersonly: true
-// 			},
-// 			email:{
-// 				required: true,
-// 				lettersonly: true
-// 			},
-// }})});

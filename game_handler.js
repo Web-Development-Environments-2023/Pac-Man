@@ -24,6 +24,7 @@ wall_img.src = "/resources/images/wall.png"
 // 9 - Pacman
 // 10 - Lives (heart)
 // 11 - Special Food
+
 function Start() {
 
 	clearInterval(interval)
@@ -427,8 +428,7 @@ function UpdatePosition()
 		pac_color = "green";
 	}
 	// If food is finished
-	console.log(food_remain)
-	if (food_remain == 0) ///////////////////////////////////////////////////////TODO change here
+	if (food_remain == 0)
 	{
 		window.clearInterval(interval);
 		winnerMusic.play(); // Play winner Music
