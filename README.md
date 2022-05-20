@@ -16,10 +16,10 @@ https://web-development-environments-2022.github.io/assignment2-316593557_313245
 
 # Extra functionalities
 ## Choose your game mode:
-#### Switch between easy/medium/hard before and during the game!
+Switch between easy/medium/hard before and during the game!
 ## Pause your game in the middle:
-#### Pause/Resume button so you can take a break whenever you want!
+Pause/Resume button so you can take a break whenever you want!
 ## THE PINK MONSTER:
-#### Beware of the pink monster as it will damage you twice the amount the red monster does!
+Beware of the pink monster as it will damage you twice the amount the red monster does!
 ## Last chance life:
-#### Do you have only 1 life left? Don't worry we got your back! Catch the read heart to win another life!
+Do you have only 1 life left? Don't worry we got your back! Catch the read heart to win another life!
