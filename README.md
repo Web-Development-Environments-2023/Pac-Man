@@ -18,7 +18,7 @@ https://web-development-environments-2022.github.io/assignment2-316593557_313245
 ## Choose your game mode:
 #### Switch between easy/medium/hard before and during the game!
 ## Pause your game in the middle:
-#### Start/Pause button so you can take a break whenever you want!
+#### Pause/Resume button so you can take a break whenever you want!
 ## THE PINK MONSTER:
 #### Beware of the pink monster as it will damage you twice the amount the red monster does!
 ## Last chance life:
