@@ -1,10 +1,10 @@
 
 let heart = new Image();
-heart.src = "/resources/images/heart.png"
+heart.src = "./resources/images/heart.png"
 let special_food_img = new Image();
-special_food_img.src = "/resources/images/cherry.png"
+special_food_img.src = "./resources/images/cherry.png"
 let wall_img = new Image();
-wall_img.src = "/resources/images/wall.png"
+wall_img.src = "./resources/images/wall.png"
 
 
  

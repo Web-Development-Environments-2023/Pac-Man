@@ -1,7 +1,7 @@
 let red_monster = new Image();
-red_monster.src = "/resources/images/red ghost.png"
+red_monster.src = "./resources/images/red ghost.png"
 let pink_monster = new Image();
-pink_monster.src =  "/resources/images/pink ghost.png"
+pink_monster.src =  "./resources/images/pink ghost.png"
 
 // Function that updates the monsters positions
 function updateMonsterPositions()
