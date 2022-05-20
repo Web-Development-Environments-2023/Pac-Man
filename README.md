@@ -4,7 +4,7 @@ Pacman game for Web Development Environment course in SISE department of BGU Uni
 
 # Table of Content
 * [Website URL](#Website-URL)
-* [Creators details](#Creators-details)
+* [Creators details](#Creators-details1)
 * [Extra functionalities](#Extra-functionalities)
 
 # Website URL
@@ -23,3 +23,6 @@ Pause/Resume button so you can take a break whenever you want!
 Beware of the pink monster as it will damage you twice the amount the red monster does!
 ## Last chance life:
 Do you have only 1 life left? Don't worry we got your back! Catch the read heart to win another life!
+
+
+# Creators details1
