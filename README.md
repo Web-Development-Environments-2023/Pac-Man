@@ -11,7 +11,7 @@ Pacman game for Web Development Environment course in SISE department of BGU Uni
 https://web-development-environments-2022.github.io/assignment2-316593557_313245508/
 
 # Creators details
-* Or Izhaki - 316593557
+* Or Izhaky - 316593557
 * Amit Elbaz - 313245508
 
 # Extra functionalities
