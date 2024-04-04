@@ -1,6 +1,6 @@
 # Web Development Environments 2022 Assignment2
 
-Pacman game for Web Development Environment course in SISE department of BGU University. Written in HTML, CSS and Javascript using Jquery.
+A browser Pac-Man game implemented in JavaScript and designed with CSS and HTML
 
 # Table of Content
 * [Website URL](#Website-URL)
